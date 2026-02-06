@@ -1,0 +1,52 @@
+import { Student } from "./types/types";
+
+export const mockStudents: Student[] = [
+  {
+    id: "STU-001",
+    name: "Alex Johnson",
+    email: "alex.j@example.com",
+    course: "Computer Science 101",
+    joinDate: "Oct 24, 2023",
+    status: "active",
+    progress: 75,
+    avatar: "https://picsum.photos/id/1/100/100",
+  },
+  {
+    id: "STU-002",
+    name: "Maria Rodriguez",
+    email: "maria.r@example.com",
+    course: "Advanced Mathematics",
+    joinDate: "Oct 22, 2023",
+    status: "pending",
+    progress: 0,
+  },
+  {
+    id: "STU-003",
+    name: "Sarah Smith",
+    email: "sarah.s@example.com",
+    course: "Creative Writing",
+    joinDate: "Oct 20, 2023",
+    status: "active",
+    progress: 45,
+    avatar: "https://picsum.photos/id/2/100/100",
+  },
+  {
+    id: "STU-004",
+    name: "James Wilson",
+    email: "j.wilson@example.com",
+    course: "Physics 101",
+    joinDate: "Oct 18, 2023",
+    status: "inactive",
+    progress: 10,
+  },
+  {
+    id: "STU-005",
+    name: "Elena Larson",
+    email: "emily.l@example.com",
+    course: "UI/UX Design",
+    joinDate: "Oct 15, 2023",
+    status: "active",
+    progress: 92,
+    avatar: "https://picsum.photos/id/3/100/100",
+  },
+];
