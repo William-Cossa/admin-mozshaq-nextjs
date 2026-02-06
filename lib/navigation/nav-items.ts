@@ -14,6 +14,6 @@ export const NAV_ITEMS = [
   { label: "Cursos", icon: BookOpen, path: "/courses" },
   { label: "Instrutores", icon: UserRound, path: "/instructors" },
   { label: "Inscrições", icon: CheckCircle, path: "/enrollments" },
-  { label: "Usuários", icon: Users, path: "/users" },
+  { label: "Utilizadores", icon: Users, path: "/users" },
   { label: "Relatórios", icon: BarChart3, path: "/reports" },
 ];

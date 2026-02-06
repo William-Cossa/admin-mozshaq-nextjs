@@ -4,9 +4,11 @@ import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import Filters from "@/components/courses/filters";
 import CoursesList from "@/components/courses/course-list";
-import { mockCourses } from "@/data";
+import { getCourses } from "@/lib/actions/courses";
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  const courses = await getCourses();
+
   return (
     <div className="max-w-7xl mx-auto space-y-4 pb-12">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
@@ -22,7 +24,7 @@ export default function CoursesPage() {
 
       <Filters />
 
-      <CoursesList courses={mockCourses} />
+      <CoursesList courses={courses} />
     </div>
   );
 }

@@ -39,7 +39,7 @@ export default function SidebarNav() {
 
       <div className="mt-8 pt-4 border-t border-border/70 w-full text-sm">
         <span className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">
-          Configurações
+          Definições
         </span>
         <Link
           href="/settings"
@@ -51,7 +51,7 @@ export default function SidebarNav() {
           href="/help"
           className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
         >
-          <HelpCircle size={20} /> Suporte
+          <HelpCircle size={20} /> Ajuda
         </Link>
       </div>
     </div>

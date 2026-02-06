@@ -11,12 +11,12 @@ async function Users() {
     <div className="max-w-7xl mx-auto space-y-3">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between md:items-center gap-2">
         <Heading
-          title="Usuários"
-          text="Gerencie os acessos, roles e status de todos os usuários da plataforma."
+          title="Utilizadores"
+          text="Faça a gestão dos acessos, papéis e estados de todos os utilizadores da plataforma."
         />
         <Button className="inline-flex items-center justify-center gap-2 text-sm font-bold  shadow-xl shadow-primary/20 transition-all active:scale-95 cursor-pointer">
           <Plus size={16} />
-          Adicionar Usuário
+          Adicionar Utilizador
         </Button>
       </div>
 
