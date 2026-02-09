@@ -1,11 +1,8 @@
-import { DataTable } from "@/components/datatable/data-table";
 import Heading from "@/components/Heading";
 import UsersTable from "@/components/tables/UsersTable";
 import { Button } from "@/components/ui/button";
 import { Filter, Plus, Search } from "lucide-react";
 
-import { columns } from "@/components/datatable/columns";
-import { tasks } from "@/task/tasks";
 async function Users() {
   return (
     <div className="max-w-7xl mx-auto space-y-3">
