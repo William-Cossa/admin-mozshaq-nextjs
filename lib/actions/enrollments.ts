@@ -3,7 +3,7 @@
 import { Enrollment } from "@/types/types";
 import { revalidatePath } from "next/cache";
 
-const API_URL = "http://localhost:3004/enrollments";
+const API_URL = "https://mozshaqadmin.vercel.app/enrollments";
 
 export async function getEnrollments(): Promise<Enrollment[]> {
   try {
@@ -16,7 +16,10 @@ export async function getEnrollments(): Promise<Enrollment[]> {
   }
 }
 
-export async function updateEnrollmentStatus(id: string, status: Enrollment["status"]): Promise<Enrollment> {
+export async function updateEnrollmentStatus(
+  id: string,
+  status: Enrollment["status"]
+): Promise<Enrollment> {
   const res = await fetch(`${API_URL}/${id}`, {
     method: "PATCH",
     headers: {
