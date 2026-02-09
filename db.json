@@ -4,7 +4,9 @@
       "id": "1",
       "title": "Advanced React Patterns",
       "category": "Development",
-      "instructorIds": ["1"],
+      "instructorIds": [
+        "1"
+      ],
       "status": "PUBLICADO",
       "type": "ONLINE",
       "studentsCount": 1204,
@@ -25,7 +27,9 @@
       "id": "2",
       "title": "UX Design Fundamentals",
       "category": "Design",
-      "instructorIds": ["2"],
+      "instructorIds": [
+        "2"
+      ],
       "status": "RASCUNHO",
       "type": "HIBRIDO",
       "studentsCount": 850,
@@ -46,7 +50,9 @@
       "id": "3",
       "title": "SEO Strategy 2024",
       "category": "Marketing",
-      "instructorIds": ["1"],
+      "instructorIds": [
+        "1"
+      ],
       "status": "ENCERRADO",
       "type": "PRESENCIAL",
       "studentsCount": 2300,
@@ -62,6 +68,66 @@
       "updatedAt": "2024-02-06T00:00:00.000Z",
       "slug": "seo-strategy-2024",
       "level": "INTERMEDIARIO"
+    }
+  ],
+  "enrollments": [
+    {
+      "id": "INS-4920",
+      "studentId": "S1",
+      "studentName": "Sarah Jenkins",
+      "courseId": "C1",
+      "courseName": "Padrões Avançados de React",
+      "date": "24 Out, 2023",
+      "progress": 75,
+      "status": "active",
+      "studentAvatar": "https://picsum.photos/id/64/100/100",
+      "contact": "841234567"
+    },
+    {
+      "id": "INS-4919",
+      "studentId": "S2",
+      "studentName": "Michael Kim",
+      "courseId": "C2",
+      "courseName": "Fundamentos de UX Design",
+      "date": "23 Out, 2023",
+      "progress": 0,
+      "status": "pending",
+      "contact": "841234567"
+    },
+    {
+      "id": "INS-4918",
+      "studentId": "S3",
+      "studentName": "David Ross",
+      "courseId": "C3",
+      "courseName": "Gestão de Produto 101",
+      "date": "22 Out, 2023",
+      "progress": 32,
+      "status": "active",
+      "studentAvatar": "https://picsum.photos/id/91/100/100",
+      "contact": "841234567"
+    },
+    {
+      "id": "INS-4915",
+      "studentId": "S4",
+      "studentName": "Elena Rodriguez",
+      "courseId": "C4",
+      "courseName": "Mestria em Figma",
+      "date": "18 Out, 2023",
+      "progress": 100,
+      "status": "completed",
+      "studentAvatar": "https://picsum.photos/id/102/100/100",
+      "contact": "841234567"
+    },
+    {
+      "id": "INS-4912",
+      "studentId": "S5",
+      "studentName": "Alex Johnson",
+      "courseId": "C5",
+      "courseName": "Desenvolvimento Full Stack",
+      "date": "15 Out, 2023",
+      "progress": 45,
+      "status": "active",
+      "contact": "841234567"
     }
   ]
 }

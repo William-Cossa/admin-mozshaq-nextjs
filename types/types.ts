@@ -109,4 +109,5 @@ export interface Enrollment {
   date: string;
   progress: number;
   status: "active" | "pending" | "completed" | "dropped";
+  contact?: string;
 }
