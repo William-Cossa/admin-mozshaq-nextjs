@@ -3,11 +3,13 @@
 import { Enrollment } from "@/types/types";
 import { revalidatePath } from "next/cache";
 
-const API_URL = "https://mozshaqadmin.vercel.app/enrollments";
+const URL =
+  (process.env.API_ENROLLMENTS_URL as string) ||
+  (process.env.NEXT_PUBLIC_API_ENROLLMENTS_URL as string);
 
 export async function getEnrollments(): Promise<Enrollment[]> {
   try {
-    const res = await fetch(API_URL, { cache: "no-store" });
+    const res = await fetch(URL, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to fetch enrollments");
     return res.json();
   } catch (error) {
@@ -18,9 +20,9 @@ export async function getEnrollments(): Promise<Enrollment[]> {
 
 export async function updateEnrollmentStatus(
   id: string,
-  status: Enrollment["status"]
+  status: Enrollment["status"],
 ): Promise<Enrollment> {
-  const res = await fetch(`${API_URL}/${id}`, {
+  const res = await fetch(`${URL}/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

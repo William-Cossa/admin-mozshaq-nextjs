@@ -3,7 +3,9 @@
 import { Course } from "@/types/types";
 import { revalidatePath } from "next/cache";
 
-const API_URL = "https://mozshaqadmin.vercel.app/courses";
+const API_URL =
+  (process.env.API_COURSES_URL as string) ||
+  (process.env.NEXT_PUBLIC_API_COURSES_URL as string);
 
 export async function getCourses(): Promise<Course[]> {
   try {
@@ -31,7 +33,7 @@ export async function getCourseById(id: string): Promise<Course | null> {
 }
 
 export async function createCourse(
-  data: Omit<Course, "id"> | Course
+  data: Omit<Course, "id"> | Course,
 ): Promise<Course> {
   const { id, ...rest } = data as Course; // Remove ID to let json-server generate it if needed, or if it's empty string
 
@@ -65,7 +67,7 @@ export async function createCourse(
 
 export async function updateCourse(
   id: string,
-  data: Partial<Course>
+  data: Partial<Course>,
 ): Promise<Course> {
   const payload = {
     ...data,

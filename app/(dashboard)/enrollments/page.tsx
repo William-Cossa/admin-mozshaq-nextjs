@@ -48,7 +48,7 @@ export default async function EnrollmentsPage({
             estados das inscrições.
           </p>
         </div>
-        <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-sm font-bold text-white shadow-xl shadow-primary/20 hover:bg-blue-600 transition-all active:scale-95">
+        <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow-xl shadow-primary/20 hover:bg-blue-600 transition-all active:scale-95">
           <Plus size={16} />
           <span>Nova Inscrição</span>
         </button>
@@ -167,17 +167,22 @@ export default async function EnrollmentsPage({
                   <td className="px-4 py-1.5">
                     <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
                       <Phone size={12} className="text-slate-400" />
-                      <span className="font-medium text-xs">{enr.contact || "841234567"}</span>
+                      <span className="font-medium text-xs">
+                        {enr.contact || "841234567"}
+                      </span>
                     </div>
                   </td>
-                  <td className="px-4 py-1.5 font-bold text-slate-700 dark:text-slate-300">
+                  <td className="px-4 py-1.5 font-semibold  text-slate-700 dark:text-slate-300">
                     {enr.courseName}
                   </td>
                   <td className="px-4 py-1.5 text-slate-500 font-medium">
                     {enr.date}
                   </td>
                   <td className="px-4 py-1.5">
-                    <StatusSelect enrollmentId={enr.id} currentStatus={enr.status} />
+                    <StatusSelect
+                      enrollmentId={enr.id}
+                      currentStatus={enr.status}
+                    />
                   </td>
                   <td className="px-4 py-1.5 text-right">
                     <button className="text-slate-400 hover:text-primary transition-colors p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
@@ -188,7 +193,10 @@ export default async function EnrollmentsPage({
               ))}
               {filteredEnrollments.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="px-4 py-12 text-center text-slate-500">
+                  <td
+                    colSpan={7}
+                    className="px-4 py-12 text-center text-slate-500"
+                  >
                     Nenhuma inscrição encontrada para a sua pesquisa.
                   </td>
                 </tr>
