@@ -15,5 +15,5 @@ export const NAV_ITEMS = [
   { label: "Instrutores", icon: UserRound, path: "/instructors" },
   { label: "Inscrições", icon: CheckCircle, path: "/enrollments" },
   { label: "Utilizadores", icon: Users, path: "/users" },
-  { label: "Relatórios", icon: BarChart3, path: "/reports" },
+  // { label: "Relatórios", icon: BarChart3, path: "/reports" },
 ];
