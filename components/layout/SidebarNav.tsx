@@ -37,7 +37,7 @@ export default function SidebarNav() {
         );
       })}
 
-      <div className="mt-8 pt-4 border-t border-border/70 w-full text-sm">
+      {/* <div className="mt-8 pt-4 border-t border-border/70 w-full text-sm">
         <span className="px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">
           Definições
         </span>
@@ -53,7 +53,7 @@ export default function SidebarNav() {
         >
           <HelpCircle size={20} /> Ajuda
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
