@@ -6,6 +6,7 @@ import {
   CheckCircle,
   BarChart3,
   UserRound,
+  CreditCard,
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -14,6 +15,8 @@ export const NAV_ITEMS = [
   { label: "Cursos", icon: BookOpen, path: "/courses" },
   { label: "Instrutores", icon: UserRound, path: "/instructors" },
   { label: "Inscrições", icon: CheckCircle, path: "/enrollments" },
+  { label: "Pagamentos", icon: CreditCard, path: "/payments" },
   { label: "Utilizadores", icon: Users, path: "/users" },
   // { label: "Relatórios", icon: BarChart3, path: "/reports" },
 ];
+

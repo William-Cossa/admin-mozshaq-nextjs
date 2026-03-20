@@ -111,3 +111,16 @@ export interface Enrollment {
   status: "active" | "pending" | "completed" | "dropped";
   contact?: string;
 }
+
+export type PaymentStatus = "pending" | "approved" | "rejected";
+
+export interface Payment {
+  id: string;
+  studentName: string;
+  courseName: string;
+  amount: number;
+  paymentProof: string;
+  status: PaymentStatus;
+  rejectionReason?: string;
+  createdAt: string;
+}

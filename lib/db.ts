@@ -1,12 +1,13 @@
 import fs from "fs/promises";
 import path from "path";
-import { Course, Enrollment } from "@/types/types";
+import { Course, Enrollment, Payment } from "@/types/types";
 
 const DB_PATH = path.join(process.cwd(), "db.json");
 
 interface DbSchema {
   courses: Course[];
   enrollments: Enrollment[];
+  payments: Payment[];
 }
 
 export async function readDb(): Promise<DbSchema> {
