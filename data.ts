@@ -134,7 +134,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Sarah Jenkins",
     "courseName": "Padrões Avançados de React",
     "amount": 4500,
-    "paymentProof": "https://picsum.photos/id/20/800/600",
+    "paymentProof": "/images/pay1.png",
     "status": "pending",
     "createdAt": "2026-03-18T08:30:00.000Z"
   },
@@ -143,7 +143,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Michael Kim",
     "courseName": "Fundamentos de UX Design",
     "amount": 3200,
-    "paymentProof": "https://picsum.photos/id/48/800/600",
+    "paymentProof": "/images/pay2.jpeg",
     "status": "approved",
     "createdAt": "2026-03-17T14:10:00.000Z"
   },
@@ -152,7 +152,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "David Ross",
     "courseName": "Gestão de Produto 101",
     "amount": 2800,
-    "paymentProof": "https://picsum.photos/id/60/800/600",
+    "paymentProof": "/images/pay4.png",
     "status": "rejected",
     "rejectionReason": "Comprovativo ilegível. Por favor envie uma imagem mais nítida.",
     "createdAt": "2026-03-16T11:55:00.000Z"
@@ -162,7 +162,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Elena Rodriguez",
     "courseName": "Mestria em Figma",
     "amount": 5000,
-    "paymentProof": "https://picsum.photos/id/96/800/600",
+    "paymentProof": "/images/pay3.png",
     "status": "pending",
     "createdAt": "2026-03-19T09:05:00.000Z"
   },
@@ -171,7 +171,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Alex Johnson",
     "courseName": "Desenvolvimento Full Stack",
     "amount": 7500,
-    "paymentProof": "https://picsum.photos/id/110/800/600",
+    "paymentProof": "/images/pay5.png",
     "status": "approved",
     "createdAt": "2026-03-15T16:30:00.000Z"
   },
@@ -180,7 +180,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Fatima Mousa",
     "courseName": "Marketing Digital Avançado",
     "amount": 3800,
-    "paymentProof": "https://picsum.photos/id/130/800/600",
+    "paymentProof": "/images/pay4.png",
     "status": "pending",
     "createdAt": "2026-03-19T11:20:00.000Z"
   },
@@ -189,7 +189,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Carlos Mendez",
     "courseName": "Padrões Avançados de React",
     "amount": 4500,
-    "paymentProof": "https://picsum.photos/id/142/800/600",
+    "paymentProof": "/images/pay2.jpeg",
     "status": "rejected",
     "rejectionReason": "Valor pago não corresponde ao montante indicado na inscrição.",
     "createdAt": "2026-03-14T13:40:00.000Z"
@@ -199,7 +199,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Lisa Wang",
     "courseName": "SEO Strategy 2024",
     "amount": 2500,
-    "paymentProof": "https://picsum.photos/id/160/800/600",
+    "paymentProof": "/images/pay4.png",
     "status": "approved",
     "createdAt": "2026-03-13T10:00:00.000Z"
   },
@@ -208,7 +208,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Nuno Fernandes",
     "courseName": "Fundamentos de UX Design",
     "amount": 3200,
-    "paymentProof": "https://picsum.photos/id/180/800/600",
+    "paymentProof": "/images/pay4.png",
     "status": "pending",
     "createdAt": "2026-03-20T07:45:00.000Z"
   },
@@ -217,7 +217,7 @@ export const mockPayments: Partial<Payment>[] = [
     "studentName": "Amina Diallo",
     "courseName": "Gestão de Produto 101",
     "amount": 2800,
-    "paymentProof": "https://picsum.photos/id/200/800/600",
+    "paymentProof": "/images/pay5.png",
     "status": "approved",
     "createdAt": "2026-03-12T09:15:00.000Z"
   }
