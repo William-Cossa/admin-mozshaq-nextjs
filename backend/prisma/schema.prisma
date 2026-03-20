@@ -1,0 +1,326 @@
+// Prisma Schema — admin-mozshaq-nextjs
+// IDs gerados com UUIDv7 no nível da aplicação: import { v7 as uuidv7 } from "uuid"
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  MANAGER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  DROPPED
+}
+
+enum InstructorStatus {
+  ACTIVO
+  INACTIVO
+}
+
+enum CourseType {
+  ONLINE
+  PRESENCIAL
+  HIBRIDO
+}
+
+enum CourseStatus {
+  RASCUNHO
+  PUBLICADO
+  ENCERRADO
+}
+
+enum CourseLevel {
+  INICIANTE
+  INTERMEDIARIO
+  AVANCADO
+}
+
+enum ModuleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum LessonType {
+  VIDEO
+  TEXTO
+  QUIZ
+  LIVE
+}
+
+enum CourseClassStatus {
+  ABERTA
+  LOTADA
+  FINALIZADA
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  PENDING
+  COMPLETED
+  DROPPED
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ─────────────────────────────────────────────
+// MODELS
+// ─────────────────────────────────────────────
+
+/// Administradores e gestores da plataforma
+model User {
+  id        String     @id // UUIDv7 gerado na aplicação
+  name      String
+  email     String     @unique
+  password  String
+  role      Role       @default(MANAGER)
+  status    UserStatus @default(PENDING)
+  avatar    String?
+  lastLogin DateTime?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@map("users")
+}
+
+/// Alunos inscritos na plataforma
+model Student {
+  id        String        @id // UUIDv7 gerado na aplicação
+  name      String
+  email     String        @unique
+  password  String
+  phone     String?
+  avatar    String?
+  status    StudentStatus @default(PENDING)
+  joinDate  DateTime      @default(now())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  enrollments Enrollment[]
+  payments    Payment[]
+
+  @@index([email])
+  @@index([status])
+  @@map("students")
+}
+
+/// Formadores/instrutores dos cursos
+model Instructor {
+  id                String           @id // UUIDv7 gerado na aplicação
+  name              String
+  photo             String?
+  specialization    String
+  yearsExperience   Int              @default(0)
+  bio               String
+  education         String
+  linkedin          String?
+  professionalEmail String?
+  status            InstructorStatus @default(ACTIVO)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  courses CourseInstructor[]
+
+  @@index([status])
+  @@map("instructors")
+}
+
+/// Cursos disponíveis na plataforma
+model Course {
+  id              String       @id // UUIDv7 gerado na aplicação
+  title           String
+  description     String       @db.Text
+  thumbnail       String?
+  category        String
+  level           CourseLevel  @default(INICIANTE)
+  type            CourseType   @default(ONLINE)
+  status          CourseStatus @default(RASCUNHO)
+  objectives      String[]
+  targetAudience  String[]
+  requirements    String[]
+  rating          Float        @default(0)
+  reviewCount     Int          @default(0)
+  studentsCount   Int          @default(0)
+  duration        String? // Ex: "4h 32m"
+  locationDefault String? // Para cursos PRESENCIAL/HIBRIDO
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  instructors CourseInstructor[]
+  modules     Module[]
+  classes     CourseClass[]
+  enrollments Enrollment[]
+  payments    Payment[]
+
+  @@index([status])
+  @@index([category])
+  @@index([type])
+  @@index([status, category])
+  @@map("courses")
+}
+
+/// Tabela de junção N:N entre Cursos e Instrutores
+model CourseInstructor {
+  courseId     String
+  instructorId String
+  assignedAt   DateTime @default(now())
+
+  course     Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  instructor Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, instructorId])
+  @@index([instructorId])
+  @@map("course_instructors")
+}
+
+/// Módulos de um curso (capítulos/secções)
+model Module {
+  id        String       @id // UUIDv7 gerado na aplicação
+  courseId  String
+  title     String
+  order     Int
+  status    ModuleStatus @default(DRAFT)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@index([courseId, order])
+  @@map("modules")
+}
+
+/// Aulas dentro de um módulo
+model Lesson {
+  id        String      @id // UUIDv7 gerado na aplicação
+  moduleId  String
+  title     String
+  type      LessonType? @default(VIDEO)
+  content   String?     @db.Text
+  duration  String? // Ex: "12m:30s"
+  order     Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@index([moduleId, order])
+  @@map("lessons")
+}
+
+/// Turmas de um curso (para modalidades PRESENCIAL/HIBRIDO)
+model CourseClass {
+  id            String            @id // UUIDv7 gerado na aplicação
+  courseId      String
+  name          String
+  startDate     DateTime
+  endDate       DateTime
+  schedule      String // Ex: "Sábados 08:00-12:00"
+  location      String
+  vacancies     Int
+  enrolledCount Int               @default(0)
+  status        CourseClassStatus @default(ABERTA)
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([courseId])
+  @@index([status])
+  @@index([startDate])
+  @@map("course_classes")
+}
+
+/// Inscrições de alunos em cursos
+model Enrollment {
+  id        String           @id // UUIDv7 gerado na aplicação
+  studentId String
+  courseId  String
+  progress  Int              @default(0) // 0–100
+  status    EnrollmentStatus @default(PENDING)
+  contact   String?
+  date      DateTime         @default(now())
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course  Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, courseId])
+  @@index([studentId])
+  @@index([courseId])
+  @@index([status])
+  @@index([courseId, status])
+  @@map("enrollments")
+}
+
+/// Pagamentos de alunos para inscrição em cursos
+model Payment {
+  id              String        @id // UUIDv7 gerado na aplicação
+  studentId       String
+  courseId        String
+  studentName     String // Desnormalizado para histórico
+  courseName      String // Desnormalizado para histórico
+  amount          Float
+  paymentProof    String // URL ou path do comprovativo
+  status          PaymentStatus @default(PENDING)
+  rejectionReason String?
+  approvedAt      DateTime?
+  rejectedAt      DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id])
+  course  Course  @relation(fields: [courseId], references: [id])
+
+  @@index([status])
+  @@index([studentId])
+  @@index([courseId])
+  @@index([createdAt])
+  @@index([status, createdAt])
+  @@map("payments")
+}
+
+/// Refresh tokens persistidos para revogação segura (admin + student portals)
+model RefreshToken {
+  id        String   @id // UUIDv7 gerado na aplicação
+  token     String   @unique
+  portal    String // "admin" | "student"
+  entityId  String // User.id ou Student.id
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([entityId, portal])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
