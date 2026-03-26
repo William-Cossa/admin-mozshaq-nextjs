@@ -5,12 +5,12 @@ import {
   studentRegisterSchema,
 } from "../../validators/auth/student.auth.validator.js";
 
-const COOKIE_OPTIONS = {
+const COOKIE_OPTIONS = (req: Request) => ({
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
+  secure: process.env.NODE_ENV === "production" && !req.headers.host?.includes("localhost"),
   sameSite: "lax" as const,
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days em ms
-};
+});
 
 export const studentAuthController = {
   async register(req: Request, res: Response): Promise<void> {
@@ -28,7 +28,7 @@ export const studentAuthController = {
       const { accessToken, refreshToken, student } =
         await studentAuthService.register(result.data);
 
-      res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
+      res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS(req));
       res.status(201).json({ success: true, accessToken, student });
     } catch (err: any) {
       const isConflict = err.message.includes("Já existe");
@@ -54,7 +54,7 @@ export const studentAuthController = {
       const { accessToken, refreshToken, student } =
         await studentAuthService.login(result.data);
 
-      res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
+      res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS(req));
       res.status(200).json({ success: true, accessToken, student });
     } catch (err: any) {
       res.status(401).json({ success: false, message: err.message });
@@ -76,7 +76,7 @@ export const studentAuthController = {
       const { accessToken, refreshToken: newRefreshToken } =
         await studentAuthService.refresh(refreshToken);
 
-      res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS);
+      res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS(req));
       res.status(200).json({ success: true, accessToken });
     } catch (err: any) {
       res.clearCookie("refreshToken");

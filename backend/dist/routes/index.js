@@ -9,6 +9,9 @@ import adminEnrollmentRoutes from "./admin/enrollment.routes.js";
 import adminPaymentRoutes from "./admin/payment.routes.js";
 import adminCourseNestedRoutes from "./admin/course.nested.routes.js";
 import studentAuthRoutes from "./auth/student.auth.routes.js";
+import studentEnrollmentRoutes from "./student/enrollment.routes.js";
+import publicCategoryRoutes from "./public/category.routes.js";
+import publicCourseRoutes from "./public/course.routes.js";
 const router = Router();
 // ─── Health check ─────────────────────────────────────────────────────────────
 router.get("/health", (_req, res) => {
@@ -26,4 +29,8 @@ router.use("/admin/enrollments", adminEnrollmentRoutes);
 router.use("/admin/payments", adminPaymentRoutes);
 // ─── Student Portal ───────────────────────────────────────────────────────────
 router.use("/student/auth", studentAuthRoutes);
+router.use("/student/enrollments", studentEnrollmentRoutes);
+// ─── Public Portal ────────────────────────────────────────────────────────────
+router.use("/public/categories", publicCategoryRoutes);
+router.use("/public/courses", publicCourseRoutes);
 export default router;

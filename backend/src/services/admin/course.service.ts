@@ -57,13 +57,14 @@ function formatFrontendCourse(course: any) {
 
 export const courseService = {
   async getAll(query: any = {}) {
-    const { page = 1, limit = 10, category, level, minPrice, maxPrice, sort } = query;
+    const { page = 1, limit = 10, category, level, minPrice, maxPrice, sort, status } = query;
     const skip = (Number(page) - 1) * Number(limit);
     const take = Number(limit);
 
     const where: any = {};
     if (category) where.categoryId = category;
     if (level) where.level = level;
+    if (status) where.status = status;
     if (minPrice || maxPrice) {
       where.price = {};
       if (minPrice) where.price.gte = Number(minPrice);

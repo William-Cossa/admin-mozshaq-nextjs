@@ -1,11 +1,11 @@
 import { adminAuthService } from "../../services/auth/admin.auth.service.js";
 import { adminLoginSchema } from "../../validators/auth/admin.auth.validator.js";
-const COOKIE_OPTIONS = {
+const COOKIE_OPTIONS = (req) => ({
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production" && !req.headers.host?.includes("localhost"),
     sameSite: "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days em ms
-};
+});
 export const adminAuthController = {
     async login(req, res) {
         const result = adminLoginSchema.safeParse(req.body);
@@ -19,7 +19,7 @@ export const adminAuthController = {
         }
         try {
             const { accessToken, refreshToken, user } = await adminAuthService.login(result.data);
-            res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS);
+            res.cookie("refreshToken", refreshToken, COOKIE_OPTIONS(req));
             res.status(200).json({
                 success: true,
                 accessToken,
@@ -41,7 +41,7 @@ export const adminAuthController = {
         }
         try {
             const { accessToken, refreshToken: newRefreshToken } = await adminAuthService.refresh(refreshToken);
-            res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS);
+            res.cookie("refreshToken", newRefreshToken, COOKIE_OPTIONS(req));
             res.status(200).json({ success: true, accessToken });
         }
         catch (err) {
