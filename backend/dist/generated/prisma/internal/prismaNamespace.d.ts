@@ -234,6 +234,7 @@ export declare const ModelName: {
     readonly User: "User";
     readonly Student: "Student";
     readonly Instructor: "Instructor";
+    readonly Category: "Category";
     readonly Course: "Course";
     readonly CourseInstructor: "CourseInstructor";
     readonly Module: "Module";
@@ -254,7 +255,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "user" | "student" | "instructor" | "course" | "courseInstructor" | "module" | "lesson" | "courseClass" | "enrollment" | "payment" | "refreshToken";
+        modelProps: "user" | "student" | "instructor" | "category" | "course" | "courseInstructor" | "module" | "lesson" | "courseClass" | "enrollment" | "payment" | "refreshToken";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -477,6 +478,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 count: {
                     args: Prisma.InstructorCountArgs<ExtArgs>;
                     result: runtime.Types.Utils.Optional<Prisma.InstructorCountAggregateOutputType> | number;
+                };
+            };
+        };
+        Category: {
+            payload: Prisma.$CategoryPayload<ExtArgs>;
+            fields: Prisma.CategoryFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.CategoryFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.CategoryFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+                };
+                findFirst: {
+                    args: Prisma.CategoryFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.CategoryFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+                };
+                findMany: {
+                    args: Prisma.CategoryFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[];
+                };
+                create: {
+                    args: Prisma.CategoryCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+                };
+                createMany: {
+                    args: Prisma.CategoryCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.CategoryCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[];
+                };
+                delete: {
+                    args: Prisma.CategoryDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+                };
+                update: {
+                    args: Prisma.CategoryUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.CategoryDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.CategoryUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.CategoryUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[];
+                };
+                upsert: {
+                    args: Prisma.CategoryUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>;
+                };
+                aggregate: {
+                    args: Prisma.CategoryAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateCategory>;
+                };
+                groupBy: {
+                    args: Prisma.CategoryGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.CategoryGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.CategoryCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number;
                 };
             };
         };
@@ -1123,13 +1198,13 @@ export declare const StudentScalarFieldEnum: {
     readonly id: "id";
     readonly name: "name";
     readonly email: "email";
-    readonly password: "password";
     readonly phone: "phone";
     readonly avatar: "avatar";
     readonly status: "status";
     readonly joinDate: "joinDate";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
+    readonly password: "password";
 };
 export type StudentScalarFieldEnum = (typeof StudentScalarFieldEnum)[keyof typeof StudentScalarFieldEnum];
 export declare const InstructorScalarFieldEnum: {
@@ -1147,12 +1222,20 @@ export declare const InstructorScalarFieldEnum: {
     readonly updatedAt: "updatedAt";
 };
 export type InstructorScalarFieldEnum = (typeof InstructorScalarFieldEnum)[keyof typeof InstructorScalarFieldEnum];
+export declare const CategoryScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly description: "description";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum];
 export declare const CourseScalarFieldEnum: {
     readonly id: "id";
     readonly title: "title";
     readonly description: "description";
     readonly thumbnail: "thumbnail";
-    readonly category: "category";
+    readonly categoryId: "categoryId";
     readonly level: "level";
     readonly type: "type";
     readonly status: "status";
@@ -1164,6 +1247,11 @@ export declare const CourseScalarFieldEnum: {
     readonly studentsCount: "studentsCount";
     readonly duration: "duration";
     readonly locationDefault: "locationDefault";
+    readonly price: "price";
+    readonly discountPrice: "discountPrice";
+    readonly longDescription: "longDescription";
+    readonly objective: "objective";
+    readonly skills: "skills";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
@@ -1180,6 +1268,8 @@ export declare const ModuleScalarFieldEnum: {
     readonly title: "title";
     readonly order: "order";
     readonly status: "status";
+    readonly duration: "duration";
+    readonly topics: "topics";
     readonly createdAt: "createdAt";
     readonly updatedAt: "updatedAt";
 };
@@ -1496,6 +1586,7 @@ export type GlobalOmitConfig = {
     user?: Prisma.UserOmit;
     student?: Prisma.StudentOmit;
     instructor?: Prisma.InstructorOmit;
+    category?: Prisma.CategoryOmit;
     course?: Prisma.CourseOmit;
     courseInstructor?: Prisma.CourseInstructorOmit;
     module?: Prisma.ModuleOmit;

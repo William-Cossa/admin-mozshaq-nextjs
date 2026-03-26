@@ -1,6 +1,7 @@
 export type * from './models/User.js';
 export type * from './models/Student.js';
 export type * from './models/Instructor.js';
+export type * from './models/Category.js';
 export type * from './models/Course.js';
 export type * from './models/CourseInstructor.js';
 export type * from './models/Module.js';

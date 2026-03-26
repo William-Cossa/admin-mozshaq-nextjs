@@ -1,0 +1,1097 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mozshaq Admin API",
+    "version": "2.0.0",
+    "description": "Documentação completa da API do painel administrativo Mozshaq. Todos os endpoints requerem autenticação Bearer JWT, exceto os de auth."
+  },
+  "servers": [
+    { "url": "/api", "description": "Base URL" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": true },
+          "message": { "type": "string" }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "message": { "type": "string" }
+        }
+      },
+      "PaginatedMeta": {
+        "type": "object",
+        "properties": {
+          "total": { "type": "integer" },
+          "page": { "type": "integer" },
+          "limit": { "type": "integer" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "role": { "type": "string", "enum": ["ADMIN", "MANAGER"] },
+          "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING"] },
+          "avatar": { "type": "string", "nullable": true },
+          "lastLogin": { "type": "string", "format": "date-time", "nullable": true },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Student": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string", "nullable": true },
+          "avatar": { "type": "string", "nullable": true },
+          "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING", "DROPPED"] },
+          "statusLabel": { "type": "string", "description": "Computed: human-readable status" },
+          "joinDate": { "type": "string", "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" },
+          "totalCursos": { "type": "integer" },
+          "cursosActivos": { "type": "integer" },
+          "totalInvestido": { "type": "number" }
+        }
+      },
+      "Instructor": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "photo": { "type": "string", "nullable": true },
+          "specialization": { "type": "string" },
+          "yearsExperience": { "type": "integer" },
+          "experience": { "type": "string", "description": "Computed: formatted years of experience" },
+          "bio": { "type": "string" },
+          "education": { "type": "string" },
+          "linkedin": { "type": "string", "nullable": true },
+          "professionalEmail": { "type": "string", "nullable": true },
+          "status": { "type": "string", "enum": ["ACTIVO", "INACTIVO"] },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string", "nullable": true },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "_count": {
+            "type": "object",
+            "properties": {
+              "courses": { "type": "integer" }
+            }
+          }
+        }
+      },
+      "Lesson": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "moduleId": { "type": "string" },
+          "title": { "type": "string" },
+          "type": { "type": "string", "enum": ["VIDEO", "TEXTO", "QUIZ", "LIVE"], "nullable": true },
+          "content": { "type": "string", "nullable": true },
+          "duration": { "type": "string", "nullable": true },
+          "order": { "type": "integer" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Module": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "courseId": { "type": "string" },
+          "title": { "type": "string" },
+          "order": { "type": "integer" },
+          "status": { "type": "string", "enum": ["DRAFT", "PUBLISHED", "ARCHIVED"] },
+          "duration": { "type": "string", "nullable": true },
+          "topics": { "type": "array", "items": { "type": "string" } },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "lessons": { "type": "array", "items": { "$ref": "#/components/schemas/Lesson" } }
+        }
+      },
+      "CourseClass": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "courseId": { "type": "string" },
+          "name": { "type": "string" },
+          "startDate": { "type": "string", "format": "date-time", "nullable": true },
+          "endDate": { "type": "string", "format": "date-time", "nullable": true },
+          "schedule": { "type": "string" },
+          "location": { "type": "string" },
+          "vacancies": { "type": "integer" },
+          "enrolledCount": { "type": "integer" },
+          "status": { "type": "string", "enum": ["ABERTA", "LOTADA", "FINALIZADA"] }
+        }
+      },
+      "Course": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "longDescription": { "type": "string", "nullable": true },
+          "thumbnail": { "type": "string", "nullable": true },
+          "categoryId": { "type": "string" },
+          "level": { "type": "string", "enum": ["INICIANTE", "INTERMEDIARIO", "AVANCADO"] },
+          "type": { "type": "string", "enum": ["ONLINE", "PRESENCIAL", "HIBRIDO"] },
+          "status": { "type": "string", "enum": ["RASCUNHO", "PUBLICADO", "ENCERRADO"] },
+          "price": { "type": "number" },
+          "discountPrice": { "type": "number", "nullable": true },
+          "titulo": { "type": "string", "description": "Alias for title" },
+          "descricao": { "type": "string", "description": "Alias for description" },
+          "descricaoLonga": { "type": "string", "description": "Alias for longDescription", "nullable": true },
+          "preco": { "type": "number", "description": "Alias for price" },
+          "precoPromocional": { "type": "number", "description": "Alias for discountPrice", "nullable": true },
+          "precoFinal": { "type": "number", "description": "Computed: effective price after discount" },
+          "temDesconto": { "type": "boolean" },
+          "percentagemDesconto": { "type": "integer" },
+          "vagasTotais": { "type": "integer" },
+          "vagasDisponiveis": { "type": "integer" },
+          "estaCheio": { "type": "boolean" },
+          "avaliacao": { "type": "number", "description": "Alias for rating" },
+          "totalAvaliacoes": { "type": "integer", "description": "Alias for reviewCount" },
+          "rating": { "type": "number" },
+          "reviewCount": { "type": "integer" },
+          "isPublished": { "type": "boolean" },
+          "isActive": { "type": "boolean" },
+          "isClosed": { "type": "boolean" },
+          "duration": { "type": "string", "nullable": true },
+          "skills": { "type": "array", "items": { "type": "string" } },
+          "objectives": { "type": "array", "items": { "type": "string" } },
+          "requirements": { "type": "array", "items": { "type": "string" } },
+          "categoria": { "type": "string", "nullable": true },
+          "formadores": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "photo": { "type": "string" },
+                "specialization": { "type": "string" },
+                "experience": { "type": "string" }
+              }
+            }
+          },
+          "modulos": { "type": "array", "items": { "$ref": "#/components/schemas/Module" } },
+          "studentsCount": { "type": "integer", "description": "Computed: total active enrollments" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Enrollment": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "studentId": { "type": "string" },
+          "courseId": { "type": "string" },
+          "status": { "type": "string", "enum": ["ACTIVE", "PENDING", "COMPLETED", "DROPPED"] },
+          "statusLabel": { "type": "string" },
+          "progress": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "contact": { "type": "string", "nullable": true },
+          "date": { "type": "string", "format": "date-time" },
+          "student": { "$ref": "#/components/schemas/Student" },
+          "course": { "$ref": "#/components/schemas/Course" }
+        }
+      },
+      "Payment": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "studentId": { "type": "string" },
+          "courseId": { "type": "string" },
+          "studentName": { "type": "string" },
+          "courseName": { "type": "string" },
+          "amount": { "type": "number" },
+          "paymentProof": { "type": "string" },
+          "status": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"] },
+          "statusLabel": { "type": "string" },
+          "rejectionReason": { "type": "string", "nullable": true },
+          "approvedAt": { "type": "string", "format": "date-time", "nullable": true },
+          "rejectedAt": { "type": "string", "format": "date-time", "nullable": true },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "parameters": {
+      "IdParam": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Resource ID"
+      },
+      "CourseIdParam": {
+        "name": "courseId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Course ID"
+      },
+      "ModuleIdParam": {
+        "name": "moduleId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "Module ID"
+      },
+      "PageParam": { "name": "page", "in": "query", "schema": { "type": "integer", "default": 1 } },
+      "LimitParam": { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Não autenticado",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      },
+      "NotFound": {
+        "description": "Recurso não encontrado",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      },
+      "BadRequest": {
+        "description": "Dados inválidos",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      }
+    }
+  },
+  "security": [{ "bearerAuth": [] }],
+  "tags": [
+    { "name": "Auth - Admin", "description": "Autenticação do portal administrativo" },
+    { "name": "Auth - Student", "description": "Autenticação do portal do aluno" },
+    { "name": "Users", "description": "Gestão de utilizadores (admins/managers)" },
+    { "name": "Students", "description": "Gestão de alunos" },
+    { "name": "Instructors", "description": "Gestão de formadores" },
+    { "name": "Categories", "description": "Gestão de categorias de cursos" },
+    { "name": "Courses", "description": "Gestão de cursos" },
+    { "name": "Modules", "description": "Gestão de módulos de cursos" },
+    { "name": "Lessons", "description": "Gestão de aulas dentro de módulos" },
+    { "name": "Classes", "description": "Gestão de turmas de cursos presenciais/híbridos" },
+    { "name": "Enrollments", "description": "Gestão de inscrições" },
+    { "name": "Payments", "description": "Gestão de pagamentos" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": ["System"],
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "API is up",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "status": { "type": "string" }, "timestamp": { "type": "string" } } } } }
+          }
+        }
+      }
+    },
+    "/admin/auth/login": {
+      "post": {
+        "tags": ["Auth - Admin"],
+        "summary": "Login de administrador",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login bem-sucedido. Retorna accessToken e seta cookie refreshToken." },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/admin/auth/refresh": {
+      "post": {
+        "tags": ["Auth - Admin"],
+        "summary": "Renovar access token (usa cookie refreshToken)",
+        "security": [],
+        "responses": {
+          "200": { "description": "Novo accessToken retornado" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/admin/auth/logout": {
+      "post": {
+        "tags": ["Auth - Admin"],
+        "summary": "Logout — revoga o refreshToken",
+        "responses": { "200": { "description": "Logout bem-sucedido" } }
+      }
+    },
+    "/admin/auth/me": {
+      "get": {
+        "tags": ["Auth - Admin"],
+        "summary": "Obter perfil do admin autenticado",
+        "responses": {
+          "200": {
+            "description": "Perfil retornado",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "user": { "$ref": "#/components/schemas/User" } } } } }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/student/auth/register": {
+      "post": {
+        "tags": ["Auth - Student"],
+        "summary": "Registo de aluno",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 6 },
+                  "phone": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Conta criada com sucesso" } }
+      }
+    },
+    "/student/auth/login": {
+      "post": {
+        "tags": ["Auth - Student"],
+        "summary": "Login de aluno",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login bem-sucedido" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/student/auth/refresh": {
+      "post": {
+        "tags": ["Auth - Student"],
+        "summary": "Renovar access token do aluno",
+        "security": [],
+        "responses": {
+          "200": { "description": "Novo accessToken retornado" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/student/auth/logout": {
+      "post": {
+        "tags": ["Auth - Student"],
+        "summary": "Logout do aluno",
+        "responses": { "200": { "description": "Logout bem-sucedido" } }
+      }
+    },
+    "/student/auth/me": {
+      "get": {
+        "tags": ["Auth - Student"],
+        "summary": "Obter perfil do aluno autenticado",
+        "responses": {
+          "200": {
+            "description": "Perfil retornado",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "student": { "$ref": "#/components/schemas/Student" } } } } }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Listar todos os utilizadores",
+        "responses": {
+          "200": {
+            "description": "Lista de utilizadores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": { "type": "array", "items": { "$ref": "#/components/schemas/User" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Criar utilizador",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 6 },
+                  "role": { "type": "string", "enum": ["ADMIN", "MANAGER"] },
+                  "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING"] },
+                  "avatar": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Utilizador criado" },
+          "400": { "$ref": "#/components/responses/BadRequest" }
+        }
+      }
+    },
+    "/admin/users/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": {
+        "tags": ["Users"],
+        "summary": "Buscar utilizador por ID",
+        "responses": {
+          "200": { "description": "Utilizador encontrado" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Atualizar utilizador",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" },
+                  "role": { "type": "string", "enum": ["ADMIN", "MANAGER"] },
+                  "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING"] },
+                  "avatar": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Utilizador atualizado" } }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Eliminar utilizador",
+        "responses": { "200": { "description": "Utilizador eliminado" } }
+      }
+    },
+    "/admin/students": {
+      "get": {
+        "tags": ["Students"],
+        "summary": "Listar alunos com paginação e filtros",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" },
+          { "name": "status", "in": "query", "schema": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING", "DROPPED"] } },
+          { "name": "search", "in": "query", "schema": { "type": "string" }, "description": "Pesquisa por nome ou email" }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista paginada de alunos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/PaginatedMeta" },
+                    { "type": "object", "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/Student" } } } }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Students"],
+        "summary": "Criar aluno",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 6 },
+                  "phone": { "type": "string" },
+                  "avatar": { "type": "string" },
+                  "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING", "DROPPED"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Aluno criado" }, "400": { "$ref": "#/components/responses/BadRequest" } }
+      }
+    },
+    "/admin/students/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": {
+        "tags": ["Students"],
+        "summary": "Buscar aluno por ID (inclui inscrições e pagamentos)",
+        "responses": {
+          "200": { "description": "Aluno encontrado com dados detalhados" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Students"],
+        "summary": "Atualizar aluno",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "properties": { "name": { "type": "string" }, "email": { "type": "string" }, "phone": { "type": "string" }, "status": { "type": "string", "enum": ["ACTIVE", "INACTIVE", "PENDING", "DROPPED"] } } } } }
+        },
+        "responses": { "200": { "description": "Aluno atualizado" } }
+      },
+      "delete": {
+        "tags": ["Students"],
+        "summary": "Eliminar aluno",
+        "responses": { "200": { "description": "Aluno eliminado" } }
+      }
+    },
+    "/admin/instructors": {
+      "get": {
+        "tags": ["Instructors"],
+        "summary": "Listar formadores",
+        "responses": {
+          "200": {
+            "description": "Lista de formadores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": { "type": "array", "items": { "$ref": "#/components/schemas/Instructor" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Instructors"],
+        "summary": "Criar formador",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "specialization", "bio", "education"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "specialization": { "type": "string" },
+                  "bio": { "type": "string" },
+                  "education": { "type": "string" },
+                  "photo": { "type": "string" },
+                  "yearsExperience": { "type": "integer" },
+                  "linkedin": { "type": "string" },
+                  "professionalEmail": { "type": "string", "format": "email" },
+                  "status": { "type": "string", "enum": ["ACTIVO", "INACTIVO"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Formador criado" } }
+      }
+    },
+    "/admin/instructors/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": { "tags": ["Instructors"], "summary": "Buscar formador por ID", "responses": { "200": { "description": "Formador encontrado" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Instructors"], "summary": "Atualizar formador", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Instructor" } } } }, "responses": { "200": { "description": "Formador atualizado" } } },
+      "delete": { "tags": ["Instructors"], "summary": "Eliminar formador", "responses": { "200": { "description": "Formador eliminado" } } }
+    },
+    "/admin/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Listar categorias (inclui contagem de cursos)",
+        "responses": {
+          "200": {
+            "description": "Lista de categorias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "data": { "type": "array", "items": { "$ref": "#/components/schemas/Category" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Criar categoria",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Categoria criada" } }
+      }
+    },
+    "/admin/categories/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": { "tags": ["Categories"], "summary": "Buscar categoria por ID", "responses": { "200": { "description": "Categoria encontrada" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Categories"], "summary": "Atualizar categoria", "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "name": { "type": "string" }, "description": { "type": "string" } } } } } }, "responses": { "200": { "description": "Categoria atualizada" } } },
+      "delete": { "tags": ["Categories"], "summary": "Eliminar categoria", "responses": { "200": { "description": "Categoria eliminada" } } }
+    },
+    "/admin/courses": {
+      "get": {
+        "tags": ["Courses"],
+        "summary": "Listar cursos com paginação, filtros e dados computados",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" },
+          { "name": "category", "in": "query", "schema": { "type": "string" }, "description": "Filtrar por ID de categoria" },
+          { "name": "level", "in": "query", "schema": { "type": "string", "enum": ["INICIANTE", "INTERMEDIARIO", "AVANCADO"] } },
+          { "name": "minPrice", "in": "query", "schema": { "type": "number" } },
+          { "name": "maxPrice", "in": "query", "schema": { "type": "number" } },
+          { "name": "sort", "in": "query", "schema": { "type": "string", "enum": ["price", "rating"] } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista paginada de cursos com campos computados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    { "$ref": "#/components/schemas/PaginatedMeta" },
+                    { "type": "object", "properties": { "data": { "type": "array", "items": { "$ref": "#/components/schemas/Course" } } } }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Courses"],
+        "summary": "Criar curso (com módulos e instrutores opcionais)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "description", "categoryId", "price"],
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "longDescription": { "type": "string" },
+                  "thumbnail": { "type": "string", "format": "uri" },
+                  "categoryId": { "type": "string" },
+                  "level": { "type": "string", "enum": ["INICIANTE", "INTERMEDIARIO", "AVANCADO"] },
+                  "type": { "type": "string", "enum": ["ONLINE", "PRESENCIAL", "HIBRIDO"] },
+                  "status": { "type": "string", "enum": ["RASCUNHO", "PUBLICADO", "ENCERRADO"] },
+                  "price": { "type": "number", "minimum": 0.01 },
+                  "discountPrice": { "type": "number", "minimum": 0 },
+                  "duration": { "type": "string" },
+                  "objectives": { "type": "array", "items": { "type": "string" } },
+                  "targetAudience": { "type": "array", "items": { "type": "string" } },
+                  "requirements": { "type": "array", "items": { "type": "string" } },
+                  "skills": { "type": "array", "items": { "type": "string" } },
+                  "locationDefault": { "type": "string" },
+                  "instructorIds": { "type": "array", "items": { "type": "string" }, "description": "IDs dos formadores a associar" },
+                  "modules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["title", "order"],
+                      "properties": {
+                        "title": { "type": "string" },
+                        "order": { "type": "integer" },
+                        "duration": { "type": "string" },
+                        "topics": { "type": "array", "items": { "type": "string" } }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Curso criado com dados computados" }, "400": { "$ref": "#/components/responses/BadRequest" } }
+      }
+    },
+    "/admin/courses/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": { "tags": ["Courses"], "summary": "Buscar curso por ID (dados completos com módulos, formadores, turmas)", "responses": { "200": { "description": "Curso encontrado" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Courses"], "summary": "Atualizar curso", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Course" } } } }, "responses": { "200": { "description": "Curso atualizado" } } },
+      "delete": { "tags": ["Courses"], "summary": "Eliminar curso (em cascata: módulos, aulas, inscrições)", "responses": { "200": { "description": "Curso eliminado" } } }
+    },
+    "/admin/courses/{courseId}/modules": {
+      "parameters": [{ "$ref": "#/components/parameters/CourseIdParam" }],
+      "get": { "tags": ["Modules"], "summary": "Listar módulos do curso (ordenados)", "responses": { "200": { "description": "Lista de módulos com aulas" } } },
+      "post": {
+        "tags": ["Modules"],
+        "summary": "Criar módulo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "order"],
+                "properties": {
+                  "title": { "type": "string" },
+                  "order": { "type": "integer" },
+                  "duration": { "type": "string" },
+                  "topics": { "type": "array", "items": { "type": "string" } },
+                  "status": { "type": "string", "enum": ["DRAFT", "PUBLISHED", "ARCHIVED"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Módulo criado" } }
+      }
+    },
+    "/admin/courses/{courseId}/modules/reorder": {
+      "parameters": [{ "$ref": "#/components/parameters/CourseIdParam" }],
+      "post": {
+        "tags": ["Modules"],
+        "summary": "Reordenar módulos",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "required": ["orderedIds"], "properties": { "orderedIds": { "type": "array", "items": { "type": "string" }, "description": "IDs dos módulos na nova ordem" } } } } }
+        },
+        "responses": { "200": { "description": "Módulos reordenados" } }
+      }
+    },
+    "/admin/courses/{courseId}/modules/{moduleId}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/CourseIdParam" },
+        { "$ref": "#/components/parameters/ModuleIdParam" }
+      ],
+      "get": { "tags": ["Modules"], "summary": "Buscar módulo por ID", "responses": { "200": { "description": "Módulo encontrado" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Modules"], "summary": "Atualizar módulo", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Module" } } } }, "responses": { "200": { "description": "Módulo atualizado" } } },
+      "delete": { "tags": ["Modules"], "summary": "Eliminar módulo (em cascata: aulas)", "responses": { "200": { "description": "Módulo eliminado" } } }
+    },
+    "/admin/courses/{courseId}/modules/{moduleId}/lessons": {
+      "parameters": [
+        { "$ref": "#/components/parameters/CourseIdParam" },
+        { "$ref": "#/components/parameters/ModuleIdParam" }
+      ],
+      "get": { "tags": ["Lessons"], "summary": "Listar aulas do módulo (ordenadas)", "responses": { "200": { "description": "Lista de aulas" } } },
+      "post": {
+        "tags": ["Lessons"],
+        "summary": "Criar aula",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "order"],
+                "properties": {
+                  "title": { "type": "string" },
+                  "order": { "type": "integer" },
+                  "type": { "type": "string", "enum": ["VIDEO", "TEXTO", "QUIZ", "LIVE"] },
+                  "content": { "type": "string" },
+                  "duration": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Aula criada" } }
+      }
+    },
+    "/admin/courses/{courseId}/modules/{moduleId}/lessons/reorder": {
+      "parameters": [
+        { "$ref": "#/components/parameters/CourseIdParam" },
+        { "$ref": "#/components/parameters/ModuleIdParam" }
+      ],
+      "post": {
+        "tags": ["Lessons"],
+        "summary": "Reordenar aulas",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "required": ["orderedIds"], "properties": { "orderedIds": { "type": "array", "items": { "type": "string" } } } } } }
+        },
+        "responses": { "200": { "description": "Aulas reordenadas" } }
+      }
+    },
+    "/admin/courses/{courseId}/modules/{moduleId}/lessons/{id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/CourseIdParam" },
+        { "$ref": "#/components/parameters/ModuleIdParam" },
+        { "$ref": "#/components/parameters/IdParam" }
+      ],
+      "get": { "tags": ["Lessons"], "summary": "Buscar aula por ID", "responses": { "200": { "description": "Aula encontrada" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Lessons"], "summary": "Atualizar aula", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Lesson" } } } }, "responses": { "200": { "description": "Aula atualizada" } } },
+      "delete": { "tags": ["Lessons"], "summary": "Eliminar aula", "responses": { "200": { "description": "Aula eliminada" } } }
+    },
+    "/admin/courses/{courseId}/classes": {
+      "parameters": [{ "$ref": "#/components/parameters/CourseIdParam" }],
+      "get": { "tags": ["Classes"], "summary": "Listar turmas do curso", "responses": { "200": { "description": "Lista de turmas" } } },
+      "post": {
+        "tags": ["Classes"],
+        "summary": "Criar turma",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "schedule", "location", "vacancies"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "schedule": { "type": "string", "description": "Ex: Segunda e Quarta, 19h-21h" },
+                  "location": { "type": "string" },
+                  "vacancies": { "type": "integer", "minimum": 1 },
+                  "startDate": { "type": "string", "format": "date-time" },
+                  "endDate": { "type": "string", "format": "date-time" },
+                  "status": { "type": "string", "enum": ["ABERTA", "LOTADA", "FINALIZADA"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Turma criada" } }
+      }
+    },
+    "/admin/courses/{courseId}/classes/{id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/CourseIdParam" },
+        { "$ref": "#/components/parameters/IdParam" }
+      ],
+      "get": { "tags": ["Classes"], "summary": "Buscar turma por ID", "responses": { "200": { "description": "Turma encontrada" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": { "tags": ["Classes"], "summary": "Atualizar turma", "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CourseClass" } } } }, "responses": { "200": { "description": "Turma atualizada" } } },
+      "delete": { "tags": ["Classes"], "summary": "Eliminar turma", "responses": { "200": { "description": "Turma eliminada" } } }
+    },
+    "/admin/enrollments": {
+      "get": {
+        "tags": ["Enrollments"],
+        "summary": "Listar inscrições com paginação e filtros",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" },
+          { "name": "status", "in": "query", "schema": { "type": "string", "enum": ["ACTIVE", "PENDING", "COMPLETED", "DROPPED"] } },
+          { "name": "studentId", "in": "query", "schema": { "type": "string" } },
+          { "name": "courseId", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Lista paginada de inscrições" } }
+      },
+      "post": {
+        "tags": ["Enrollments"],
+        "summary": "Criar inscrição manual",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["studentId", "courseId"],
+                "properties": {
+                  "studentId": { "type": "string" },
+                  "courseId": { "type": "string" },
+                  "contact": { "type": "string" },
+                  "status": { "type": "string", "enum": ["ACTIVE", "PENDING", "COMPLETED", "DROPPED"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Inscrição criada" }, "400": { "$ref": "#/components/responses/BadRequest" } }
+      }
+    },
+    "/admin/enrollments/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": { "tags": ["Enrollments"], "summary": "Buscar inscrição por ID", "responses": { "200": { "description": "Inscrição encontrada" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "patch": {
+        "tags": ["Enrollments"],
+        "summary": "Atualizar estado/progresso da inscrição",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": { "type": "string", "enum": ["ACTIVE", "PENDING", "COMPLETED", "DROPPED"] },
+                  "progress": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "contact": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "200": { "description": "Inscrição atualizada" } }
+      },
+      "delete": { "tags": ["Enrollments"], "summary": "Eliminar inscrição", "responses": { "200": { "description": "Inscrição eliminada" } } }
+    },
+    "/admin/payments": {
+      "get": {
+        "tags": ["Payments"],
+        "summary": "Listar pagamentos com filtros",
+        "parameters": [
+          { "$ref": "#/components/parameters/PageParam" },
+          { "$ref": "#/components/parameters/LimitParam" },
+          { "name": "status", "in": "query", "schema": { "type": "string", "enum": ["PENDING", "APPROVED", "REJECTED"] } },
+          { "name": "studentId", "in": "query", "schema": { "type": "string" } },
+          { "name": "courseId", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Lista paginada de pagamentos" } }
+      },
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Registar pagamento manualmente",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["studentId", "courseId", "studentName", "courseName", "amount", "paymentProof"],
+                "properties": {
+                  "studentId": { "type": "string" },
+                  "courseId": { "type": "string" },
+                  "studentName": { "type": "string" },
+                  "courseName": { "type": "string" },
+                  "amount": { "type": "number", "minimum": 0.01 },
+                  "paymentProof": { "type": "string", "description": "URL ou referência do comprovativo" }
+                }
+              }
+            }
+          }
+        },
+        "responses": { "201": { "description": "Pagamento registado" } }
+      }
+    },
+    "/admin/payments/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "get": { "tags": ["Payments"], "summary": "Buscar pagamento por ID", "responses": { "200": { "description": "Pagamento encontrado" }, "404": { "$ref": "#/components/responses/NotFound" } } },
+      "delete": { "tags": ["Payments"], "summary": "Eliminar pagamento", "responses": { "200": { "description": "Pagamento eliminado" } } }
+    },
+    "/admin/payments/stats": {
+      "get": {
+        "tags": ["Payments"],
+        "summary": "Obter estatísticas financeiras",
+        "responses": {
+          "200": {
+            "description": "Estatísticas retornadas com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": { "type": "boolean" },
+                    "stats": {
+                      "type": "object",
+                      "properties": {
+                        "receitaTotal": { "type": "number" },
+                        "pendentes": { "type": "integer" },
+                        "receitaMesActual": { "type": "number" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/payments/{id}/review": {
+      "parameters": [{ "$ref": "#/components/parameters/IdParam" }],
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Aprovar ou rejeitar pagamento pendente",
+        "description": "Apenas pagamentos no estado PENDING podem ser revistos. Ao aprovar, `approvedAt` é preenchido. Ao rejeitar, `rejectedAt` e `rejectionReason` são preenchidos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["status"],
+                "properties": {
+                  "status": { "type": "string", "enum": ["APPROVED", "REJECTED"] },
+                  "rejectionReason": { "type": "string", "description": "Obrigatório quando status = REJECTED" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Pagamento revisto com sucesso", "content": { "application/json": { "schema": { "type": "object", "properties": { "success": { "type": "boolean" }, "payment": { "$ref": "#/components/schemas/Payment" } } } } } },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  }
+}

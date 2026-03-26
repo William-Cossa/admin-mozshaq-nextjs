@@ -8,10 +8,10 @@ export declare const adminAuthService: {
         refreshToken: string;
         user: {
             email: string;
-            role: import("../../../generated/prisma/enums.js").Role;
+            role: import("../../generated/prisma/enums.js").Role;
             id: string;
             name: string;
-            status: import("../../../generated/prisma/enums.js").UserStatus;
+            status: import("../../generated/prisma/enums.js").UserStatus;
             avatar: string | null;
             lastLogin: Date | null;
             createdAt: Date;
@@ -34,10 +34,10 @@ export declare const adminAuthService: {
      */
     getMe(userId: string): Promise<{
         email: string;
-        role: import("../../../generated/prisma/enums.js").Role;
+        role: import("../../generated/prisma/enums.js").Role;
         id: string;
         name: string;
-        status: import("../../../generated/prisma/enums.js").UserStatus;
+        status: import("../../generated/prisma/enums.js").UserStatus;
         avatar: string | null;
         lastLogin: Date | null;
         createdAt: Date;

@@ -25,6 +25,7 @@ export type ModuleMinAggregateOutputType = {
     title: string | null;
     order: number | null;
     status: $Enums.ModuleStatus | null;
+    duration: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -34,6 +35,7 @@ export type ModuleMaxAggregateOutputType = {
     title: string | null;
     order: number | null;
     status: $Enums.ModuleStatus | null;
+    duration: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -43,6 +45,8 @@ export type ModuleCountAggregateOutputType = {
     title: number;
     order: number;
     status: number;
+    duration: number;
+    topics: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -59,6 +63,7 @@ export type ModuleMinAggregateInputType = {
     title?: true;
     order?: true;
     status?: true;
+    duration?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -68,6 +73,7 @@ export type ModuleMaxAggregateInputType = {
     title?: true;
     order?: true;
     status?: true;
+    duration?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -77,6 +83,8 @@ export type ModuleCountAggregateInputType = {
     title?: true;
     order?: true;
     status?: true;
+    duration?: true;
+    topics?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -163,6 +171,8 @@ export type ModuleGroupByOutputType = {
     title: string;
     order: number;
     status: $Enums.ModuleStatus;
+    duration: string | null;
+    topics: string[];
     createdAt: Date;
     updatedAt: Date;
     _count: ModuleCountAggregateOutputType | null;
@@ -183,10 +193,12 @@ export type ModuleWhereInput = {
     title?: Prisma.StringFilter<"Module"> | string;
     order?: Prisma.IntFilter<"Module"> | number;
     status?: Prisma.EnumModuleStatusFilter<"Module"> | $Enums.ModuleStatus;
+    duration?: Prisma.StringNullableFilter<"Module"> | string | null;
+    topics?: Prisma.StringNullableListFilter<"Module">;
     createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string;
-    course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>;
     lessons?: Prisma.LessonListRelationFilter;
+    course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>;
 };
 export type ModuleOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -194,10 +206,12 @@ export type ModuleOrderByWithRelationInput = {
     title?: Prisma.SortOrder;
     order?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
+    duration?: Prisma.SortOrderInput | Prisma.SortOrder;
+    topics?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
-    course?: Prisma.CourseOrderByWithRelationInput;
     lessons?: Prisma.LessonOrderByRelationAggregateInput;
+    course?: Prisma.CourseOrderByWithRelationInput;
 };
 export type ModuleWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -208,10 +222,12 @@ export type ModuleWhereUniqueInput = Prisma.AtLeast<{
     title?: Prisma.StringFilter<"Module"> | string;
     order?: Prisma.IntFilter<"Module"> | number;
     status?: Prisma.EnumModuleStatusFilter<"Module"> | $Enums.ModuleStatus;
+    duration?: Prisma.StringNullableFilter<"Module"> | string | null;
+    topics?: Prisma.StringNullableListFilter<"Module">;
     createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string;
-    course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>;
     lessons?: Prisma.LessonListRelationFilter;
+    course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>;
 }, "id">;
 export type ModuleOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -219,6 +235,8 @@ export type ModuleOrderByWithAggregationInput = {
     title?: Prisma.SortOrder;
     order?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
+    duration?: Prisma.SortOrderInput | Prisma.SortOrder;
+    topics?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.ModuleCountOrderByAggregateInput;
@@ -236,6 +254,8 @@ export type ModuleScalarWhereWithAggregatesInput = {
     title?: Prisma.StringWithAggregatesFilter<"Module"> | string;
     order?: Prisma.IntWithAggregatesFilter<"Module"> | number;
     status?: Prisma.EnumModuleStatusWithAggregatesFilter<"Module"> | $Enums.ModuleStatus;
+    duration?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null;
+    topics?: Prisma.StringNullableListFilter<"Module">;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Module"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Module"> | Date | string;
 };
@@ -244,10 +264,12 @@ export type ModuleCreateInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    course: Prisma.CourseCreateNestedOneWithoutModulesInput;
     lessons?: Prisma.LessonCreateNestedManyWithoutModuleInput;
+    course: Prisma.CourseCreateNestedOneWithoutModulesInput;
 };
 export type ModuleUncheckedCreateInput = {
     id: string;
@@ -255,6 +277,8 @@ export type ModuleUncheckedCreateInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
     lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutModuleInput;
@@ -264,10 +288,12 @@ export type ModuleUpdateInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    course?: Prisma.CourseUpdateOneRequiredWithoutModulesNestedInput;
     lessons?: Prisma.LessonUpdateManyWithoutModuleNestedInput;
+    course?: Prisma.CourseUpdateOneRequiredWithoutModulesNestedInput;
 };
 export type ModuleUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -275,6 +301,8 @@ export type ModuleUncheckedUpdateInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     lessons?: Prisma.LessonUncheckedUpdateManyWithoutModuleNestedInput;
@@ -285,6 +313,8 @@ export type ModuleCreateManyInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -293,6 +323,8 @@ export type ModuleUpdateManyMutationInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -302,6 +334,8 @@ export type ModuleUncheckedUpdateManyInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -319,6 +353,8 @@ export type ModuleCountOrderByAggregateInput = {
     title?: Prisma.SortOrder;
     order?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
+    duration?: Prisma.SortOrder;
+    topics?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -331,6 +367,7 @@ export type ModuleMaxOrderByAggregateInput = {
     title?: Prisma.SortOrder;
     order?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
+    duration?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -340,6 +377,7 @@ export type ModuleMinOrderByAggregateInput = {
     title?: Prisma.SortOrder;
     order?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
+    duration?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -388,8 +426,15 @@ export type ModuleUncheckedUpdateManyWithoutCourseNestedInput = {
     updateMany?: Prisma.ModuleUpdateManyWithWhereWithoutCourseInput | Prisma.ModuleUpdateManyWithWhereWithoutCourseInput[];
     deleteMany?: Prisma.ModuleScalarWhereInput | Prisma.ModuleScalarWhereInput[];
 };
+export type ModuleCreatetopicsInput = {
+    set: string[];
+};
 export type EnumModuleStatusFieldUpdateOperationsInput = {
     set?: $Enums.ModuleStatus;
+};
+export type ModuleUpdatetopicsInput = {
+    set?: string[];
+    push?: string | string[];
 };
 export type ModuleCreateNestedOneWithoutLessonsInput = {
     create?: Prisma.XOR<Prisma.ModuleCreateWithoutLessonsInput, Prisma.ModuleUncheckedCreateWithoutLessonsInput>;
@@ -408,6 +453,8 @@ export type ModuleCreateWithoutCourseInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
     lessons?: Prisma.LessonCreateNestedManyWithoutModuleInput;
@@ -417,6 +464,8 @@ export type ModuleUncheckedCreateWithoutCourseInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
     lessons?: Prisma.LessonUncheckedCreateNestedManyWithoutModuleInput;
@@ -451,6 +500,8 @@ export type ModuleScalarWhereInput = {
     title?: Prisma.StringFilter<"Module"> | string;
     order?: Prisma.IntFilter<"Module"> | number;
     status?: Prisma.EnumModuleStatusFilter<"Module"> | $Enums.ModuleStatus;
+    duration?: Prisma.StringNullableFilter<"Module"> | string | null;
+    topics?: Prisma.StringNullableListFilter<"Module">;
     createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string;
 };
@@ -459,6 +510,8 @@ export type ModuleCreateWithoutLessonsInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
     course: Prisma.CourseCreateNestedOneWithoutModulesInput;
@@ -469,6 +522,8 @@ export type ModuleUncheckedCreateWithoutLessonsInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -490,6 +545,8 @@ export type ModuleUpdateWithoutLessonsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     course?: Prisma.CourseUpdateOneRequiredWithoutModulesNestedInput;
@@ -500,6 +557,8 @@ export type ModuleUncheckedUpdateWithoutLessonsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -508,6 +567,8 @@ export type ModuleCreateManyCourseInput = {
     title: string;
     order: number;
     status?: $Enums.ModuleStatus;
+    duration?: string | null;
+    topics?: Prisma.ModuleCreatetopicsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -516,6 +577,8 @@ export type ModuleUpdateWithoutCourseInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     lessons?: Prisma.LessonUpdateManyWithoutModuleNestedInput;
@@ -525,6 +588,8 @@ export type ModuleUncheckedUpdateWithoutCourseInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     lessons?: Prisma.LessonUncheckedUpdateManyWithoutModuleNestedInput;
@@ -534,6 +599,8 @@ export type ModuleUncheckedUpdateManyWithoutCourseInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     order?: Prisma.IntFieldUpdateOperationsInput | number;
     status?: Prisma.EnumModuleStatusFieldUpdateOperationsInput | $Enums.ModuleStatus;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    topics?: Prisma.ModuleUpdatetopicsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -567,10 +634,12 @@ export type ModuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     title?: boolean;
     order?: boolean;
     status?: boolean;
+    duration?: boolean;
+    topics?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
     lessons?: boolean | Prisma.Module$lessonsArgs<ExtArgs>;
+    course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
     _count?: boolean | Prisma.ModuleCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["module"]>;
 export type ModuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -579,6 +648,8 @@ export type ModuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
     title?: boolean;
     order?: boolean;
     status?: boolean;
+    duration?: boolean;
+    topics?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
@@ -589,6 +660,8 @@ export type ModuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
     title?: boolean;
     order?: boolean;
     status?: boolean;
+    duration?: boolean;
+    topics?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
@@ -599,13 +672,15 @@ export type ModuleSelectScalar = {
     title?: boolean;
     order?: boolean;
     status?: boolean;
+    duration?: boolean;
+    topics?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "order" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["module"]>;
+export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "courseId" | "title" | "order" | "status" | "duration" | "topics" | "createdAt" | "updatedAt", ExtArgs["result"]["module"]>;
 export type ModuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
     lessons?: boolean | Prisma.Module$lessonsArgs<ExtArgs>;
+    course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
     _count?: boolean | Prisma.ModuleCountOutputTypeDefaultArgs<ExtArgs>;
 };
 export type ModuleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -617,8 +692,8 @@ export type ModuleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Module";
     objects: {
-        course: Prisma.$CoursePayload<ExtArgs>;
         lessons: Prisma.$LessonPayload<ExtArgs>[];
+        course: Prisma.$CoursePayload<ExtArgs>;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -626,6 +701,8 @@ export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
         title: string;
         order: number;
         status: $Enums.ModuleStatus;
+        duration: string | null;
+        topics: string[];
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["module"]>;
@@ -957,8 +1034,8 @@ export interface ModuleDelegate<ExtArgs extends runtime.Types.Extensions.Interna
  */
 export interface Prisma__ModuleClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     lessons<T extends Prisma.Module$lessonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$lessonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LessonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -989,6 +1066,8 @@ export interface ModuleFieldRefs {
     readonly title: Prisma.FieldRef<"Module", 'String'>;
     readonly order: Prisma.FieldRef<"Module", 'Int'>;
     readonly status: Prisma.FieldRef<"Module", 'ModuleStatus'>;
+    readonly duration: Prisma.FieldRef<"Module", 'String'>;
+    readonly topics: Prisma.FieldRef<"Module", 'String[]'>;
     readonly createdAt: Prisma.FieldRef<"Module", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Module", 'DateTime'>;
 }

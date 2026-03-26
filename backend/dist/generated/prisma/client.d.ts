@@ -37,6 +37,11 @@ export type Student = Prisma.StudentModel;
  */
 export type Instructor = Prisma.InstructorModel;
 /**
+ * Model Category
+ * Categorias de cursos
+ */
+export type Category = Prisma.CategoryModel;
+/**
  * Model Course
  * Cursos disponíveis na plataforma
  */

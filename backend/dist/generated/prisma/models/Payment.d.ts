@@ -233,8 +233,8 @@ export type PaymentWhereInput = {
     rejectedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string;
-    student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>;
     course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>;
+    student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>;
 };
 export type PaymentOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
@@ -250,8 +250,8 @@ export type PaymentOrderByWithRelationInput = {
     rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
-    student?: Prisma.StudentOrderByWithRelationInput;
     course?: Prisma.CourseOrderByWithRelationInput;
+    student?: Prisma.StudentOrderByWithRelationInput;
 };
 export type PaymentWhereUniqueInput = Prisma.AtLeast<{
     id?: string;
@@ -270,8 +270,8 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
     rejectedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null;
     createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string;
-    student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>;
     course?: Prisma.XOR<Prisma.CourseScalarRelationFilter, Prisma.CourseWhereInput>;
+    student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>;
 }, "id">;
 export type PaymentOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
@@ -323,8 +323,8 @@ export type PaymentCreateInput = {
     rejectedAt?: Date | string | null;
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    student: Prisma.StudentCreateNestedOneWithoutPaymentsInput;
     course: Prisma.CourseCreateNestedOneWithoutPaymentsInput;
+    student: Prisma.StudentCreateNestedOneWithoutPaymentsInput;
 };
 export type PaymentUncheckedCreateInput = {
     id: string;
@@ -353,8 +353,8 @@ export type PaymentUpdateInput = {
     rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    student?: Prisma.StudentUpdateOneRequiredWithoutPaymentsNestedInput;
     course?: Prisma.CourseUpdateOneRequiredWithoutPaymentsNestedInput;
+    student?: Prisma.StudentUpdateOneRequiredWithoutPaymentsNestedInput;
 };
 export type PaymentUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
@@ -794,8 +794,8 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     rejectedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
+    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["payment"]>;
 export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -811,8 +811,8 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
     rejectedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
+    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["payment"]>;
 export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
@@ -828,8 +828,8 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
     rejectedAt?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
+    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["payment"]>;
 export type PaymentSelectScalar = {
     id?: boolean;
@@ -848,22 +848,22 @@ export type PaymentSelectScalar = {
 };
 export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "studentId" | "courseId" | "studentName" | "courseName" | "amount" | "paymentProof" | "status" | "rejectionReason" | "approvedAt" | "rejectedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>;
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
+    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
 };
 export type PaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
+    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
 };
 export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
     course?: boolean | Prisma.CourseDefaultArgs<ExtArgs>;
+    student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>;
 };
 export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Payment";
     objects: {
-        student: Prisma.$StudentPayload<ExtArgs>;
         course: Prisma.$CoursePayload<ExtArgs>;
+        student: Prisma.$StudentPayload<ExtArgs>;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
@@ -1208,8 +1208,8 @@ export interface PaymentDelegate<ExtArgs extends runtime.Types.Extensions.Intern
  */
 export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    student<T extends Prisma.StudentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     course<T extends Prisma.CourseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CourseDefaultArgs<ExtArgs>>): Prisma.Prisma__CourseClient<runtime.Types.Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    student<T extends Prisma.StudentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.

@@ -10,7 +10,7 @@ export declare const studentAuthService: {
             email: string;
             id: string;
             name: string;
-            status: import("../../../generated/prisma/enums.js").StudentStatus;
+            status: import("../../generated/prisma/enums.js").StudentStatus;
             avatar: string | null;
             createdAt: Date;
             updatedAt: Date;
@@ -28,7 +28,7 @@ export declare const studentAuthService: {
             email: string;
             id: string;
             name: string;
-            status: import("../../../generated/prisma/enums.js").StudentStatus;
+            status: import("../../generated/prisma/enums.js").StudentStatus;
             avatar: string | null;
             createdAt: Date;
             updatedAt: Date;
@@ -54,20 +54,20 @@ export declare const studentAuthService: {
         email: string;
         id: string;
         name: string;
-        status: import("../../../generated/prisma/enums.js").StudentStatus;
+        status: import("../../generated/prisma/enums.js").StudentStatus;
         avatar: string | null;
         createdAt: Date;
-        phone: string | null;
-        joinDate: Date;
         enrollments: {
             id: string;
-            status: import("../../../generated/prisma/enums.js").EnrollmentStatus;
-            progress: number;
+            status: import("../../generated/prisma/enums.js").EnrollmentStatus;
             course: {
                 id: string;
                 title: string;
                 thumbnail: string | null;
             };
+            progress: number;
         }[];
+        phone: string | null;
+        joinDate: Date;
     }>;
 };

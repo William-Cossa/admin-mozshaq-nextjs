@@ -1,0 +1,12 @@
+import { Router } from "express";
+import { studentController } from "../../controllers/admin/student.controller.js";
+import { authenticate, authenticatePortal } from "../../middleware/authenticate.js";
+import { authorize } from "../../middleware/authorize.js";
+const router = Router();
+router.use(authenticate, authenticatePortal("admin"), authorize("ADMIN", "MANAGER"));
+router.get("/", studentController.getAll);
+router.get("/:id", studentController.getById);
+router.post("/", studentController.create);
+router.patch("/:id", studentController.update);
+router.delete("/:id", studentController.delete);
+export default router;

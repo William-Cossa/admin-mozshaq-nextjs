@@ -1,0 +1,32 @@
+import type { CreateStudentInput, UpdateStudentInput } from "../../validators/admin/student.validator.js";
+export declare const studentService: {
+    getAll(query?: any): Promise<{
+        total: number;
+        page: number;
+        limit: number;
+        data: any[];
+    }>;
+    getById(id: string): Promise<any>;
+    create(data: CreateStudentInput): Promise<{
+        email: string;
+        id: string;
+        name: string;
+        status: import("../../generated/prisma/enums.js").StudentStatus;
+        avatar: string | null;
+        createdAt: Date;
+        phone: string | null;
+        joinDate: Date;
+    }>;
+    update(id: string, data: UpdateStudentInput): Promise<{
+        email: string;
+        id: string;
+        name: string;
+        status: import("../../generated/prisma/enums.js").StudentStatus;
+        avatar: string | null;
+        updatedAt: Date;
+        phone: string | null;
+    }>;
+    delete(id: string): Promise<{
+        success: boolean;
+    }>;
+};

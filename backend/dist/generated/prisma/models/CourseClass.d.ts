@@ -195,8 +195,8 @@ export type CourseClassGroupByOutputType = {
     id: string;
     courseId: string;
     name: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date | null;
+    endDate: Date | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -220,8 +220,8 @@ export type CourseClassWhereInput = {
     id?: Prisma.StringFilter<"CourseClass"> | string;
     courseId?: Prisma.StringFilter<"CourseClass"> | string;
     name?: Prisma.StringFilter<"CourseClass"> | string;
-    startDate?: Prisma.DateTimeFilter<"CourseClass"> | Date | string;
-    endDate?: Prisma.DateTimeFilter<"CourseClass"> | Date | string;
+    startDate?: Prisma.DateTimeNullableFilter<"CourseClass"> | Date | string | null;
+    endDate?: Prisma.DateTimeNullableFilter<"CourseClass"> | Date | string | null;
     schedule?: Prisma.StringFilter<"CourseClass"> | string;
     location?: Prisma.StringFilter<"CourseClass"> | string;
     vacancies?: Prisma.IntFilter<"CourseClass"> | number;
@@ -235,8 +235,8 @@ export type CourseClassOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     courseId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
-    startDate?: Prisma.SortOrder;
-    endDate?: Prisma.SortOrder;
+    startDate?: Prisma.SortOrderInput | Prisma.SortOrder;
+    endDate?: Prisma.SortOrderInput | Prisma.SortOrder;
     schedule?: Prisma.SortOrder;
     location?: Prisma.SortOrder;
     vacancies?: Prisma.SortOrder;
@@ -253,8 +253,8 @@ export type CourseClassWhereUniqueInput = Prisma.AtLeast<{
     NOT?: Prisma.CourseClassWhereInput | Prisma.CourseClassWhereInput[];
     courseId?: Prisma.StringFilter<"CourseClass"> | string;
     name?: Prisma.StringFilter<"CourseClass"> | string;
-    startDate?: Prisma.DateTimeFilter<"CourseClass"> | Date | string;
-    endDate?: Prisma.DateTimeFilter<"CourseClass"> | Date | string;
+    startDate?: Prisma.DateTimeNullableFilter<"CourseClass"> | Date | string | null;
+    endDate?: Prisma.DateTimeNullableFilter<"CourseClass"> | Date | string | null;
     schedule?: Prisma.StringFilter<"CourseClass"> | string;
     location?: Prisma.StringFilter<"CourseClass"> | string;
     vacancies?: Prisma.IntFilter<"CourseClass"> | number;
@@ -268,8 +268,8 @@ export type CourseClassOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     courseId?: Prisma.SortOrder;
     name?: Prisma.SortOrder;
-    startDate?: Prisma.SortOrder;
-    endDate?: Prisma.SortOrder;
+    startDate?: Prisma.SortOrderInput | Prisma.SortOrder;
+    endDate?: Prisma.SortOrderInput | Prisma.SortOrder;
     schedule?: Prisma.SortOrder;
     location?: Prisma.SortOrder;
     vacancies?: Prisma.SortOrder;
@@ -290,8 +290,8 @@ export type CourseClassScalarWhereWithAggregatesInput = {
     id?: Prisma.StringWithAggregatesFilter<"CourseClass"> | string;
     courseId?: Prisma.StringWithAggregatesFilter<"CourseClass"> | string;
     name?: Prisma.StringWithAggregatesFilter<"CourseClass"> | string;
-    startDate?: Prisma.DateTimeWithAggregatesFilter<"CourseClass"> | Date | string;
-    endDate?: Prisma.DateTimeWithAggregatesFilter<"CourseClass"> | Date | string;
+    startDate?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseClass"> | Date | string | null;
+    endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"CourseClass"> | Date | string | null;
     schedule?: Prisma.StringWithAggregatesFilter<"CourseClass"> | string;
     location?: Prisma.StringWithAggregatesFilter<"CourseClass"> | string;
     vacancies?: Prisma.IntWithAggregatesFilter<"CourseClass"> | number;
@@ -303,8 +303,8 @@ export type CourseClassScalarWhereWithAggregatesInput = {
 export type CourseClassCreateInput = {
     id: string;
     name: string;
-    startDate: Date | string;
-    endDate: Date | string;
+    startDate?: Date | string | null;
+    endDate?: Date | string | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -318,8 +318,8 @@ export type CourseClassUncheckedCreateInput = {
     id: string;
     courseId: string;
     name: string;
-    startDate: Date | string;
-    endDate: Date | string;
+    startDate?: Date | string | null;
+    endDate?: Date | string | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -331,8 +331,8 @@ export type CourseClassUncheckedCreateInput = {
 export type CourseClassUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -346,8 +346,8 @@ export type CourseClassUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     courseId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -360,8 +360,8 @@ export type CourseClassCreateManyInput = {
     id: string;
     courseId: string;
     name: string;
-    startDate: Date | string;
-    endDate: Date | string;
+    startDate?: Date | string | null;
+    endDate?: Date | string | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -373,8 +373,8 @@ export type CourseClassCreateManyInput = {
 export type CourseClassUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -387,8 +387,8 @@ export type CourseClassUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     courseId?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -499,8 +499,8 @@ export type EnumCourseClassStatusFieldUpdateOperationsInput = {
 export type CourseClassCreateWithoutCourseInput = {
     id: string;
     name: string;
-    startDate: Date | string;
-    endDate: Date | string;
+    startDate?: Date | string | null;
+    endDate?: Date | string | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -512,8 +512,8 @@ export type CourseClassCreateWithoutCourseInput = {
 export type CourseClassUncheckedCreateWithoutCourseInput = {
     id: string;
     name: string;
-    startDate: Date | string;
-    endDate: Date | string;
+    startDate?: Date | string | null;
+    endDate?: Date | string | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -550,8 +550,8 @@ export type CourseClassScalarWhereInput = {
     id?: Prisma.StringFilter<"CourseClass"> | string;
     courseId?: Prisma.StringFilter<"CourseClass"> | string;
     name?: Prisma.StringFilter<"CourseClass"> | string;
-    startDate?: Prisma.DateTimeFilter<"CourseClass"> | Date | string;
-    endDate?: Prisma.DateTimeFilter<"CourseClass"> | Date | string;
+    startDate?: Prisma.DateTimeNullableFilter<"CourseClass"> | Date | string | null;
+    endDate?: Prisma.DateTimeNullableFilter<"CourseClass"> | Date | string | null;
     schedule?: Prisma.StringFilter<"CourseClass"> | string;
     location?: Prisma.StringFilter<"CourseClass"> | string;
     vacancies?: Prisma.IntFilter<"CourseClass"> | number;
@@ -563,8 +563,8 @@ export type CourseClassScalarWhereInput = {
 export type CourseClassCreateManyCourseInput = {
     id: string;
     name: string;
-    startDate: Date | string;
-    endDate: Date | string;
+    startDate?: Date | string | null;
+    endDate?: Date | string | null;
     schedule: string;
     location: string;
     vacancies: number;
@@ -576,8 +576,8 @@ export type CourseClassCreateManyCourseInput = {
 export type CourseClassUpdateWithoutCourseInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -589,8 +589,8 @@ export type CourseClassUpdateWithoutCourseInput = {
 export type CourseClassUncheckedUpdateWithoutCourseInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -602,8 +602,8 @@ export type CourseClassUncheckedUpdateWithoutCourseInput = {
 export type CourseClassUncheckedUpdateManyWithoutCourseInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     name?: Prisma.StringFieldUpdateOperationsInput | string;
-    startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    startDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
+    endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null;
     schedule?: Prisma.StringFieldUpdateOperationsInput | string;
     location?: Prisma.StringFieldUpdateOperationsInput | string;
     vacancies?: Prisma.IntFieldUpdateOperationsInput | number;
@@ -690,8 +690,8 @@ export type $CourseClassPayload<ExtArgs extends runtime.Types.Extensions.Interna
         id: string;
         courseId: string;
         name: string;
-        startDate: Date;
-        endDate: Date;
+        startDate: Date | null;
+        endDate: Date | null;
         schedule: string;
         location: string;
         vacancies: number;

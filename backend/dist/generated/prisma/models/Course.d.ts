@@ -17,18 +17,22 @@ export type CourseAvgAggregateOutputType = {
     rating: number | null;
     reviewCount: number | null;
     studentsCount: number | null;
+    price: number | null;
+    discountPrice: number | null;
 };
 export type CourseSumAggregateOutputType = {
     rating: number | null;
     reviewCount: number | null;
     studentsCount: number | null;
+    price: number | null;
+    discountPrice: number | null;
 };
 export type CourseMinAggregateOutputType = {
     id: string | null;
     title: string | null;
     description: string | null;
     thumbnail: string | null;
-    category: string | null;
+    categoryId: string | null;
     level: $Enums.CourseLevel | null;
     type: $Enums.CourseType | null;
     status: $Enums.CourseStatus | null;
@@ -37,6 +41,10 @@ export type CourseMinAggregateOutputType = {
     studentsCount: number | null;
     duration: string | null;
     locationDefault: string | null;
+    price: number | null;
+    discountPrice: number | null;
+    longDescription: string | null;
+    objective: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -45,7 +53,7 @@ export type CourseMaxAggregateOutputType = {
     title: string | null;
     description: string | null;
     thumbnail: string | null;
-    category: string | null;
+    categoryId: string | null;
     level: $Enums.CourseLevel | null;
     type: $Enums.CourseType | null;
     status: $Enums.CourseStatus | null;
@@ -54,6 +62,10 @@ export type CourseMaxAggregateOutputType = {
     studentsCount: number | null;
     duration: string | null;
     locationDefault: string | null;
+    price: number | null;
+    discountPrice: number | null;
+    longDescription: string | null;
+    objective: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
 };
@@ -62,7 +74,7 @@ export type CourseCountAggregateOutputType = {
     title: number;
     description: number;
     thumbnail: number;
-    category: number;
+    categoryId: number;
     level: number;
     type: number;
     status: number;
@@ -74,6 +86,11 @@ export type CourseCountAggregateOutputType = {
     studentsCount: number;
     duration: number;
     locationDefault: number;
+    price: number;
+    discountPrice: number;
+    longDescription: number;
+    objective: number;
+    skills: number;
     createdAt: number;
     updatedAt: number;
     _all: number;
@@ -82,18 +99,22 @@ export type CourseAvgAggregateInputType = {
     rating?: true;
     reviewCount?: true;
     studentsCount?: true;
+    price?: true;
+    discountPrice?: true;
 };
 export type CourseSumAggregateInputType = {
     rating?: true;
     reviewCount?: true;
     studentsCount?: true;
+    price?: true;
+    discountPrice?: true;
 };
 export type CourseMinAggregateInputType = {
     id?: true;
     title?: true;
     description?: true;
     thumbnail?: true;
-    category?: true;
+    categoryId?: true;
     level?: true;
     type?: true;
     status?: true;
@@ -102,6 +123,10 @@ export type CourseMinAggregateInputType = {
     studentsCount?: true;
     duration?: true;
     locationDefault?: true;
+    price?: true;
+    discountPrice?: true;
+    longDescription?: true;
+    objective?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -110,7 +135,7 @@ export type CourseMaxAggregateInputType = {
     title?: true;
     description?: true;
     thumbnail?: true;
-    category?: true;
+    categoryId?: true;
     level?: true;
     type?: true;
     status?: true;
@@ -119,6 +144,10 @@ export type CourseMaxAggregateInputType = {
     studentsCount?: true;
     duration?: true;
     locationDefault?: true;
+    price?: true;
+    discountPrice?: true;
+    longDescription?: true;
+    objective?: true;
     createdAt?: true;
     updatedAt?: true;
 };
@@ -127,7 +156,7 @@ export type CourseCountAggregateInputType = {
     title?: true;
     description?: true;
     thumbnail?: true;
-    category?: true;
+    categoryId?: true;
     level?: true;
     type?: true;
     status?: true;
@@ -139,6 +168,11 @@ export type CourseCountAggregateInputType = {
     studentsCount?: true;
     duration?: true;
     locationDefault?: true;
+    price?: true;
+    discountPrice?: true;
+    longDescription?: true;
+    objective?: true;
+    skills?: true;
     createdAt?: true;
     updatedAt?: true;
     _all?: true;
@@ -224,7 +258,7 @@ export type CourseGroupByOutputType = {
     title: string;
     description: string;
     thumbnail: string | null;
-    category: string;
+    categoryId: string;
     level: $Enums.CourseLevel;
     type: $Enums.CourseType;
     status: $Enums.CourseStatus;
@@ -236,6 +270,11 @@ export type CourseGroupByOutputType = {
     studentsCount: number;
     duration: string | null;
     locationDefault: string | null;
+    price: number;
+    discountPrice: number | null;
+    longDescription: string | null;
+    objective: string | null;
+    skills: string[];
     createdAt: Date;
     updatedAt: Date;
     _count: CourseCountAggregateOutputType | null;
@@ -255,7 +294,7 @@ export type CourseWhereInput = {
     title?: Prisma.StringFilter<"Course"> | string;
     description?: Prisma.StringFilter<"Course"> | string;
     thumbnail?: Prisma.StringNullableFilter<"Course"> | string | null;
-    category?: Prisma.StringFilter<"Course"> | string;
+    categoryId?: Prisma.StringFilter<"Course"> | string;
     level?: Prisma.EnumCourseLevelFilter<"Course"> | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFilter<"Course"> | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFilter<"Course"> | $Enums.CourseStatus;
@@ -267,12 +306,18 @@ export type CourseWhereInput = {
     studentsCount?: Prisma.IntFilter<"Course"> | number;
     duration?: Prisma.StringNullableFilter<"Course"> | string | null;
     locationDefault?: Prisma.StringNullableFilter<"Course"> | string | null;
+    price?: Prisma.FloatFilter<"Course"> | number;
+    discountPrice?: Prisma.FloatNullableFilter<"Course"> | number | null;
+    longDescription?: Prisma.StringNullableFilter<"Course"> | string | null;
+    objective?: Prisma.StringNullableFilter<"Course"> | string | null;
+    skills?: Prisma.StringNullableListFilter<"Course">;
     createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string;
-    instructors?: Prisma.CourseInstructorListRelationFilter;
-    modules?: Prisma.ModuleListRelationFilter;
+    category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>;
     classes?: Prisma.CourseClassListRelationFilter;
+    instructors?: Prisma.CourseInstructorListRelationFilter;
     enrollments?: Prisma.EnrollmentListRelationFilter;
+    modules?: Prisma.ModuleListRelationFilter;
     payments?: Prisma.PaymentListRelationFilter;
 };
 export type CourseOrderByWithRelationInput = {
@@ -280,7 +325,7 @@ export type CourseOrderByWithRelationInput = {
     title?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
     thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder;
-    category?: Prisma.SortOrder;
+    categoryId?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     type?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
@@ -292,12 +337,18 @@ export type CourseOrderByWithRelationInput = {
     studentsCount?: Prisma.SortOrder;
     duration?: Prisma.SortOrderInput | Prisma.SortOrder;
     locationDefault?: Prisma.SortOrderInput | Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrderInput | Prisma.SortOrder;
+    longDescription?: Prisma.SortOrderInput | Prisma.SortOrder;
+    objective?: Prisma.SortOrderInput | Prisma.SortOrder;
+    skills?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
-    instructors?: Prisma.CourseInstructorOrderByRelationAggregateInput;
-    modules?: Prisma.ModuleOrderByRelationAggregateInput;
+    category?: Prisma.CategoryOrderByWithRelationInput;
     classes?: Prisma.CourseClassOrderByRelationAggregateInput;
+    instructors?: Prisma.CourseInstructorOrderByRelationAggregateInput;
     enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput;
+    modules?: Prisma.ModuleOrderByRelationAggregateInput;
     payments?: Prisma.PaymentOrderByRelationAggregateInput;
 };
 export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -308,7 +359,7 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
     title?: Prisma.StringFilter<"Course"> | string;
     description?: Prisma.StringFilter<"Course"> | string;
     thumbnail?: Prisma.StringNullableFilter<"Course"> | string | null;
-    category?: Prisma.StringFilter<"Course"> | string;
+    categoryId?: Prisma.StringFilter<"Course"> | string;
     level?: Prisma.EnumCourseLevelFilter<"Course"> | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFilter<"Course"> | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFilter<"Course"> | $Enums.CourseStatus;
@@ -320,12 +371,18 @@ export type CourseWhereUniqueInput = Prisma.AtLeast<{
     studentsCount?: Prisma.IntFilter<"Course"> | number;
     duration?: Prisma.StringNullableFilter<"Course"> | string | null;
     locationDefault?: Prisma.StringNullableFilter<"Course"> | string | null;
+    price?: Prisma.FloatFilter<"Course"> | number;
+    discountPrice?: Prisma.FloatNullableFilter<"Course"> | number | null;
+    longDescription?: Prisma.StringNullableFilter<"Course"> | string | null;
+    objective?: Prisma.StringNullableFilter<"Course"> | string | null;
+    skills?: Prisma.StringNullableListFilter<"Course">;
     createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string;
     updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string;
-    instructors?: Prisma.CourseInstructorListRelationFilter;
-    modules?: Prisma.ModuleListRelationFilter;
+    category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>;
     classes?: Prisma.CourseClassListRelationFilter;
+    instructors?: Prisma.CourseInstructorListRelationFilter;
     enrollments?: Prisma.EnrollmentListRelationFilter;
+    modules?: Prisma.ModuleListRelationFilter;
     payments?: Prisma.PaymentListRelationFilter;
 }, "id">;
 export type CourseOrderByWithAggregationInput = {
@@ -333,7 +390,7 @@ export type CourseOrderByWithAggregationInput = {
     title?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
     thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder;
-    category?: Prisma.SortOrder;
+    categoryId?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     type?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
@@ -345,6 +402,11 @@ export type CourseOrderByWithAggregationInput = {
     studentsCount?: Prisma.SortOrder;
     duration?: Prisma.SortOrderInput | Prisma.SortOrder;
     locationDefault?: Prisma.SortOrderInput | Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrderInput | Prisma.SortOrder;
+    longDescription?: Prisma.SortOrderInput | Prisma.SortOrder;
+    objective?: Prisma.SortOrderInput | Prisma.SortOrder;
+    skills?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
     _count?: Prisma.CourseCountOrderByAggregateInput;
@@ -361,7 +423,7 @@ export type CourseScalarWhereWithAggregatesInput = {
     title?: Prisma.StringWithAggregatesFilter<"Course"> | string;
     description?: Prisma.StringWithAggregatesFilter<"Course"> | string;
     thumbnail?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null;
-    category?: Prisma.StringWithAggregatesFilter<"Course"> | string;
+    categoryId?: Prisma.StringWithAggregatesFilter<"Course"> | string;
     level?: Prisma.EnumCourseLevelWithAggregatesFilter<"Course"> | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeWithAggregatesFilter<"Course"> | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusWithAggregatesFilter<"Course"> | $Enums.CourseStatus;
@@ -373,6 +435,11 @@ export type CourseScalarWhereWithAggregatesInput = {
     studentsCount?: Prisma.IntWithAggregatesFilter<"Course"> | number;
     duration?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null;
     locationDefault?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null;
+    price?: Prisma.FloatWithAggregatesFilter<"Course"> | number;
+    discountPrice?: Prisma.FloatNullableWithAggregatesFilter<"Course"> | number | null;
+    longDescription?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null;
+    objective?: Prisma.StringNullableWithAggregatesFilter<"Course"> | string | null;
+    skills?: Prisma.StringNullableListFilter<"Course">;
     createdAt?: Prisma.DateTimeWithAggregatesFilter<"Course"> | Date | string;
     updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Course"> | Date | string;
 };
@@ -381,7 +448,6 @@ export type CourseCreateInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -393,12 +459,18 @@ export type CourseCreateInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
-    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
+    category: Prisma.CategoryCreateNestedOneWithoutCoursesInput;
     classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentCreateNestedManyWithoutCourseInput;
 };
 export type CourseUncheckedCreateInput = {
@@ -406,7 +478,7 @@ export type CourseUncheckedCreateInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -418,12 +490,17 @@ export type CourseUncheckedCreateInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
-    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCourseInput;
 };
 export type CourseUpdateInput = {
@@ -431,7 +508,6 @@ export type CourseUpdateInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -443,12 +519,18 @@ export type CourseUpdateInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
-    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
+    category?: Prisma.CategoryUpdateOneRequiredWithoutCoursesNestedInput;
     classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUpdateManyWithoutCourseNestedInput;
 };
 export type CourseUncheckedUpdateInput = {
@@ -456,7 +538,7 @@ export type CourseUncheckedUpdateInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -468,12 +550,17 @@ export type CourseUncheckedUpdateInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
-    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUncheckedUpdateManyWithoutCourseNestedInput;
 };
 export type CourseCreateManyInput = {
@@ -481,7 +568,7 @@ export type CourseCreateManyInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -493,6 +580,11 @@ export type CourseCreateManyInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
 };
@@ -501,7 +593,6 @@ export type CourseUpdateManyMutationInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -513,6 +604,11 @@ export type CourseUpdateManyMutationInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -521,7 +617,7 @@ export type CourseUncheckedUpdateManyInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -533,8 +629,21 @@ export type CourseUncheckedUpdateManyInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type CourseListRelationFilter = {
+    every?: Prisma.CourseWhereInput;
+    some?: Prisma.CourseWhereInput;
+    none?: Prisma.CourseWhereInput;
+};
+export type CourseOrderByRelationAggregateInput = {
+    _count?: Prisma.SortOrder;
 };
 export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null;
@@ -548,7 +657,7 @@ export type CourseCountOrderByAggregateInput = {
     title?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
     thumbnail?: Prisma.SortOrder;
-    category?: Prisma.SortOrder;
+    categoryId?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     type?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
@@ -560,6 +669,11 @@ export type CourseCountOrderByAggregateInput = {
     studentsCount?: Prisma.SortOrder;
     duration?: Prisma.SortOrder;
     locationDefault?: Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrder;
+    longDescription?: Prisma.SortOrder;
+    objective?: Prisma.SortOrder;
+    skills?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -567,13 +681,15 @@ export type CourseAvgOrderByAggregateInput = {
     rating?: Prisma.SortOrder;
     reviewCount?: Prisma.SortOrder;
     studentsCount?: Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrder;
 };
 export type CourseMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     title?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
     thumbnail?: Prisma.SortOrder;
-    category?: Prisma.SortOrder;
+    categoryId?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     type?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
@@ -582,6 +698,10 @@ export type CourseMaxOrderByAggregateInput = {
     studentsCount?: Prisma.SortOrder;
     duration?: Prisma.SortOrder;
     locationDefault?: Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrder;
+    longDescription?: Prisma.SortOrder;
+    objective?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -590,7 +710,7 @@ export type CourseMinOrderByAggregateInput = {
     title?: Prisma.SortOrder;
     description?: Prisma.SortOrder;
     thumbnail?: Prisma.SortOrder;
-    category?: Prisma.SortOrder;
+    categoryId?: Prisma.SortOrder;
     level?: Prisma.SortOrder;
     type?: Prisma.SortOrder;
     status?: Prisma.SortOrder;
@@ -599,6 +719,10 @@ export type CourseMinOrderByAggregateInput = {
     studentsCount?: Prisma.SortOrder;
     duration?: Prisma.SortOrder;
     locationDefault?: Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrder;
+    longDescription?: Prisma.SortOrder;
+    objective?: Prisma.SortOrder;
     createdAt?: Prisma.SortOrder;
     updatedAt?: Prisma.SortOrder;
 };
@@ -606,10 +730,50 @@ export type CourseSumOrderByAggregateInput = {
     rating?: Prisma.SortOrder;
     reviewCount?: Prisma.SortOrder;
     studentsCount?: Prisma.SortOrder;
+    price?: Prisma.SortOrder;
+    discountPrice?: Prisma.SortOrder;
 };
 export type CourseScalarRelationFilter = {
     is?: Prisma.CourseWhereInput;
     isNot?: Prisma.CourseWhereInput;
+};
+export type CourseCreateNestedManyWithoutCategoryInput = {
+    create?: Prisma.XOR<Prisma.CourseCreateWithoutCategoryInput, Prisma.CourseUncheckedCreateWithoutCategoryInput> | Prisma.CourseCreateWithoutCategoryInput[] | Prisma.CourseUncheckedCreateWithoutCategoryInput[];
+    connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCategoryInput | Prisma.CourseCreateOrConnectWithoutCategoryInput[];
+    createMany?: Prisma.CourseCreateManyCategoryInputEnvelope;
+    connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+};
+export type CourseUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: Prisma.XOR<Prisma.CourseCreateWithoutCategoryInput, Prisma.CourseUncheckedCreateWithoutCategoryInput> | Prisma.CourseCreateWithoutCategoryInput[] | Prisma.CourseUncheckedCreateWithoutCategoryInput[];
+    connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCategoryInput | Prisma.CourseCreateOrConnectWithoutCategoryInput[];
+    createMany?: Prisma.CourseCreateManyCategoryInputEnvelope;
+    connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+};
+export type CourseUpdateManyWithoutCategoryNestedInput = {
+    create?: Prisma.XOR<Prisma.CourseCreateWithoutCategoryInput, Prisma.CourseUncheckedCreateWithoutCategoryInput> | Prisma.CourseCreateWithoutCategoryInput[] | Prisma.CourseUncheckedCreateWithoutCategoryInput[];
+    connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCategoryInput | Prisma.CourseCreateOrConnectWithoutCategoryInput[];
+    upsert?: Prisma.CourseUpsertWithWhereUniqueWithoutCategoryInput | Prisma.CourseUpsertWithWhereUniqueWithoutCategoryInput[];
+    createMany?: Prisma.CourseCreateManyCategoryInputEnvelope;
+    set?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    disconnect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    delete?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    update?: Prisma.CourseUpdateWithWhereUniqueWithoutCategoryInput | Prisma.CourseUpdateWithWhereUniqueWithoutCategoryInput[];
+    updateMany?: Prisma.CourseUpdateManyWithWhereWithoutCategoryInput | Prisma.CourseUpdateManyWithWhereWithoutCategoryInput[];
+    deleteMany?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[];
+};
+export type CourseUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: Prisma.XOR<Prisma.CourseCreateWithoutCategoryInput, Prisma.CourseUncheckedCreateWithoutCategoryInput> | Prisma.CourseCreateWithoutCategoryInput[] | Prisma.CourseUncheckedCreateWithoutCategoryInput[];
+    connectOrCreate?: Prisma.CourseCreateOrConnectWithoutCategoryInput | Prisma.CourseCreateOrConnectWithoutCategoryInput[];
+    upsert?: Prisma.CourseUpsertWithWhereUniqueWithoutCategoryInput | Prisma.CourseUpsertWithWhereUniqueWithoutCategoryInput[];
+    createMany?: Prisma.CourseCreateManyCategoryInputEnvelope;
+    set?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    disconnect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    delete?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    connect?: Prisma.CourseWhereUniqueInput | Prisma.CourseWhereUniqueInput[];
+    update?: Prisma.CourseUpdateWithWhereUniqueWithoutCategoryInput | Prisma.CourseUpdateWithWhereUniqueWithoutCategoryInput[];
+    updateMany?: Prisma.CourseUpdateManyWithWhereWithoutCategoryInput | Prisma.CourseUpdateManyWithWhereWithoutCategoryInput[];
+    deleteMany?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[];
 };
 export type CourseCreateobjectivesInput = {
     set: string[];
@@ -618,6 +782,9 @@ export type CourseCreatetargetAudienceInput = {
     set: string[];
 };
 export type CourseCreaterequirementsInput = {
+    set: string[];
+};
+export type CourseCreateskillsInput = {
     set: string[];
 };
 export type EnumCourseLevelFieldUpdateOperationsInput = {
@@ -647,6 +814,17 @@ export type FloatFieldUpdateOperationsInput = {
     decrement?: number;
     multiply?: number;
     divide?: number;
+};
+export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
+export type CourseUpdateskillsInput = {
+    set?: string[];
+    push?: string | string[];
 };
 export type CourseCreateNestedOneWithoutInstructorsInput = {
     create?: Prisma.XOR<Prisma.CourseCreateWithoutInstructorsInput, Prisma.CourseUncheckedCreateWithoutInstructorsInput>;
@@ -708,12 +886,11 @@ export type CourseUpdateOneRequiredWithoutPaymentsNestedInput = {
     connect?: Prisma.CourseWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.CourseUpdateToOneWithWhereWithoutPaymentsInput, Prisma.CourseUpdateWithoutPaymentsInput>, Prisma.CourseUncheckedUpdateWithoutPaymentsInput>;
 };
-export type CourseCreateWithoutInstructorsInput = {
+export type CourseCreateWithoutCategoryInput = {
     id: string;
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -725,11 +902,124 @@ export type CourseCreateWithoutInstructorsInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
+    enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput;
     modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
+    payments?: Prisma.PaymentCreateNestedManyWithoutCourseInput;
+};
+export type CourseUncheckedCreateWithoutCategoryInput = {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail?: string | null;
+    level?: $Enums.CourseLevel;
+    type?: $Enums.CourseType;
+    status?: $Enums.CourseStatus;
+    objectives?: Prisma.CourseCreateobjectivesInput | string[];
+    targetAudience?: Prisma.CourseCreatetargetAudienceInput | string[];
+    requirements?: Prisma.CourseCreaterequirementsInput | string[];
+    rating?: number;
+    reviewCount?: number;
+    studentsCount?: number;
+    duration?: string | null;
+    locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
+    enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
+    payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCourseInput;
+};
+export type CourseCreateOrConnectWithoutCategoryInput = {
+    where: Prisma.CourseWhereUniqueInput;
+    create: Prisma.XOR<Prisma.CourseCreateWithoutCategoryInput, Prisma.CourseUncheckedCreateWithoutCategoryInput>;
+};
+export type CourseCreateManyCategoryInputEnvelope = {
+    data: Prisma.CourseCreateManyCategoryInput | Prisma.CourseCreateManyCategoryInput[];
+    skipDuplicates?: boolean;
+};
+export type CourseUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: Prisma.CourseWhereUniqueInput;
+    update: Prisma.XOR<Prisma.CourseUpdateWithoutCategoryInput, Prisma.CourseUncheckedUpdateWithoutCategoryInput>;
+    create: Prisma.XOR<Prisma.CourseCreateWithoutCategoryInput, Prisma.CourseUncheckedCreateWithoutCategoryInput>;
+};
+export type CourseUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: Prisma.CourseWhereUniqueInput;
+    data: Prisma.XOR<Prisma.CourseUpdateWithoutCategoryInput, Prisma.CourseUncheckedUpdateWithoutCategoryInput>;
+};
+export type CourseUpdateManyWithWhereWithoutCategoryInput = {
+    where: Prisma.CourseScalarWhereInput;
+    data: Prisma.XOR<Prisma.CourseUpdateManyMutationInput, Prisma.CourseUncheckedUpdateManyWithoutCategoryInput>;
+};
+export type CourseScalarWhereInput = {
+    AND?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[];
+    OR?: Prisma.CourseScalarWhereInput[];
+    NOT?: Prisma.CourseScalarWhereInput | Prisma.CourseScalarWhereInput[];
+    id?: Prisma.StringFilter<"Course"> | string;
+    title?: Prisma.StringFilter<"Course"> | string;
+    description?: Prisma.StringFilter<"Course"> | string;
+    thumbnail?: Prisma.StringNullableFilter<"Course"> | string | null;
+    categoryId?: Prisma.StringFilter<"Course"> | string;
+    level?: Prisma.EnumCourseLevelFilter<"Course"> | $Enums.CourseLevel;
+    type?: Prisma.EnumCourseTypeFilter<"Course"> | $Enums.CourseType;
+    status?: Prisma.EnumCourseStatusFilter<"Course"> | $Enums.CourseStatus;
+    objectives?: Prisma.StringNullableListFilter<"Course">;
+    targetAudience?: Prisma.StringNullableListFilter<"Course">;
+    requirements?: Prisma.StringNullableListFilter<"Course">;
+    rating?: Prisma.FloatFilter<"Course"> | number;
+    reviewCount?: Prisma.IntFilter<"Course"> | number;
+    studentsCount?: Prisma.IntFilter<"Course"> | number;
+    duration?: Prisma.StringNullableFilter<"Course"> | string | null;
+    locationDefault?: Prisma.StringNullableFilter<"Course"> | string | null;
+    price?: Prisma.FloatFilter<"Course"> | number;
+    discountPrice?: Prisma.FloatNullableFilter<"Course"> | number | null;
+    longDescription?: Prisma.StringNullableFilter<"Course"> | string | null;
+    objective?: Prisma.StringNullableFilter<"Course"> | string | null;
+    skills?: Prisma.StringNullableListFilter<"Course">;
+    createdAt?: Prisma.DateTimeFilter<"Course"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"Course"> | Date | string;
+};
+export type CourseCreateWithoutInstructorsInput = {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail?: string | null;
+    level?: $Enums.CourseLevel;
+    type?: $Enums.CourseType;
+    status?: $Enums.CourseStatus;
+    objectives?: Prisma.CourseCreateobjectivesInput | string[];
+    targetAudience?: Prisma.CourseCreatetargetAudienceInput | string[];
+    requirements?: Prisma.CourseCreaterequirementsInput | string[];
+    rating?: number;
+    reviewCount?: number;
+    studentsCount?: number;
+    duration?: string | null;
+    locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    category: Prisma.CategoryCreateNestedOneWithoutCoursesInput;
     classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentCreateNestedManyWithoutCourseInput;
 };
 export type CourseUncheckedCreateWithoutInstructorsInput = {
@@ -737,7 +1027,7 @@ export type CourseUncheckedCreateWithoutInstructorsInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -749,11 +1039,16 @@ export type CourseUncheckedCreateWithoutInstructorsInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCourseInput;
 };
 export type CourseCreateOrConnectWithoutInstructorsInput = {
@@ -774,7 +1069,6 @@ export type CourseUpdateWithoutInstructorsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -786,11 +1080,17 @@ export type CourseUpdateWithoutInstructorsInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
+    category?: Prisma.CategoryUpdateOneRequiredWithoutCoursesNestedInput;
     classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUpdateManyWithoutCourseNestedInput;
 };
 export type CourseUncheckedUpdateWithoutInstructorsInput = {
@@ -798,7 +1098,7 @@ export type CourseUncheckedUpdateWithoutInstructorsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -810,11 +1110,16 @@ export type CourseUncheckedUpdateWithoutInstructorsInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUncheckedUpdateManyWithoutCourseNestedInput;
 };
 export type CourseCreateWithoutModulesInput = {
@@ -822,7 +1127,6 @@ export type CourseCreateWithoutModulesInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -834,10 +1138,16 @@ export type CourseCreateWithoutModulesInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
+    category: Prisma.CategoryCreateNestedOneWithoutCoursesInput;
     classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentCreateNestedManyWithoutCourseInput;
 };
@@ -846,7 +1156,7 @@ export type CourseUncheckedCreateWithoutModulesInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -858,10 +1168,15 @@ export type CourseUncheckedCreateWithoutModulesInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
     classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCourseInput;
 };
@@ -883,7 +1198,6 @@ export type CourseUpdateWithoutModulesInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -895,10 +1209,16 @@ export type CourseUpdateWithoutModulesInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
+    category?: Prisma.CategoryUpdateOneRequiredWithoutCoursesNestedInput;
     classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUpdateManyWithoutCourseNestedInput;
 };
@@ -907,7 +1227,7 @@ export type CourseUncheckedUpdateWithoutModulesInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -919,10 +1239,15 @@ export type CourseUncheckedUpdateWithoutModulesInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
     classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUncheckedUpdateManyWithoutCourseNestedInput;
 };
@@ -931,7 +1256,6 @@ export type CourseCreateWithoutClassesInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -943,11 +1267,17 @@ export type CourseCreateWithoutClassesInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    category: Prisma.CategoryCreateNestedOneWithoutCoursesInput;
     instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
-    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentCreateNestedManyWithoutCourseInput;
 };
 export type CourseUncheckedCreateWithoutClassesInput = {
@@ -955,7 +1285,7 @@ export type CourseUncheckedCreateWithoutClassesInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -967,11 +1297,16 @@ export type CourseUncheckedCreateWithoutClassesInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
     instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
-    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCourseInput;
 };
 export type CourseCreateOrConnectWithoutClassesInput = {
@@ -992,7 +1327,6 @@ export type CourseUpdateWithoutClassesInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -1004,11 +1338,17 @@ export type CourseUpdateWithoutClassesInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    category?: Prisma.CategoryUpdateOneRequiredWithoutCoursesNestedInput;
     instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
-    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUpdateManyWithoutCourseNestedInput;
 };
 export type CourseUncheckedUpdateWithoutClassesInput = {
@@ -1016,7 +1356,7 @@ export type CourseUncheckedUpdateWithoutClassesInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -1028,11 +1368,16 @@ export type CourseUncheckedUpdateWithoutClassesInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
-    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUncheckedUpdateManyWithoutCourseNestedInput;
 };
 export type CourseCreateWithoutEnrollmentsInput = {
@@ -1040,7 +1385,6 @@ export type CourseCreateWithoutEnrollmentsInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -1052,11 +1396,17 @@ export type CourseCreateWithoutEnrollmentsInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    category: Prisma.CategoryCreateNestedOneWithoutCoursesInput;
+    classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
     instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
     modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
-    classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentCreateNestedManyWithoutCourseInput;
 };
 export type CourseUncheckedCreateWithoutEnrollmentsInput = {
@@ -1064,7 +1414,7 @@ export type CourseUncheckedCreateWithoutEnrollmentsInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -1076,11 +1426,16 @@ export type CourseUncheckedCreateWithoutEnrollmentsInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
+    classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
     instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
     modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
-    classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
     payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCourseInput;
 };
 export type CourseCreateOrConnectWithoutEnrollmentsInput = {
@@ -1101,7 +1456,6 @@ export type CourseUpdateWithoutEnrollmentsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -1113,11 +1467,17 @@ export type CourseUpdateWithoutEnrollmentsInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    category?: Prisma.CategoryUpdateOneRequiredWithoutCoursesNestedInput;
+    classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
     instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
     modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
-    classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUpdateManyWithoutCourseNestedInput;
 };
 export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1125,7 +1485,7 @@ export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -1137,11 +1497,16 @@ export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
     instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
     modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
-    classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
     payments?: Prisma.PaymentUncheckedUpdateManyWithoutCourseNestedInput;
 };
 export type CourseCreateWithoutPaymentsInput = {
@@ -1149,7 +1514,6 @@ export type CourseCreateWithoutPaymentsInput = {
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -1161,19 +1525,25 @@ export type CourseCreateWithoutPaymentsInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
-    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
+    category: Prisma.CategoryCreateNestedOneWithoutCoursesInput;
     classes?: Prisma.CourseClassCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleCreateNestedManyWithoutCourseInput;
 };
 export type CourseUncheckedCreateWithoutPaymentsInput = {
     id: string;
     title: string;
     description: string;
     thumbnail?: string | null;
-    category: string;
+    categoryId: string;
     level?: $Enums.CourseLevel;
     type?: $Enums.CourseType;
     status?: $Enums.CourseStatus;
@@ -1185,12 +1555,17 @@ export type CourseUncheckedCreateWithoutPaymentsInput = {
     studentsCount?: number;
     duration?: string | null;
     locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
     createdAt?: Date | string;
     updatedAt?: Date | string;
-    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
-    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
     classes?: Prisma.CourseClassUncheckedCreateNestedManyWithoutCourseInput;
+    instructors?: Prisma.CourseInstructorUncheckedCreateNestedManyWithoutCourseInput;
     enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutCourseInput;
+    modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCourseInput;
 };
 export type CourseCreateOrConnectWithoutPaymentsInput = {
     where: Prisma.CourseWhereUniqueInput;
@@ -1210,7 +1585,6 @@ export type CourseUpdateWithoutPaymentsInput = {
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -1222,19 +1596,25 @@ export type CourseUpdateWithoutPaymentsInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
-    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
+    category?: Prisma.CategoryUpdateOneRequiredWithoutCoursesNestedInput;
     classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
 };
 export type CourseUncheckedUpdateWithoutPaymentsInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     title?: Prisma.StringFieldUpdateOperationsInput | string;
     description?: Prisma.StringFieldUpdateOperationsInput | string;
     thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    category?: Prisma.StringFieldUpdateOperationsInput | string;
+    categoryId?: Prisma.StringFieldUpdateOperationsInput | string;
     level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
     type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
     status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
@@ -1246,28 +1626,139 @@ export type CourseUncheckedUpdateWithoutPaymentsInput = {
     studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
     duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
     createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
-    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
-    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
     classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
     enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
+};
+export type CourseCreateManyCategoryInput = {
+    id: string;
+    title: string;
+    description: string;
+    thumbnail?: string | null;
+    level?: $Enums.CourseLevel;
+    type?: $Enums.CourseType;
+    status?: $Enums.CourseStatus;
+    objectives?: Prisma.CourseCreateobjectivesInput | string[];
+    targetAudience?: Prisma.CourseCreatetargetAudienceInput | string[];
+    requirements?: Prisma.CourseCreaterequirementsInput | string[];
+    rating?: number;
+    reviewCount?: number;
+    studentsCount?: number;
+    duration?: string | null;
+    locationDefault?: string | null;
+    price: number;
+    discountPrice?: number | null;
+    longDescription?: string | null;
+    objective?: string | null;
+    skills?: Prisma.CourseCreateskillsInput | string[];
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+};
+export type CourseUpdateWithoutCategoryInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
+    type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
+    status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
+    objectives?: Prisma.CourseUpdateobjectivesInput | string[];
+    targetAudience?: Prisma.CourseUpdatetargetAudienceInput | string[];
+    requirements?: Prisma.CourseUpdaterequirementsInput | string[];
+    rating?: Prisma.FloatFieldUpdateOperationsInput | number;
+    reviewCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    classes?: Prisma.CourseClassUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUpdateManyWithoutCourseNestedInput;
+    enrollments?: Prisma.EnrollmentUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUpdateManyWithoutCourseNestedInput;
+    payments?: Prisma.PaymentUpdateManyWithoutCourseNestedInput;
+};
+export type CourseUncheckedUpdateWithoutCategoryInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
+    type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
+    status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
+    objectives?: Prisma.CourseUpdateobjectivesInput | string[];
+    targetAudience?: Prisma.CourseUpdatetargetAudienceInput | string[];
+    requirements?: Prisma.CourseUpdaterequirementsInput | string[];
+    rating?: Prisma.FloatFieldUpdateOperationsInput | number;
+    reviewCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    classes?: Prisma.CourseClassUncheckedUpdateManyWithoutCourseNestedInput;
+    instructors?: Prisma.CourseInstructorUncheckedUpdateManyWithoutCourseNestedInput;
+    enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutCourseNestedInput;
+    modules?: Prisma.ModuleUncheckedUpdateManyWithoutCourseNestedInput;
+    payments?: Prisma.PaymentUncheckedUpdateManyWithoutCourseNestedInput;
+};
+export type CourseUncheckedUpdateManyWithoutCategoryInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    title?: Prisma.StringFieldUpdateOperationsInput | string;
+    description?: Prisma.StringFieldUpdateOperationsInput | string;
+    thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    level?: Prisma.EnumCourseLevelFieldUpdateOperationsInput | $Enums.CourseLevel;
+    type?: Prisma.EnumCourseTypeFieldUpdateOperationsInput | $Enums.CourseType;
+    status?: Prisma.EnumCourseStatusFieldUpdateOperationsInput | $Enums.CourseStatus;
+    objectives?: Prisma.CourseUpdateobjectivesInput | string[];
+    targetAudience?: Prisma.CourseUpdatetargetAudienceInput | string[];
+    requirements?: Prisma.CourseUpdaterequirementsInput | string[];
+    rating?: Prisma.FloatFieldUpdateOperationsInput | number;
+    reviewCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    studentsCount?: Prisma.IntFieldUpdateOperationsInput | number;
+    duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    locationDefault?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    price?: Prisma.FloatFieldUpdateOperationsInput | number;
+    discountPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null;
+    longDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    objective?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    skills?: Prisma.CourseUpdateskillsInput | string[];
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 /**
  * Count Type CourseCountOutputType
  */
 export type CourseCountOutputType = {
-    instructors: number;
-    modules: number;
     classes: number;
+    instructors: number;
     enrollments: number;
+    modules: number;
     payments: number;
 };
 export type CourseCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    instructors?: boolean | CourseCountOutputTypeCountInstructorsArgs;
-    modules?: boolean | CourseCountOutputTypeCountModulesArgs;
     classes?: boolean | CourseCountOutputTypeCountClassesArgs;
+    instructors?: boolean | CourseCountOutputTypeCountInstructorsArgs;
     enrollments?: boolean | CourseCountOutputTypeCountEnrollmentsArgs;
+    modules?: boolean | CourseCountOutputTypeCountModulesArgs;
     payments?: boolean | CourseCountOutputTypeCountPaymentsArgs;
 };
 /**
@@ -1282,26 +1773,26 @@ export type CourseCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * CourseCountOutputType without action
  */
-export type CourseCountOutputTypeCountInstructorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.CourseInstructorWhereInput;
-};
-/**
- * CourseCountOutputType without action
- */
-export type CourseCountOutputTypeCountModulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.ModuleWhereInput;
-};
-/**
- * CourseCountOutputType without action
- */
 export type CourseCountOutputTypeCountClassesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.CourseClassWhereInput;
 };
 /**
  * CourseCountOutputType without action
  */
+export type CourseCountOutputTypeCountInstructorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.CourseInstructorWhereInput;
+};
+/**
+ * CourseCountOutputType without action
+ */
 export type CourseCountOutputTypeCountEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     where?: Prisma.EnrollmentWhereInput;
+};
+/**
+ * CourseCountOutputType without action
+ */
+export type CourseCountOutputTypeCountModulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ModuleWhereInput;
 };
 /**
  * CourseCountOutputType without action
@@ -1314,7 +1805,7 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     title?: boolean;
     description?: boolean;
     thumbnail?: boolean;
-    category?: boolean;
+    categoryId?: boolean;
     level?: boolean;
     type?: boolean;
     status?: boolean;
@@ -1326,12 +1817,18 @@ export type CourseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     studentsCount?: boolean;
     duration?: boolean;
     locationDefault?: boolean;
+    price?: boolean;
+    discountPrice?: boolean;
+    longDescription?: boolean;
+    objective?: boolean;
+    skills?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
-    instructors?: boolean | Prisma.Course$instructorsArgs<ExtArgs>;
-    modules?: boolean | Prisma.Course$modulesArgs<ExtArgs>;
+    category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>;
     classes?: boolean | Prisma.Course$classesArgs<ExtArgs>;
+    instructors?: boolean | Prisma.Course$instructorsArgs<ExtArgs>;
     enrollments?: boolean | Prisma.Course$enrollmentsArgs<ExtArgs>;
+    modules?: boolean | Prisma.Course$modulesArgs<ExtArgs>;
     payments?: boolean | Prisma.Course$paymentsArgs<ExtArgs>;
     _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["course"]>;
@@ -1340,7 +1837,7 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
     title?: boolean;
     description?: boolean;
     thumbnail?: boolean;
-    category?: boolean;
+    categoryId?: boolean;
     level?: boolean;
     type?: boolean;
     status?: boolean;
@@ -1352,15 +1849,21 @@ export type CourseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
     studentsCount?: boolean;
     duration?: boolean;
     locationDefault?: boolean;
+    price?: boolean;
+    discountPrice?: boolean;
+    longDescription?: boolean;
+    objective?: boolean;
+    skills?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["course"]>;
 export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     title?: boolean;
     description?: boolean;
     thumbnail?: boolean;
-    category?: boolean;
+    categoryId?: boolean;
     level?: boolean;
     type?: boolean;
     status?: boolean;
@@ -1372,15 +1875,21 @@ export type CourseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
     studentsCount?: boolean;
     duration?: boolean;
     locationDefault?: boolean;
+    price?: boolean;
+    discountPrice?: boolean;
+    longDescription?: boolean;
+    objective?: boolean;
+    skills?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
+    category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["course"]>;
 export type CourseSelectScalar = {
     id?: boolean;
     title?: boolean;
     description?: boolean;
     thumbnail?: boolean;
-    category?: boolean;
+    categoryId?: boolean;
     level?: boolean;
     type?: boolean;
     status?: boolean;
@@ -1392,27 +1901,38 @@ export type CourseSelectScalar = {
     studentsCount?: boolean;
     duration?: boolean;
     locationDefault?: boolean;
+    price?: boolean;
+    discountPrice?: boolean;
+    longDescription?: boolean;
+    objective?: boolean;
+    skills?: boolean;
     createdAt?: boolean;
     updatedAt?: boolean;
 };
-export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "thumbnail" | "category" | "level" | "type" | "status" | "objectives" | "targetAudience" | "requirements" | "rating" | "reviewCount" | "studentsCount" | "duration" | "locationDefault" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>;
+export type CourseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "thumbnail" | "categoryId" | "level" | "type" | "status" | "objectives" | "targetAudience" | "requirements" | "rating" | "reviewCount" | "studentsCount" | "duration" | "locationDefault" | "price" | "discountPrice" | "longDescription" | "objective" | "skills" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>;
 export type CourseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    instructors?: boolean | Prisma.Course$instructorsArgs<ExtArgs>;
-    modules?: boolean | Prisma.Course$modulesArgs<ExtArgs>;
+    category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>;
     classes?: boolean | Prisma.Course$classesArgs<ExtArgs>;
+    instructors?: boolean | Prisma.Course$instructorsArgs<ExtArgs>;
     enrollments?: boolean | Prisma.Course$enrollmentsArgs<ExtArgs>;
+    modules?: boolean | Prisma.Course$modulesArgs<ExtArgs>;
     payments?: boolean | Prisma.Course$paymentsArgs<ExtArgs>;
     _count?: boolean | Prisma.CourseCountOutputTypeDefaultArgs<ExtArgs>;
 };
-export type CourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
-export type CourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
+export type CourseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>;
+};
+export type CourseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>;
+};
 export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Course";
     objects: {
-        instructors: Prisma.$CourseInstructorPayload<ExtArgs>[];
-        modules: Prisma.$ModulePayload<ExtArgs>[];
+        category: Prisma.$CategoryPayload<ExtArgs>;
         classes: Prisma.$CourseClassPayload<ExtArgs>[];
+        instructors: Prisma.$CourseInstructorPayload<ExtArgs>[];
         enrollments: Prisma.$EnrollmentPayload<ExtArgs>[];
+        modules: Prisma.$ModulePayload<ExtArgs>[];
         payments: Prisma.$PaymentPayload<ExtArgs>[];
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1420,7 +1940,7 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
         title: string;
         description: string;
         thumbnail: string | null;
-        category: string;
+        categoryId: string;
         level: $Enums.CourseLevel;
         type: $Enums.CourseType;
         status: $Enums.CourseStatus;
@@ -1432,6 +1952,11 @@ export type $CoursePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
         studentsCount: number;
         duration: string | null;
         locationDefault: string | null;
+        price: number;
+        discountPrice: number | null;
+        longDescription: string | null;
+        objective: string | null;
+        skills: string[];
         createdAt: Date;
         updatedAt: Date;
     }, ExtArgs["result"]["course"]>;
@@ -1763,10 +2288,11 @@ export interface CourseDelegate<ExtArgs extends runtime.Types.Extensions.Interna
  */
 export interface Prisma__CourseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    instructors<T extends Prisma.Course$instructorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$instructorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseInstructorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
-    modules<T extends Prisma.Course$modulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$modulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     classes<T extends Prisma.Course$classesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$classesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    instructors<T extends Prisma.Course$instructorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$instructorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CourseInstructorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     enrollments<T extends Prisma.Course$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    modules<T extends Prisma.Course$modulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$modulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     payments<T extends Prisma.Course$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Course$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1797,7 +2323,7 @@ export interface CourseFieldRefs {
     readonly title: Prisma.FieldRef<"Course", 'String'>;
     readonly description: Prisma.FieldRef<"Course", 'String'>;
     readonly thumbnail: Prisma.FieldRef<"Course", 'String'>;
-    readonly category: Prisma.FieldRef<"Course", 'String'>;
+    readonly categoryId: Prisma.FieldRef<"Course", 'String'>;
     readonly level: Prisma.FieldRef<"Course", 'CourseLevel'>;
     readonly type: Prisma.FieldRef<"Course", 'CourseType'>;
     readonly status: Prisma.FieldRef<"Course", 'CourseStatus'>;
@@ -1809,6 +2335,11 @@ export interface CourseFieldRefs {
     readonly studentsCount: Prisma.FieldRef<"Course", 'Int'>;
     readonly duration: Prisma.FieldRef<"Course", 'String'>;
     readonly locationDefault: Prisma.FieldRef<"Course", 'String'>;
+    readonly price: Prisma.FieldRef<"Course", 'Float'>;
+    readonly discountPrice: Prisma.FieldRef<"Course", 'Float'>;
+    readonly longDescription: Prisma.FieldRef<"Course", 'String'>;
+    readonly objective: Prisma.FieldRef<"Course", 'String'>;
+    readonly skills: Prisma.FieldRef<"Course", 'String[]'>;
     readonly createdAt: Prisma.FieldRef<"Course", 'DateTime'>;
     readonly updatedAt: Prisma.FieldRef<"Course", 'DateTime'>;
 }
@@ -2055,6 +2586,10 @@ export type CourseCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
      */
     data: Prisma.CourseCreateManyInput | Prisma.CourseCreateManyInput[];
     skipDuplicates?: boolean;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CourseIncludeCreateManyAndReturn<ExtArgs> | null;
 };
 /**
  * Course update
@@ -2122,6 +2657,10 @@ export type CourseUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
      * Limit how many Courses to update.
      */
     limit?: number;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CourseIncludeUpdateManyAndReturn<ExtArgs> | null;
 };
 /**
  * Course upsert
@@ -2187,52 +2726,6 @@ export type CourseDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
     limit?: number;
 };
 /**
- * Course.instructors
- */
-export type Course$instructorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the CourseInstructor
-     */
-    select?: Prisma.CourseInstructorSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the CourseInstructor
-     */
-    omit?: Prisma.CourseInstructorOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Prisma.CourseInstructorInclude<ExtArgs> | null;
-    where?: Prisma.CourseInstructorWhereInput;
-    orderBy?: Prisma.CourseInstructorOrderByWithRelationInput | Prisma.CourseInstructorOrderByWithRelationInput[];
-    cursor?: Prisma.CourseInstructorWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: Prisma.CourseInstructorScalarFieldEnum | Prisma.CourseInstructorScalarFieldEnum[];
-};
-/**
- * Course.modules
- */
-export type Course$modulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Module
-     */
-    select?: Prisma.ModuleSelect<ExtArgs> | null;
-    /**
-     * Omit specific fields from the Module
-     */
-    omit?: Prisma.ModuleOmit<ExtArgs> | null;
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: Prisma.ModuleInclude<ExtArgs> | null;
-    where?: Prisma.ModuleWhereInput;
-    orderBy?: Prisma.ModuleOrderByWithRelationInput | Prisma.ModuleOrderByWithRelationInput[];
-    cursor?: Prisma.ModuleWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: Prisma.ModuleScalarFieldEnum | Prisma.ModuleScalarFieldEnum[];
-};
-/**
  * Course.classes
  */
 export type Course$classesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2256,6 +2749,29 @@ export type Course$classesArgs<ExtArgs extends runtime.Types.Extensions.Internal
     distinct?: Prisma.CourseClassScalarFieldEnum | Prisma.CourseClassScalarFieldEnum[];
 };
 /**
+ * Course.instructors
+ */
+export type Course$instructorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CourseInstructor
+     */
+    select?: Prisma.CourseInstructorSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the CourseInstructor
+     */
+    omit?: Prisma.CourseInstructorOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.CourseInstructorInclude<ExtArgs> | null;
+    where?: Prisma.CourseInstructorWhereInput;
+    orderBy?: Prisma.CourseInstructorOrderByWithRelationInput | Prisma.CourseInstructorOrderByWithRelationInput[];
+    cursor?: Prisma.CourseInstructorWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.CourseInstructorScalarFieldEnum | Prisma.CourseInstructorScalarFieldEnum[];
+};
+/**
  * Course.enrollments
  */
 export type Course$enrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2277,6 +2793,29 @@ export type Course$enrollmentsArgs<ExtArgs extends runtime.Types.Extensions.Inte
     take?: number;
     skip?: number;
     distinct?: Prisma.EnrollmentScalarFieldEnum | Prisma.EnrollmentScalarFieldEnum[];
+};
+/**
+ * Course.modules
+ */
+export type Course$modulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Module
+     */
+    select?: Prisma.ModuleSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Module
+     */
+    omit?: Prisma.ModuleOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ModuleInclude<ExtArgs> | null;
+    where?: Prisma.ModuleWhereInput;
+    orderBy?: Prisma.ModuleOrderByWithRelationInput | Prisma.ModuleOrderByWithRelationInput[];
+    cursor?: Prisma.ModuleWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ModuleScalarFieldEnum | Prisma.ModuleScalarFieldEnum[];
 };
 /**
  * Course.payments

@@ -71,6 +71,7 @@ export const ModelName = {
     User: 'User',
     Student: 'Student',
     Instructor: 'Instructor',
+    Category: 'Category',
     Course: 'Course',
     CourseInstructor: 'CourseInstructor',
     Module: 'Module',
@@ -105,13 +106,13 @@ export const StudentScalarFieldEnum = {
     id: 'id',
     name: 'name',
     email: 'email',
-    password: 'password',
     phone: 'phone',
     avatar: 'avatar',
     status: 'status',
     joinDate: 'joinDate',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    password: 'password'
 };
 export const InstructorScalarFieldEnum = {
     id: 'id',
@@ -127,12 +128,19 @@ export const InstructorScalarFieldEnum = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
+export const CategoryScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
 export const CourseScalarFieldEnum = {
     id: 'id',
     title: 'title',
     description: 'description',
     thumbnail: 'thumbnail',
-    category: 'category',
+    categoryId: 'categoryId',
     level: 'level',
     type: 'type',
     status: 'status',
@@ -144,6 +152,11 @@ export const CourseScalarFieldEnum = {
     studentsCount: 'studentsCount',
     duration: 'duration',
     locationDefault: 'locationDefault',
+    price: 'price',
+    discountPrice: 'discountPrice',
+    longDescription: 'longDescription',
+    objective: 'objective',
+    skills: 'skills',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
@@ -158,6 +171,8 @@ export const ModuleScalarFieldEnum = {
     title: 'title',
     order: 'order',
     status: 'status',
+    duration: 'duration',
+    topics: 'topics',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
 };
