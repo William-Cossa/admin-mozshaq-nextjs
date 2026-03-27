@@ -1,9 +1,18 @@
-import { mockUsers } from "@/data";
 import { cn } from "@/lib/utils";
 import { BadgeInfo, Mail, ShieldCheck, UsersIcon } from "lucide-react";
 import Image from "next/image";
 
-function UsersTable() {
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  avatar: string | null;
+  lastLogin: string | null;
+};
+
+function UsersTable({ users = [] }: { users: User[] }) {
   return (
     <div className="bg-background  rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
       <table className="w-full text-left border-collapse">
@@ -17,7 +26,7 @@ function UsersTable() {
           </tr>
         </thead>
         <tbody className="text-sm divide-y divide-slate-100 dark:divide-slate-800">
-          {mockUsers.map((user) => (
+          {users.map((user) => (
             <tr
               key={user.id}
               className="group hover:bg-primary/3 transition-colors"
@@ -48,21 +57,21 @@ function UsersTable() {
               </td>
               <td className="px-4 py-2">
                 <div className="flex items-center gap-1 text-slate-600 dark:text-slate-300 font-medium">
-                  {user.role === "admin" ? (
+                  {user.role === "ADMIN" ? (
                     <ShieldCheck size={14} className="text-primary" />
                   ) : (
                     <UsersIcon size={14} className="text-slate-400" />
                   )}
-                  {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                  {user.role}
                 </div>
               </td>
               <td className="px-4 py-2">
                 <span
                   className={cn(
                     "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-widest border",
-                    user.status === "active"
+                    user.status === "ACTIVE"
                       ? "bg-green-50 text-green-700 border-green-100 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20"
-                      : user.status === "pending"
+                      : user.status === "PENDING"
                       ? "bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20"
                       : "bg-slate-50 text-slate-700 border-slate-100 dark:bg-slate-700/50 dark:text-slate-400 dark:border-slate-600/50"
                   )}
@@ -70,8 +79,8 @@ function UsersTable() {
                   {user.status}
                 </span>
               </td>
-              <td className="px-4 py-2 text-slate-500 font-medium">
-                {user.lastLogin}
+              <td className="px-4 py-2 text-slate-500 font-medium whitespace-nowrap">
+                {user.lastLogin ? new Date(user.lastLogin).toLocaleString() : "Nunca"}
               </td>
               <td className="px-4 py-2 text-right">
                 <div className="flex items-center justify-end gap-1">

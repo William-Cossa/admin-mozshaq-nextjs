@@ -2,8 +2,10 @@ import Heading from "@/components/Heading";
 import UsersTable from "@/components/tables/UsersTable";
 import { Button } from "@/components/ui/button";
 import { Filter, Plus, Search } from "lucide-react";
+import { getUsers } from "@/lib/actions/users";
 
 async function Users() {
+  const users = await getUsers();
   return (
     <div className="max-w-7xl mx-auto space-y-3">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between md:items-center gap-2">
@@ -36,7 +38,7 @@ async function Users() {
           </button>
         </div>
       </div>
-      <UsersTable />
+      <UsersTable users={users} />
       {/* <DataTable data={tasks} columns={columns} /> */}
     </div>
   );
