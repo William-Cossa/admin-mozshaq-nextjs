@@ -62,6 +62,9 @@ export const courseService = {
     const take = Number(limit);
 
     const where: any = {};
+    if (query.search) {
+      where.title = { contains: query.search, mode: "insensitive" };
+    }
     if (category) where.categoryId = category;
     if (level) where.level = level;
     if (status) where.status = status;

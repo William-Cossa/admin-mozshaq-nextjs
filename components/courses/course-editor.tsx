@@ -13,9 +13,16 @@ import { toast } from "sonner";
 interface CourseEditorProps {
   initialData?: Partial<Course>;
   onSubmit: (data: Course) => Promise<void>;
+  categories: any[];
+  instructors: any[];
 }
 
-export function CourseEditor({ initialData, onSubmit }: CourseEditorProps) {
+export function CourseEditor({ 
+  initialData, 
+  onSubmit,
+  categories,
+  instructors,
+}: CourseEditorProps) {
   const [formData, setFormData] = useState(initialData || {});
   const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,7 +98,7 @@ export function CourseEditor({ initialData, onSubmit }: CourseEditorProps) {
         <TabsContent value="basic">
           <AnimatePresence mode="wait">
             <motion.div
-              key="tab-basic" // ← agora é único
+              key="tab-basic"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -101,6 +108,8 @@ export function CourseEditor({ initialData, onSubmit }: CourseEditorProps) {
                 data={formData}
                 errors={errors}
                 updateField={updateField}
+                categories={categories}
+                instructors={instructors}
               />
             </motion.div>
           </AnimatePresence>
@@ -110,7 +119,7 @@ export function CourseEditor({ initialData, onSubmit }: CourseEditorProps) {
         <TabsContent value="curriculum">
           <AnimatePresence mode="wait">
             <motion.div
-              key="tab-curriculum" // ← agora é único
+              key="tab-curriculum"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}

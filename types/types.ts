@@ -92,11 +92,15 @@ export interface Student {
   id: string;
   name: string;
   email: string;
-  course: string;
+  phone?: string | null;
+  avatar?: string | null;
+  status: "ACTIVE" | "INACTIVE" | "PENDING" | "DROPPED";
+  statusLabel?: string;
   joinDate: string;
-  status: "active" | "pending" | "inactive" | "dropped";
-  avatar?: string;
-  progress: number;
+  createdAt?: string;
+  totalCursos?: number;
+  cursosActivos?: number;
+  totalInvestido?: number;
 }
 
 export interface Enrollment {

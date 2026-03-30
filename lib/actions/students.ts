@@ -5,50 +5,42 @@ import { revalidatePath } from "next/cache";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
 
-export async function getUsers(params?: Record<string, string>) {
+export async function getStudents(params?: Record<string, string>) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
   if (!token) {
-    console.warn("No token found for fetching users.");
-    return { users: [], total: 0, page: 1, limit: 10 };
+    console.warn("No token found for fetching students.");
+    return { data: [], total: 0, page: 1, limit: 10 };
   }
 
   const query = params ? "?" + new URLSearchParams(params).toString() : "";
 
   try {
-    const res = await fetch(`${API_URL}/admin/users${query}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const res = await fetch(`${API_URL}/admin/students${query}`, {
+      headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });
 
     if (!res.ok) {
-      console.warn("Failed to fetch users, status:", res.status);
-      return { users: [], total: 0, page: 1, limit: 10 };
+      console.warn("Failed to fetch students, status:", res.status);
+      return { data: [], total: 0, page: 1, limit: 10 };
     }
-    const data = await res.json();
-    return {
-      users: data.users || [],
-      total: data.total || 0,
-      page: data.page || 1,
-      limit: data.limit || 10,
-    };
+    return await res.json();
   } catch (error) {
-    console.error("Error fetching users from backend:", error);
-    return { users: [], total: 0, page: 1, limit: 10 };
+    console.error("Error fetching students from backend:", error);
+    return { data: [], total: 0, page: 1, limit: 10 };
   }
 }
 
-export async function createUser(data: any) {
+export async function createStudent(data: any) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
   if (!token) return { success: false, error: "No token" };
 
   try {
-    const res = await fetch(`${API_URL}/admin/users`, {
+    const res = await fetch(`${API_URL}/admin/students`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -59,24 +51,24 @@ export async function createUser(data: any) {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
-      return { success: false, error: errorData.error || "Failed to create user" };
+      return { success: false, error: errorData.message || "Erro ao criar estudante" };
     }
 
-    revalidatePath("/users");
+    revalidatePath("/students");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
 }
 
-export async function updateUser(id: string, data: any) {
+export async function updateStudent(id: string, data: any) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
   if (!token) return { success: false, error: "No token" };
 
   try {
-    const res = await fetch(`${API_URL}/admin/users/${id}`, {
+    const res = await fetch(`${API_URL}/admin/students/${id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -87,36 +79,34 @@ export async function updateUser(id: string, data: any) {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
-      return { success: false, error: errorData.error || "Failed to update user" };
+      return { success: false, error: errorData.message || "Erro ao actualizar estudante" };
     }
 
-    revalidatePath("/users");
+    revalidatePath("/students");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
 }
 
-export async function deleteUser(id: string) {
+export async function deleteStudent(id: string) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
   if (!token) return { success: false, error: "No token" };
 
   try {
-    const res = await fetch(`${API_URL}/admin/users/${id}`, {
+    const res = await fetch(`${API_URL}/admin/students/${id}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
-      return { success: false, error: errorData.error || "Failed to delete user" };
+      return { success: false, error: errorData.message || "Erro ao apagar estudante" };
     }
 
-    revalidatePath("/users");
+    revalidatePath("/students");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };

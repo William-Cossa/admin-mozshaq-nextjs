@@ -82,14 +82,14 @@ export const columns: ColumnDef<Student>[] = [
         <span
           className={cn(
             "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold border",
-            status === "active"
+            status === "ACTIVE"
               ? "bg-green-50 text-green-700 border-green-100 dark:bg-green-500/10 dark:text-green-400 dark:border-green-500/20"
-              : status === "pending"
+              : status === "PENDING"
               ? "bg-amber-50 text-amber-700 border-amber-100 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20"
               : "bg-slate-50 text-slate-700 border-slate-100 dark:bg-slate-700/50 dark:text-slate-400 dark:border-slate-600/50"
           )}
         >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
+          {status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()}
         </span>
       );
     },

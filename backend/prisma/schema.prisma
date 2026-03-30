@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -54,7 +54,7 @@ model Instructor {
   yearsExperience   Int                @default(0)
   bio               String
   education         String
-  linkedin          String?
+  phone             String?
   professionalEmail String?
   status            InstructorStatus   @default(ACTIVO)
   createdAt         DateTime           @default(now())

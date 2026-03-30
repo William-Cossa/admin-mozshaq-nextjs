@@ -12,7 +12,6 @@ import {
   ImageIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,14 +33,23 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export function CourseFormBasic({ data, errors, updateField }: any) {
-  const [selectedInstructors, setSelectedInstructors] = useState<string[]>(
-    data.instructorIds || ["1"]
-  );
+export function CourseFormBasic({ 
+  data, 
+  errors, 
+  updateField,
+  categories = [],
+  instructors = [],
+}: any) {
+  const allInstructors = instructors;
+  const selectedInstructors = data.instructorIds || [];
 
-  const removeInstructor = (idToRemove: string) => {
-    const updated = selectedInstructors.filter((id) => id !== idToRemove);
-    setSelectedInstructors(updated);
+  const toggleInstructor = (id: string) => {
+    let updated;
+    if (selectedInstructors.includes(id)) {
+      updated = selectedInstructors.filter((i: string) => i !== id);
+    } else {
+      updated = [...selectedInstructors, id];
+    }
     updateField("instructorIds", updated);
   };
 
@@ -56,7 +64,7 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
           <CardHeader className="pb-4">
             <div className="flex items-center gap-2">
               <Info className="h-5 w-5 text-primary" />
-              <CardTitle className="text-base">Informações Básicas</CardTitle>
+              <CardTitle className="">Informações Básicas</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -92,59 +100,57 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label
-                  htmlFor="slug"
+                  htmlFor="categoryId"
                   className="text-xs font-semibold uppercase text-muted-foreground"
                 >
-                  Slug (URL)
+                  Categoria
                 </Label>
-                <Input
-                  id="slug"
-                  value={data.slug || ""}
-                  onChange={(e) => updateField("slug", e.target.value)}
-                  className="h-10"
-                  placeholder="formacao-full-stack"
-                />
-                {errors.slug && (
+                <Select
+                  value={data.categoryId || ""}
+                  onValueChange={(value) => updateField("categoryId", value)}
+                >
+                  <SelectTrigger className="h-10 w-full rounded-xl">
+                    <SelectValue placeholder="Selecione uma categoria..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.length > 0 ? (
+                      categories.map((cat: any) => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </SelectItem>
+                      ))
+                    ) : (
+                      <div className="p-2 text-xs text-muted-foreground text-center">
+                        Nenhuma categoria encontrada
+                      </div>
+                    )}
+                  </SelectContent>
+                </Select>
+                {errors.categoryId && (
                   <motion.p
                     initial={{ opacity: 0, x: -5 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="text-destructive text-xs font-medium"
                   >
-                    {errors.slug}
+                    {errors.categoryId}
                   </motion.p>
                 )}
               </div>
 
               <div className="space-y-2">
                 <Label
-                  htmlFor="category"
+                  htmlFor="duration"
                   className="text-xs font-semibold uppercase text-muted-foreground"
                 >
-                  Categoria
+                  Duração
                 </Label>
-                <Select
-                  value={data.category || ""}
-                  onValueChange={(value) => updateField("category", value)}
-                >
-                  <SelectTrigger className="h-10 w-full">
-                    <SelectValue placeholder="Selecione..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="dev">Desenvolvimento</SelectItem>
-                    <SelectItem value="design">Design</SelectItem>
-                    <SelectItem value="marketing">Marketing</SelectItem>
-                    <SelectItem value="negocios">Negócios</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.category && (
-                  <motion.p
-                    initial={{ opacity: 0, x: -5 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="text-destructive text-xs font-medium"
-                  >
-                    {errors.category}
-                  </motion.p>
-                )}
+                <Input
+                  id="duration"
+                  value={data.duration || ""}
+                  onChange={(e) => updateField("duration", e.target.value)}
+                  className="h-10"
+                  placeholder="Ex: 40h ou 12 semanas"
+                />
               </div>
             </div>
 
@@ -153,14 +159,14 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
                 htmlFor="description"
                 className="text-xs font-semibold uppercase text-muted-foreground"
               >
-                Descrição
+                Descrição Curta
               </Label>
               <Textarea
                 id="description"
                 value={data.description || ""}
                 onChange={(e) => updateField("description", e.target.value)}
                 rows={3}
-                placeholder="Descreva o curso..."
+                placeholder="Descreva o curso brevemente..."
               />
               {errors.description && (
                 <motion.p
@@ -175,52 +181,145 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
           </CardContent>
         </Card>
 
+        {/* Preços */}
+        <Card>
+          <CardHeader className="pb-4">
+            <CardTitle className="text-base text-sm uppercase tracking-wider">Preços e Investimento</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="price"
+                  className="text-xs font-semibold uppercase text-muted-foreground"
+                >
+                  Preço Base (MT)
+                </Label>
+                <Input
+                  id="price"
+                  type="number"
+                  value={data.price || ""}
+                  onChange={(e) => updateField("price", parseFloat(e.target.value))}
+                  className="h-10"
+                />
+                {errors.price && (
+                  <motion.p
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-destructive text-xs font-medium"
+                  >
+                    {errors.price}
+                  </motion.p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="discountPrice"
+                  className="text-xs font-semibold uppercase text-muted-foreground"
+                >
+                  Preço com Desconto (MT)
+                </Label>
+                <Input
+                  id="discountPrice"
+                  type="number"
+                  value={data.discountPrice || ""}
+                  onChange={(e) => updateField("discountPrice", parseFloat(e.target.value))}
+                  className="h-10"
+                />
+                {errors.discountPrice && (
+                  <motion.p
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-destructive text-xs font-medium"
+                  >
+                    {errors.discountPrice}
+                  </motion.p>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Corpo Docente */}
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
               <UserRound className="h-5 w-5 text-primary" />
-              <CardTitle className="text-base">Corpo Docente</CardTitle>
+              <CardTitle className="text-base text-sm uppercase tracking-wider">Corpo Docente</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
+            <div className="space-y-4">
               <div className="flex flex-wrap gap-2">
-                {selectedInstructors.map((id) => (
-                  <Badge
-                    key={id}
-                    variant="secondary"
-                    className="gap-2 pl-1.5 pr-2 py-1.5 h-auto rounded-lg"
-                  >
-                    <img
-                      src={`https://i.pravatar.cc/150?u=${id}`}
-                      className="size-5 rounded-full"
-                      alt="Formador"
-                    />
-                    <span className="text-xs font-semibold">
-                      Formador #{id}
-                    </span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="h-4 w-4 p-0 hover:bg-transparent"
-                      onClick={() => removeInstructor(id)}
+                {selectedInstructors.map((id: string) => {
+                  const instructor = allInstructors.find((i: any) => i.id === id);
+                  return (
+                    <Badge
+                      key={id}
+                      variant="secondary"
+                      className="gap-2 pl-1.5 pr-2 py-1.5 h-auto rounded-lg"
                     >
-                      <X className="h-3 w-3 text-muted-foreground hover:text-destructive" />
-                    </Button>
-                  </Badge>
-                ))}
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="h-auto py-1.5 border-dashed border-primary text-xs font-semibold"
-                >
-                  <Plus className="h-3 w-3 mr-1" />
-                  Adicionar Formador
-                </Button>
+                      {instructor?.photo ? (
+                        <img
+                          src={instructor.photo}
+                          className="size-5 rounded-full object-cover"
+                          alt="Formador"
+                        />
+                      ) : (
+                        <div className="size-5 rounded-full bg-slate-200 flex items-center justify-center text-[8px] font-bold">
+                          {instructor?.name?.charAt(0) || id.charAt(0)}
+                        </div>
+                      )}
+                      <span className="text-xs font-semibold">
+                        {instructor?.name || `Formador #${id}`}
+                      </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="h-4 w-4 p-0 hover:bg-transparent"
+                        onClick={() => toggleInstructor(id)}
+                      >
+                        <X className="h-3 w-3 text-muted-foreground hover:text-destructive" />
+                      </Button>
+                    </Badge>
+                  );
+                })}
               </div>
+
+              <div className="border rounded-xl p-4 bg-slate-50/50 dark:bg-slate-800/50">
+                <Label className="text-[10px] font-bold uppercase tracking-wider mb-3 block text-muted-foreground">
+                  Adicionar Formadores
+                </Label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-2">
+                  {allInstructors.map((inst: any) => (
+                    <button
+                      key={inst.id}
+                      type="button"
+                      onClick={() => toggleInstructor(inst.id)}
+                      className={cn(
+                        "flex items-center gap-2 p-2 rounded-lg border text-left transition-all",
+                        selectedInstructors.includes(inst.id)
+                          ? "bg-primary/10 border-primary"
+                          : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-primary/50"
+                      )}
+                    >
+                      {inst.photo ? (
+                        <img src={inst.photo} className="size-6 rounded-full object-cover" />
+                      ) : (
+                        <div className="size-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold">
+                          {inst.name.charAt(0)}
+                        </div>
+                      )}
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-xs font-bold truncate">{inst.name}</span>
+                        <span className="text-[10px] text-muted-foreground truncate">{inst.specialization}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
               {errors.instructorIds && (
                 <motion.p
                   initial={{ opacity: 0, x: -5 }}
@@ -233,17 +332,20 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
             </div>
           </CardContent>
         </Card>
+      </div>
 
+      {/* COLUNA LATERAL (1/3) */}
+      <div className="space-y-6">
         {/* Modalidade */}
         <Card>
-          <CardHeader className="">
+          <CardHeader className="pb-4">
             <div className="flex items-center gap-2">
               <Globe className="h-5 w-5 text-primary" />
-              <CardTitle className="text-base">Modalidade</CardTitle>
+              <CardTitle className="text-base text-sm uppercase tracking-wider">Modalidade</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-2">
               {(["ONLINE", "PRESENCIAL", "HIBRIDO"] as const).map((type) => (
                 <Button
                   key={type}
@@ -251,15 +353,15 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
                   variant={courseType === type ? "default" : "outline"}
                   onClick={() => updateField("type", type)}
                   className={cn(
-                    "flex flex-col h-auto py-3 gap-1.5",
+                    "flex items-center justify-start h-auto py-2.5 px-4 gap-3 rounded-xl",
                     courseType === type &&
                       "bg-primary/10 text-primary border-primary hover:bg-primary/20 hover:text-primary"
                   )}
                 >
-                  {type === "ONLINE" && <Globe className="h-5 w-5" />}
-                  {type === "PRESENCIAL" && <MapPin className="h-5 w-5" />}
-                  {type === "HIBRIDO" && <Layers className="h-5 w-5" />}
-                  <span className="text-[10px] font-bold uppercase">
+                  {type === "ONLINE" && <Globe className="h-4 w-4" />}
+                  {type === "PRESENCIAL" && <MapPin className="h-4 w-4" />}
+                  {type === "HIBRIDO" && <Layers className="h-4 w-4" />}
+                  <span className="text-xs font-bold uppercase tracking-wide">
                     {type}
                   </span>
                 </Button>
@@ -267,13 +369,10 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
             </div>
           </CardContent>
         </Card>
-      </div>
 
-      {/* COLUNA LATERAL (1/3) */}
-      <div className="space-y-6">
         {/* Publicação */}
         <Card>
-          <CardHeader className="">
+          <CardHeader className="pb-4">
             <CardTitle className="text-sm uppercase tracking-wider">
               Publicação
             </CardTitle>
@@ -290,7 +389,7 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
                 value={data.status || "RASCUNHO"}
                 onValueChange={(value) => updateField("status", value)}
               >
-                <SelectTrigger id="status" className="h-10 w-full">
+                <SelectTrigger id="status" className="h-10 w-full rounded-xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -312,7 +411,7 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
                 value={data.level || "INICIANTE"}
                 onValueChange={(value) => updateField("level", value)}
               >
-                <SelectTrigger id="level" className="h-10 w-full">
+                <SelectTrigger id="level" className="h-10 w-full rounded-xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -325,33 +424,34 @@ export function CourseFormBasic({ data, errors, updateField }: any) {
           </CardContent>
         </Card>
 
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-          <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-4 block">
-            Imagem de Capa
-          </label>
-          <div className="aspect-video w-full rounded-2xl bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
-            {data?.image ? (
-              <>
-                <img src={data.image} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <button className="p-2 bg-white rounded-lg text-red-500 shadow-xl font-bold text-xs uppercase">
-                    Alterar Imagem
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <ImageIcon className="text-gray-300" size={32} />
-                <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                  Carregar Imagem
-                </p>
-              </>
-            )}
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+          <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-4 block">
+            Imagem de Capa (URL)
+          </Label>
+          <div className="space-y-3">
+            <Input
+              value={data.thumbnail || ""}
+              onChange={(e) => updateField("thumbnail", e.target.value)}
+              placeholder="https://exemplo.com/imagem.jpg"
+              className="h-10 rounded-xl"
+            />
+            <div className="aspect-video w-full rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
+              {data.thumbnail ? (
+                <img src={data.thumbnail} className="w-full h-full object-cover" />
+              ) : (
+                <>
+                  <ImageIcon className="text-slate-300" size={32} />
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center px-4">
+                    Cole uma URL ou use uma imagem padrão
+                  </p>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Nota de Gestão */}
-        <Alert className="bg-slate-900 border-slate-800 text-white">
+        <Alert className="bg-slate-900 border-slate-800 text-white rounded-2xl">
           <AlertCircle className="h-4 w-4 text-white" />
           <AlertDescription className="text-xs leading-relaxed opacity-90 mt-2">
             <strong className="block font-semibold mb-1">Nota de Gestão</strong>

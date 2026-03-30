@@ -6,46 +6,14 @@ import Filters from "@/components/courses/filters";
 import CoursesList from "@/components/courses/course-list";
 import { getCourses } from "@/lib/actions/courses";
 
-export default async function CoursesPage() {
-  const courses = [
-  {
-    id: "1",
-    title: "Advanced React Patterns",
-    category: "Development",
-    instructorIds: ["1"],
-    status: "PUBLICADO",
-    type: "ONLINE",
-    studentsCount: 1204,
-    duration: "4h 32m",
-    thumbnail: "https://picsum.photos/id/180/800/450",
-    description: "Master compound components, control props, and custom hooks.",
-  },
-  {
-    id: "2",
-    title: "UX Design Fundamentals",
-    category: "Design",
-    instructorIds: ["2"],
-    status: "RASCUNHO",
-    type: "HIBRIDO",
-    studentsCount: 850,
-    duration: "6h 15m",
-    thumbnail: "https://picsum.photos/id/201/800/450",
-    description: "Learn wireframing, prototyping, and user research basics.",
-  },
-  {
-    id: "3",
-    title: "SEO Strategy 2024",
-    category: "Marketing",
-    instructorIds: ["1"],
-    status: "ENCERRADO",
-    type: "PRESENCIAL",
-    studentsCount: 2300,
-    duration: "2h 10m",
-    thumbnail: "https://picsum.photos/id/20/800/450",
-    description: "Complete guide to technical SEO and content optimization.",
-  },
-];
-  // const courses = await getCourses();
+interface PageProps {
+  searchParams: Promise<Record<string, string>>;
+}
+
+export default async function CoursesPage({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const result = await getCourses(params);
+  const courses = result.data || [];
 
   return (
     <div className="max-w-7xl mx-auto space-y-4 pb-12">
@@ -62,7 +30,12 @@ export default async function CoursesPage() {
 
       <Filters />
 
-      <CoursesList courses={courses} />
+      <CoursesList 
+        courses={courses} 
+        total={result.total || 0}
+        page={result.page || 1}
+        limit={result.limit || 10}
+      />
     </div>
   );
 }

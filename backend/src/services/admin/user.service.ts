@@ -2,23 +2,51 @@ import { prisma } from "../../lib/prisma.js";
 import { v7 as uuidv7 } from "uuid";
 import bcrypt from "bcryptjs";
 import type { CreateUserInput, UpdateUserInput } from "../../validators/admin/user.validator.js";
+import { generateAvatarUrl } from "../../lib/avatar.js";
 
 export const userService = {
-  async getAll() {
-    return prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        status: true,
-        avatar: true,
-        lastLogin: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-      orderBy: { createdAt: "desc" },
-    });
+  async getAll(query: any = {}) {
+    const { page = 1, limit = 10, status, role, search } = query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const take = Number(limit);
+
+    const where: any = {};
+    if (status) where.status = status;
+    if (role) where.role = role;
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: "insensitive" } },
+        { email: { contains: search, mode: "insensitive" } },
+      ];
+    }
+
+    const [total, users] = await Promise.all([
+      prisma.user.count({ where }),
+      prisma.user.findMany({
+        where,
+        skip,
+        take,
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+          status: true,
+          avatar: true,
+          lastLogin: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+        orderBy: { createdAt: "desc" },
+      }),
+    ]);
+
+    return {
+      total,
+      page: Number(page),
+      limit: take,
+      users,
+    };
   },
 
   async getById(id: string) {
@@ -54,6 +82,7 @@ export const userService = {
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);
+    const avatar = data.avatar || generateAvatarUrl(data.name);
 
     const user = await prisma.user.create({
       data: {
@@ -61,9 +90,9 @@ export const userService = {
         name: data.name,
         email: data.email,
         password: hashedPassword,
+        avatar,
         ...(data.role && { role: data.role }),
         ...(data.status && { status: data.status }),
-        ...(data.avatar && { avatar: data.avatar }),
       },
       select: {
         id: true,

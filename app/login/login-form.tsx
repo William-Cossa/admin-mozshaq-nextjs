@@ -7,9 +7,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Mail, Lock, Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 export function LoginForm() {
     const [state, formAction, isPending] = useActionState(loginAction, null);
+
+    useEffect(() => {
+        if (state?.error) {
+            toast.error(state.error);
+        }
+    }, [state?.error]);
 
     return (
         <form action={formAction} className="p-8 space-y-6">
