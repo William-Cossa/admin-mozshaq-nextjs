@@ -55,12 +55,7 @@ const InstructorsClient: React.FC<InstructorsClientProps> = ({
   page,
   limit,
 }) => {
-  console.log("INSTRUCTORS:", {
-    instructors,
-    total,
-    page,
-    limit,
-  });
+
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-3 h-full">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">

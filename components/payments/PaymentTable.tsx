@@ -68,7 +68,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
 
   return (
     <>
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
         {/* Filters bar */}
         <div className="p-3 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row gap-3">
           {/* Search */}

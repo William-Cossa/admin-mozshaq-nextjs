@@ -89,7 +89,7 @@ export function CourseEditor({
         defaultValue="basic"
         className="w-full flex flex-col gap-6"
       >
-        <TabsList className="grid grid-cols-2 w-full">
+        <TabsList className="grid grid-cols-2 w-full gap-4">
           <TabsTrigger className="h-10" value="basic">Informações Básicas</TabsTrigger>
           <TabsTrigger className="h-10" value="curriculum">Programa</TabsTrigger>
         </TabsList>

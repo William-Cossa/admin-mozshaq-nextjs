@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { TrendingUp } from "lucide-react";
 
 export const StatCard = ({ title, value, icon: Icon, trend, color }: any) => (
-  <div className="p-3 rounded-2xl bg-background border shadow-sm flex flex-col gap-1 group hover:border-primary/50 transition-all duration-300">
+  <div className="p-3 rounded-lg bg-background border shadow-sm flex flex-col gap-1 group hover:border-primary/50 transition-all duration-300">
     <div className="flex items-start justify-between">
       <div className={cn("p-2 rounded-lg", color)}>
         <Icon size={18} />

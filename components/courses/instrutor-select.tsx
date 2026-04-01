@@ -51,7 +51,7 @@ export const InstructorSelect: React.FC<InstructorSelectProps> = ({
       </button>
 
       {open && (
-        <div className="absolute z-20 mt-2 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-xl p-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+        <div className="absolute z-20 mt-2 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl p-4 space-y-3 animate-in fade-in slide-in-from-top-2">
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800">
             <Search size={14} className="text-slate-400" />
             <input
@@ -70,8 +70,8 @@ export const InstructorSelect: React.FC<InstructorSelectProps> = ({
                 type="button"
                 onClick={() => toggle(inst.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all border ${selected.includes(inst.id)
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
                   }`}
               >
                 <img src={inst.avatar} className="size-7 rounded-full" />

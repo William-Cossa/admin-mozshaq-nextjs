@@ -34,7 +34,7 @@ export async function loginAction(prevState: any, formData: FormData) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 15 * 60, // 15 minutos (corresponde à expiração da API)
+      maxAge: 24 * 60 * 60,
     });
 
   } catch (error) {
@@ -43,7 +43,7 @@ export async function loginAction(prevState: any, formData: FormData) {
   }
 
   // Redirecionamento após o try-catch para evitar conflitos de Next.js
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function logoutAction() {

@@ -17,7 +17,7 @@ import { enrollmentsTrendsData, performanceData } from "@/data";
 function EnrollmentsTrends() {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
-      <div className="xl:col-span-2 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+      <div className="xl:col-span-2 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">
             Enrollment Trends
@@ -61,7 +61,7 @@ function EnrollmentsTrends() {
         </div>
       </div>
 
-      <div className="bg-background rounded-2xl border  shadow-sm p-4 flex flex-col">
+      <div className="bg-background rounded-lg border  shadow-sm p-4 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">
             Performance

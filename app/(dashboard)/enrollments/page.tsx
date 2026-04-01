@@ -87,7 +87,7 @@ export default async function EnrollmentsPage({
         ].map((stat, i) => (
           <div
             key={i}
-            className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm"
+            className="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
           >
             <div className="flex justify-between items-start mb-2">
               <div className={cn("p-2 rounded-lg", stat.color)}>
@@ -107,7 +107,7 @@ export default async function EnrollmentsPage({
         ))}
       </div>
 
-      <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
         <div className="p-3 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row gap-3 items-center">
           <SearchEnrollments placeholder="Pesquisar por aluno, curso ou ID..." />
           <div className="flex gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">

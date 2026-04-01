@@ -25,7 +25,7 @@ export default function UsersSearch() {
   };
 
   return (
-    <div className="bg-background p-2 rounded-2xl border shadow-sm flex flex-col lg:flex-row gap-2 justify-between items-center">
+    <div className="bg-background p-2 rounded-lg border shadow-sm flex flex-col lg:flex-row gap-2 justify-between items-center">
       <div className="relative w-full lg:w-96 group">
         <Search
           className={`absolute left-3 top-1/2 -translate-y-1/2 transition-colors ${isPending ? "text-primary animate-pulse" : "text-slate-400 group-focus-within:text-primary"

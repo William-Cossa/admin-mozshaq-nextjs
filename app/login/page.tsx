@@ -19,7 +19,7 @@ export default function LoginPage() {
 
           {/* Cabeçalho */}
           <div className="relative p-8 text-center border-b border-slate-100 dark:border-slate-800">
-            <div className="inline-flex size-16 items-center justify-center rounded-2xl bg-primary text-white mb-5 shadow-lg shadow-primary/30 ring-4 ring-primary/10">
+            <div className="inline-flex size-16 items-center justify-center rounded-lg bg-primary text-white mb-5 shadow-lg shadow-primary/30 ring-4 ring-primary/10">
               <ShieldCheck size={32} />
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">

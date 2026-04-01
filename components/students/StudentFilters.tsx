@@ -31,7 +31,7 @@ export function StudentFilters() {
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col lg:flex-row gap-2 items-center justify-between">
+    <div className="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col lg:flex-row gap-2 items-center justify-between">
       <div className="w-full lg:w-96 relative">
         <Search
           className={cn(

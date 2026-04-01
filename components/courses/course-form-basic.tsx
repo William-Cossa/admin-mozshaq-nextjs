@@ -61,7 +61,7 @@ export function CourseFormBasic({
       <div className="lg:col-span-2 space-y-4">
         {/* Informações Básicas */}
         <Card>
-          <CardHeader className="pb-4">
+          <CardHeader>
             <div className="flex items-center gap-2">
               <Info className="h-5 w-5 text-primary" />
               <CardTitle className="">Informações Básicas</CardTitle>
@@ -435,7 +435,7 @@ export function CourseFormBasic({
               placeholder="https://exemplo.com/imagem.jpg"
               className="h-10 rounded-lg"
             />
-            <div className="aspect-video w-full rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
+            <div className="aspect-video w-full rounded-lg bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
               {data.thumbnail ? (
                 <img src={data.thumbnail} className="w-full h-full object-cover" />
               ) : (
@@ -451,7 +451,7 @@ export function CourseFormBasic({
         </div>
 
         {/* Nota de Gestão */}
-        <Alert className="bg-slate-900 border-slate-800 text-white rounded-2xl">
+        <Alert className="bg-slate-900 border-slate-800 text-white rounded-lg">
           <AlertCircle className="h-4 w-4 text-white" />
           <AlertDescription className="text-xs leading-relaxed opacity-90 mt-2">
             <strong className="block font-semibold mb-1">Nota de Gestão</strong>

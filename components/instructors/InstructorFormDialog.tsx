@@ -108,7 +108,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border-none shadow-2xl p-0 overflow-hidden bg-white dark:bg-slate-900">
+      <DialogContent className="max-w-xl max-h-[90vh] overflow-y-auto rounded-lg border-none shadow-2xl p-0 overflow-hidden bg-white dark:bg-slate-900">
         <div className="bg-primary/5 dark:bg-primary/10 px-6 py-4 border-b border-slate-100 dark:border-slate-800">
           <DialogHeader>
             <DialogTitle className="text-xl font-black text-slate-900 dark:text-white">

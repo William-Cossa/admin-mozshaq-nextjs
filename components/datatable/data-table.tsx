@@ -73,10 +73,10 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex flex-col gap-4 bg-background rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-4">
+    <div className="flex flex-col gap-4 bg-background rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm p-4">
       <DataTableToolbar table={table} />
 
-      <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800">
+      <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-800">
         <Table className="w-full text-left border-collapse">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

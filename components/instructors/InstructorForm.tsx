@@ -101,10 +101,10 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
         </div>
       </div>
 
-      <form onSubmit={onSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <form onSubmit={onSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* COLUNA PRINCIPAL (2/3) */}
-        <div className="lg:col-span-2 space-y-6">
-          <Card className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="lg:col-span-2 space-y-4">
+          <Card className="rounded-lg border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <CardHeader className="pb-4">
               <div className="flex items-center gap-2">
                 <Info className="h-5 w-5 text-primary" />
@@ -112,7 +112,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
               </div>
               <CardDescription>Dados principais do formador na plataforma.</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name" className="text-[10px] font-black uppercase tracking-widest text-slate-400">Nome Completo</Label>
                 <Input
@@ -177,7 +177,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
             </CardContent>
           </Card>
 
-          <Card className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <Card className="rounded-lg border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <CardHeader className="pb-4">
               <div className="flex items-center gap-2">
                 <UserRound className="h-5 w-5 text-primary" />
@@ -205,8 +205,8 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
         </div>
 
         {/* COLUNA LATERAL (1/3) */}
-        <div className="space-y-6">
-          <Card className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div className="space-y-4">
+          <Card className="rounded-lg border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <CardHeader className="pb-4">
               <CardTitle className="text-sm border-b pb-2 font-bold uppercase tracking-wider">Estado e Contactos</CardTitle>
             </CardHeader>
@@ -257,7 +257,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
             </CardContent>
           </Card>
 
-          <Card className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <Card className="rounded-lg border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <CardHeader className="pb-4">
               <CardTitle className="text-sm border-b pb-2 font-bold uppercase tracking-wider">Fotografia</CardTitle>
             </CardHeader>
@@ -271,7 +271,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                   placeholder="https://..."
                   className="rounded-lg h-11 focus:ring-1 focus:ring-primary"
                 />
-                <div className="aspect-square w-full rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
+                <div className="aspect-square w-full rounded-lg bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
                   {photoUrl ? (
                     <img src={photoUrl} className="w-full h-full object-cover" />
                   ) : (
@@ -291,7 +291,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full rounded-2xl h-12 font-black uppercase tracking-widest bg-primary hover:bg-primary/90 text-white shadow-lg active:scale-[0.98] transition-all"
+              className="w-full cursor-pointer rounded-lg h-12 font-bold uppercase tracking-widest bg-primary hover:bg-primary/90 text-white shadow-lg active:scale-[0.98] transition-all"
             >
               {loading ? <Loader2 className="animate-spin mr-2" /> : <Save className="mr-2" />}
               {instructor ? "Actualizar Dados" : "Salvar Especialista"}
@@ -300,7 +300,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full rounded-2xl h-12 font-black uppercase tracking-widest border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"
+                className="w-full cursor-pointer rounded-lg h-12 font-black uppercase tracking-widest border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"
               >
                 Voltar à Lista
               </Button>

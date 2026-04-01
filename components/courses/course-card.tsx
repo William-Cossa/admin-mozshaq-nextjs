@@ -21,7 +21,7 @@ export default function CourseCard({ course }: Props) {
   const categoryName = course.categoria || (typeof course.category === 'object' ? course.category?.name : course.category);
 
   return (
-    <div className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+    <div className="group bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
       <div className="relative h-40 w-full overflow-hidden">
         <img
           src={course.thumbnail}

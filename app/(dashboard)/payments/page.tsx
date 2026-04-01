@@ -86,7 +86,7 @@ export default async function PaymentsPage() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm"
+            className="bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm"
           >
             <div className="flex justify-between items-start mb-3">
               <div className={cn("p-2 rounded-lg", stat.color)}>

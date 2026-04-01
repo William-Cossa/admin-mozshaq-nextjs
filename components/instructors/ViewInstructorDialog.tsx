@@ -46,10 +46,10 @@ export function ViewInstructorDialog({ instructor }: ViewInstructorDialogProps) 
           <Eye size={14} />
         </button>
       </DialogTrigger>
-      <DialogContent className="rounded-2xl border-none shadow-2xl bg-white dark:bg-slate-900 sm:max-w-[480px] p-0 overflow-hidden">
+      <DialogContent className="rounded-lg border-none shadow-2xl bg-white dark:bg-slate-900 sm:max-w-[480px] p-0 overflow-hidden">
         <div className="bg-slate-50/80 dark:bg-slate-800/50 p-6 border-b border-slate-100 dark:border-slate-800">
           <DialogHeader className="flex flex-row items-center gap-4 text-left space-y-0">
-            <div className="size-16 rounded-2xl overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
+            <div className="size-16 rounded-lg overflow-hidden shrink-0 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm">
               {instructor.photo ? (
                 <Image
                   width={64}

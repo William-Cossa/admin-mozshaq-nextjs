@@ -3,6 +3,7 @@ import { getCourseById, updateCourse } from "@/lib/actions/courses";
 import { getCategories } from "@/lib/actions/categories";
 import { getInstructors } from "@/lib/actions/instructors";
 import { redirect } from "next/navigation";
+import Heading from "@/components/Heading";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -32,10 +33,16 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="max-w-7xl mx-auto ">
-      <h1 className="text-3xl font-semibold mb-6">Editar curso</h1>
-      <CourseEditor 
-        initialData={course} 
-        onSubmit={updateCourseAction} 
+      <div className="flex -mb-12" >
+
+        <Heading
+          title="Editar Curso"
+          text="Preencha os campos abaixo para editar o curso."
+        />
+      </div>
+      <CourseEditor
+        initialData={course}
+        onSubmit={updateCourseAction}
         categories={categories}
         instructors={instructors}
       />
