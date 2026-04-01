@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Info,
@@ -32,6 +33,51 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+
+function ArrayStringField({ label, placeholder, values = [], onChange }: { label: string, placeholder?: string, values: string[], onChange: (v: string[]) => void }) {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleAdd = () => {
+    if (inputValue.trim()) {
+      onChange([...values, inputValue.trim()]);
+      setInputValue("");
+    }
+  };
+
+  const handleRemove = (index: number) => {
+    onChange(values.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label className="text-xs font-semibold uppercase text-muted-foreground">{label}</Label>
+      <div className="flex gap-2">
+        <Input 
+          value={inputValue} 
+          onChange={e => setInputValue(e.target.value)} 
+          onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAdd(); } }}
+          placeholder={placeholder}
+          className="h-10"
+        />
+        <Button type="button" onClick={handleAdd} variant="secondary" className="h-10 px-3">
+          <Plus className="h-4 w-4" />
+        </Button>
+      </div>
+      {values.length > 0 && (
+        <div className="flex flex-wrap gap-2 mt-2">
+          {values.map((v, i) => (
+            <Badge key={i} variant="secondary" className="gap-1 pr-1.5 py-1 text-xs font-normal">
+              {v}
+              <Button type="button" variant="ghost" size="icon" className="h-4 w-4 p-0 ml-1 hover:bg-transparent" onClick={() => handleRemove(i)}>
+                <X className="h-3 w-3 text-muted-foreground hover:text-destructive" />
+              </Button>
+            </Badge>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function CourseFormBasic({
   data,
@@ -330,6 +376,42 @@ export function CourseFormBasic({
                 </motion.p>
               )}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Informações Adicionais */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Layers className="h-5 w-5 text-primary" />
+              <CardTitle className="text-base text-sm uppercase tracking-wider">Informações Adicionais</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <ArrayStringField 
+              label="Requisitos" 
+              placeholder="Ex: Conhecimentos básicos de informática" 
+              values={data.requirements || []} 
+              onChange={(v) => updateField("requirements", v)} 
+            />
+            <ArrayStringField 
+              label="Objetivos" 
+              placeholder="Ex: Compreender os fundamentos da cibersegurança" 
+              values={data.objectives || []} 
+              onChange={(v) => updateField("objectives", v)} 
+            />
+            <ArrayStringField 
+              label="Público-Alvo" 
+              placeholder="Ex: Iniciantes em TI" 
+              values={data.targetAudience || []} 
+              onChange={(v) => updateField("targetAudience", v)} 
+            />
+            <ArrayStringField 
+              label="Habilidades (Skills)" 
+              placeholder="Ex: Segurança de redes" 
+              values={data.skills || []} 
+              onChange={(v) => updateField("skills", v)} 
+            />
           </CardContent>
         </Card>
       </div>

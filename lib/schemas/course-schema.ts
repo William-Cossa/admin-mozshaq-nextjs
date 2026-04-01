@@ -11,6 +11,10 @@ export const courseSchema = z.object({
   level: z.enum(["INICIANTE", "INTERMEDIARIO", "AVANCADO"]).optional(),
   thumbnail: z.string().url("URL da imagem inválida").optional().or(z.literal("")),
   instructorIds: z.array(z.string()).min(1, "Escolha pelo menos um formador"),
+  requirements: z.array(z.string()).optional(),
+  objectives: z.array(z.string()).optional(),
+  targetAudience: z.array(z.string()).optional(),
+  skills: z.array(z.string()).optional(),
   modules: z
     .array(
       z.object({
