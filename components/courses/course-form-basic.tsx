@@ -199,7 +199,7 @@ export function CourseFormBasic({
                   id="price"
                   type="number"
                   value={data.price || ""}
-                  onChange={(e) => updateField("price", parseFloat(e.target.value))}
+                  onChange={(e) => updateField("price", e.target.value ? parseFloat(e.target.value) : undefined)}
                   className="h-10"
                 />
                 {errors.price && (
@@ -223,7 +223,7 @@ export function CourseFormBasic({
                   id="discountPrice"
                   type="number"
                   value={data.discountPrice || ""}
-                  onChange={(e) => updateField("discountPrice", parseFloat(e.target.value))}
+                  onChange={(e) => updateField("discountPrice", e.target.value ? parseFloat(e.target.value) : undefined)}
                   className="h-10"
                 />
                 {errors.discountPrice && (
