@@ -6,7 +6,7 @@ export declare const createInstructorSchema: z.ZodObject<{
     yearsExperience: z.ZodOptional<z.ZodNumber>;
     bio: z.ZodString;
     education: z.ZodString;
-    linkedin: z.ZodOptional<z.ZodString>;
+    phone: z.ZodOptional<z.ZodString>;
     professionalEmail: z.ZodOptional<z.ZodString>;
     status: z.ZodOptional<z.ZodEnum<{
         ACTIVO: "ACTIVO";
@@ -20,7 +20,7 @@ export declare const updateInstructorSchema: z.ZodObject<{
     yearsExperience: z.ZodOptional<z.ZodOptional<z.ZodNumber>>;
     bio: z.ZodOptional<z.ZodString>;
     education: z.ZodOptional<z.ZodString>;
-    linkedin: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+    phone: z.ZodOptional<z.ZodOptional<z.ZodString>>;
     professionalEmail: z.ZodOptional<z.ZodOptional<z.ZodString>>;
     status: z.ZodOptional<z.ZodOptional<z.ZodEnum<{
         ACTIVO: "ACTIVO";

@@ -1,42 +1,47 @@
 import type { CreateUserInput, UpdateUserInput } from "../../validators/admin/user.validator.js";
 export declare const userService: {
-    getAll(): Promise<{
-        email: string;
-        role: import("../../generated/prisma/enums.js").Role;
-        id: string;
-        name: string;
-        status: import("../../generated/prisma/enums.js").UserStatus;
-        avatar: string | null;
-        lastLogin: Date | null;
-        createdAt: Date;
-        updatedAt: Date;
-    }[]>;
+    getAll(query?: any): Promise<{
+        total: number;
+        page: number;
+        limit: number;
+        users: {
+            name: string;
+            id: string;
+            email: string;
+            role: import("../../generated/prisma/index.js").$Enums.Role;
+            status: import("../../generated/prisma/index.js").$Enums.UserStatus;
+            avatar: string | null;
+            lastLogin: Date | null;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+    }>;
     getById(id: string): Promise<{
-        email: string;
-        role: import("../../generated/prisma/enums.js").Role;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").UserStatus;
+        id: string;
+        email: string;
+        role: import("../../generated/prisma/index.js").$Enums.Role;
+        status: import("../../generated/prisma/index.js").$Enums.UserStatus;
         avatar: string | null;
         lastLogin: Date | null;
         createdAt: Date;
         updatedAt: Date;
     }>;
     create(data: CreateUserInput): Promise<{
-        email: string;
-        role: import("../../generated/prisma/enums.js").Role;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").UserStatus;
+        id: string;
+        email: string;
+        role: import("../../generated/prisma/index.js").$Enums.Role;
+        status: import("../../generated/prisma/index.js").$Enums.UserStatus;
         avatar: string | null;
         createdAt: Date;
     }>;
     update(id: string, data: UpdateUserInput): Promise<{
-        email: string;
-        role: import("../../generated/prisma/enums.js").Role;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").UserStatus;
+        id: string;
+        email: string;
+        role: import("../../generated/prisma/index.js").$Enums.Role;
+        status: import("../../generated/prisma/index.js").$Enums.UserStatus;
         avatar: string | null;
         updatedAt: Date;
     }>;

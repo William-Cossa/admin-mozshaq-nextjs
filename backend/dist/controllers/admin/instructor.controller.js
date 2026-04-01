@@ -3,8 +3,8 @@ import { createInstructorSchema, updateInstructorSchema } from "../../validators
 export const instructorController = {
     async getAll(req, res) {
         try {
-            const instructors = await instructorService.getAll();
-            res.status(200).json({ success: true, instructors });
+            const result = await instructorService.getAll(req.query);
+            res.status(200).json(result);
         }
         catch (err) {
             res.status(500).json({ success: false, message: err.message });

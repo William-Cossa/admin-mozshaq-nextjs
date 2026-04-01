@@ -15,7 +15,7 @@ export interface Instructor {
   yearsExperience: number;
   bio: string;
   education: string;
-  linkedin?: string;
+  phone?: string;
   professionalEmail?: string;
   status: InstructorStatus;
   courseIds: string[]; // Relação N:N

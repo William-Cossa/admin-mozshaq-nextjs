@@ -12,7 +12,7 @@ export default async function InstructorsPage({ searchParams }: PageProps) {
 
   return (
     <InstructorsClient
-      instructors={result.instructors || []}
+      instructors={result.data || []}
       total={result.total || 0}
       page={result.page || 1}
       limit={result.limit || 10}

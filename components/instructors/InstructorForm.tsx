@@ -26,6 +26,7 @@ import { z } from "zod";
 import { createInstructor, updateInstructor } from "@/lib/actions/instructors";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Heading from "../Heading";
 
 const instructorSchema = z.object({
   name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
@@ -91,19 +92,12 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link href="/instructors">
-            <button className="p-2 border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 text-slate-500 hover:text-primary transition-all shadow-sm">
-              <ArrowLeft size={20} />
-            </button>
-          </Link>
-          <div className="flex flex-col">
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              {instructor ? "Editar Formador" : "Novo Formador"}
-            </h1>
-            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-0.5">
-              Gestão de Especialistas e Mentores
-            </p>
-          </div>
+
+          <Heading
+            title={instructor ? "Editar Formador" : "Novo Formador"}
+            text="Gerencie a equipa de instrutores, especialidades e o impacto nos cursos."
+          />
+
         </div>
       </div>
 
@@ -127,7 +121,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                   placeholder="Nome do Instrutor"
                   defaultValue={instructor?.name}
                   className={cn(
-                    "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-1 focus:ring-primary h-11",
+                    "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-1 focus:ring-primary h-11",
                     errors.name && "border-red-500 focus:ring-red-500"
                   )}
                 />
@@ -143,7 +137,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                     placeholder="Ex: UI/UX Design, React, etc."
                     defaultValue={instructor?.specialization}
                     className={cn(
-                      "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 h-11",
+                      "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 h-11",
                       errors.specialization && "border-red-500"
                     )}
                   />
@@ -158,7 +152,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                     type="number"
                     defaultValue={instructor?.yearsExperience || 0}
                     className={cn(
-                      "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 h-11",
+                      "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 h-11",
                       errors.yearsExperience && "border-red-500"
                     )}
                   />
@@ -174,7 +168,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                   placeholder="Ex: Licenciatura em Engenharia Informática"
                   defaultValue={instructor?.education}
                   className={cn(
-                    "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 h-11",
+                    "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 h-11",
                     errors.education && "border-red-500"
                   )}
                 />
@@ -200,7 +194,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                   defaultValue={instructor?.bio}
                   rows={6}
                   className={cn(
-                    "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-1 focus:ring-primary resize-none p-4",
+                    "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-1 focus:ring-primary resize-none p-4",
                     errors.bio && "border-red-500 focus:ring-red-500"
                   )}
                 />
@@ -220,7 +214,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
               <div className="space-y-2">
                 <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Status na Plataforma</Label>
                 <Select name="status" defaultValue={instructor?.status || "ACTIVO"}>
-                  <SelectTrigger className="rounded-xl border-slate-200 dark:border-slate-800 h-11">
+                  <SelectTrigger className="rounded-lg border-slate-200 dark:border-slate-800 h-11">
                     <SelectValue placeholder="Estado" />
                   </SelectTrigger>
                   <SelectContent>
@@ -241,7 +235,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                       type="email"
                       placeholder="email@mozshaq.com"
                       defaultValue={instructor?.professionalEmail || ""}
-                      className="pl-10 rounded-xl h-11 focus:ring-1 focus:ring-primary"
+                      className="pl-10 rounded-lg h-11 focus:ring-1 focus:ring-primary"
                     />
                   </div>
                 </div>
@@ -255,7 +249,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                       name="phone"
                       placeholder="+258 8x xxxxxxx"
                       defaultValue={instructor?.phone || ""}
-                      className="pl-10 rounded-xl h-11 focus:ring-1 focus:ring-primary"
+                      className="pl-10 rounded-lg h-11 focus:ring-1 focus:ring-primary"
                     />
                   </div>
                 </div>
@@ -275,7 +269,7 @@ export function InstructorForm({ instructor }: InstructorFormProps) {
                   value={photoUrl}
                   onChange={(e) => setPhotoUrl(e.target.value)}
                   placeholder="https://..."
-                  className="rounded-xl h-11 focus:ring-1 focus:ring-primary"
+                  className="rounded-lg h-11 focus:ring-1 focus:ring-primary"
                 />
                 <div className="aspect-square w-full rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
                   {photoUrl ? (

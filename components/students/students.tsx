@@ -22,7 +22,7 @@ export default function StudentsPage() {
           </p>
         </div>
 
-        <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-1.5 text-sm font-bold text-white shadow-xl shadow-primary/20 hover:bg-blue-600 transition-all active:scale-95">
+        <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-1.5 text-sm font-bold text-white shadow-xl shadow-primary/20 hover:bg-blue-600 transition-all active:scale-95">
           <Plus size={16} />
           <span>Add Student</span>
         </button>
@@ -40,24 +40,24 @@ export default function StudentsPage() {
             placeholder="Search by name, email, or ID"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-1.5 rounded-xl border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 text-sm focus:ring-2 focus:ring-primary transition-all"
+            className="w-full pl-10 pr-4 py-1.5 rounded-lg border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 text-sm focus:ring-2 focus:ring-primary transition-all"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-          <select className="rounded-xl border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary">
+          <select className="rounded-lg border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary">
             <option>All Courses</option>
           </select>
 
-          <select className="rounded-xl border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary">
+          <select className="rounded-lg border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 px-3 py-1.5 text-sm font-bold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-primary">
             <option>All Statuses</option>
           </select>
 
-          <button className="p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors">
+          <button className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors">
             <Filter size={16} />
           </button>
 
-          <button className="p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors">
+          <button className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-slate-500 hover:text-primary transition-colors">
             <Download size={16} />
           </button>
         </div>

@@ -5,8 +5,8 @@ export declare const categoryService: {
             courses: number;
         };
     } & {
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
@@ -16,22 +16,22 @@ export declare const categoryService: {
             courses: number;
         };
     } & {
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
     }>;
     create(data: CreateCategoryInput): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;
     }>;
     update(id: string, data: UpdateCategoryInput): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         updatedAt: Date;
         description: string | null;

@@ -15,7 +15,7 @@ export function ModuleCard({ index, data, updateModule, removeModule }: any) {
   }
 
   return (
-    <div className="border rounded-xl p-4 space-y-4">
+    <div className="border rounded-lg p-4 space-y-4">
       <div className="flex justify-between items-center">
         <h3 className="font-semibold">Módulo {index + 1}</h3>
         <Button variant="destructive" onClick={() => removeModule(index)}>

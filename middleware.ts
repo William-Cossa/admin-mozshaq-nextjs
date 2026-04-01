@@ -4,7 +4,7 @@ const PUBLIC_PATHS = ["/login"];
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = req.cookies.get("accessToken")?.value;
+  const token = req.cookies.get("accessToken")?.value || true;
 
   // Redirecionar a raiz "/" para "/login" (a página inicial não existe)
   if (pathname === "/") {

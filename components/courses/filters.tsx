@@ -42,7 +42,7 @@ export default function Filters() {
           size={16}
         />
         <input
-          className="w-full h-10 pl-10 pr-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl outline-none focus:ring-1 focus:ring-primary transition-all"
+          className="w-full h-10 pl-10 pr-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg outline-none focus:ring-1 focus:ring-primary transition-all"
           placeholder="Pesquisar por nome..."
           defaultValue={searchParams.get("search") || ""}
           onChange={(e) => updateUrl({ search: e.target.value || null })}
@@ -50,7 +50,7 @@ export default function Filters() {
       </div>
 
       <select
-        className="h-10 pl-3 pr-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold outline-none focus:ring-1 focus:ring-primary"
+        className="h-10 pl-3 pr-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-bold outline-none focus:ring-1 focus:ring-primary"
         defaultValue={searchParams.get("type") || ""}
         onChange={(e) => updateUrl({ type: e.target.value || null })}
       >

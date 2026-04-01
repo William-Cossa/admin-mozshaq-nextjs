@@ -33,9 +33,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export function CourseFormBasic({ 
-  data, 
-  errors, 
+export function CourseFormBasic({
+  data,
+  errors,
   updateField,
   categories = [],
   instructors = [],
@@ -82,7 +82,7 @@ export function CourseFormBasic({
                 className={cn(
                   "h-10",
                   errors.title &&
-                    "border-destructive focus-visible:ring-destructive"
+                  "border-destructive focus-visible:ring-destructive"
                 )}
                 placeholder="Ex: Formação Full Stack Senior"
               />
@@ -109,7 +109,7 @@ export function CourseFormBasic({
                   value={data.categoryId || ""}
                   onValueChange={(value) => updateField("categoryId", value)}
                 >
-                  <SelectTrigger className="h-10 w-full rounded-xl">
+                  <SelectTrigger className="h-10 w-full rounded-lg">
                     <SelectValue placeholder="Selecione uma categoria..." />
                   </SelectTrigger>
                   <SelectContent>
@@ -287,7 +287,7 @@ export function CourseFormBasic({
                 })}
               </div>
 
-              <div className="border rounded-xl p-4 bg-slate-50/50 dark:bg-slate-800/50">
+              <div className="border rounded-lg p-4 bg-slate-50/50 dark:bg-slate-800/50">
                 <Label className="text-[10px] font-bold uppercase tracking-wider mb-3 block text-muted-foreground">
                   Adicionar Formadores
                 </Label>
@@ -319,7 +319,7 @@ export function CourseFormBasic({
                   ))}
                 </div>
               </div>
-              
+
               {errors.instructorIds && (
                 <motion.p
                   initial={{ opacity: 0, x: -5 }}
@@ -353,9 +353,9 @@ export function CourseFormBasic({
                   variant={courseType === type ? "default" : "outline"}
                   onClick={() => updateField("type", type)}
                   className={cn(
-                    "flex items-center justify-start h-auto py-2.5 px-4 gap-3 rounded-xl",
+                    "flex items-center justify-start h-auto py-2.5 px-4 gap-3 rounded-lg",
                     courseType === type &&
-                      "bg-primary/10 text-primary border-primary hover:bg-primary/20 hover:text-primary"
+                    "bg-primary/10 text-primary border-primary hover:bg-primary/20 hover:text-primary"
                   )}
                 >
                   {type === "ONLINE" && <Globe className="h-4 w-4" />}
@@ -389,7 +389,7 @@ export function CourseFormBasic({
                 value={data.status || "RASCUNHO"}
                 onValueChange={(value) => updateField("status", value)}
               >
-                <SelectTrigger id="status" className="h-10 w-full rounded-xl">
+                <SelectTrigger id="status" className="h-10 w-full rounded-lg">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -411,7 +411,7 @@ export function CourseFormBasic({
                 value={data.level || "INICIANTE"}
                 onValueChange={(value) => updateField("level", value)}
               >
-                <SelectTrigger id="level" className="h-10 w-full rounded-xl">
+                <SelectTrigger id="level" className="h-10 w-full rounded-lg">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -433,7 +433,7 @@ export function CourseFormBasic({
               value={data.thumbnail || ""}
               onChange={(e) => updateField("thumbnail", e.target.value)}
               placeholder="https://exemplo.com/imagem.jpg"
-              className="h-10 rounded-xl"
+              className="h-10 rounded-lg"
             />
             <div className="aspect-video w-full rounded-2xl bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
               {data.thumbnail ? (

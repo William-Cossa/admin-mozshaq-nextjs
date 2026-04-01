@@ -1,9 +1,9 @@
 import type { CreateClassInput, UpdateClassInput } from "../../validators/admin/class.validator.js";
 export declare const classService: {
     getAllByCourse(courseId: string): Promise<{
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").CourseClassStatus;
+        id: string;
+        status: import("../../generated/prisma/index.js").$Enums.CourseClassStatus;
         createdAt: Date;
         updatedAt: Date;
         courseId: string;
@@ -16,14 +16,14 @@ export declare const classService: {
     }[]>;
     getById(id: string): Promise<{
         course: {
-            type: import("../../generated/prisma/enums.js").CourseType;
             id: string;
             title: string;
+            type: import("../../generated/prisma/index.js").$Enums.CourseType;
         };
     } & {
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").CourseClassStatus;
+        id: string;
+        status: import("../../generated/prisma/index.js").$Enums.CourseClassStatus;
         createdAt: Date;
         updatedAt: Date;
         courseId: string;
@@ -35,9 +35,9 @@ export declare const classService: {
         enrolledCount: number;
     }>;
     create(data: CreateClassInput): Promise<{
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").CourseClassStatus;
+        id: string;
+        status: import("../../generated/prisma/index.js").$Enums.CourseClassStatus;
         createdAt: Date;
         updatedAt: Date;
         courseId: string;
@@ -49,9 +49,9 @@ export declare const classService: {
         enrolledCount: number;
     }>;
     update(id: string, data: UpdateClassInput): Promise<{
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").CourseClassStatus;
+        id: string;
+        status: import("../../generated/prisma/index.js").$Enums.CourseClassStatus;
         createdAt: Date;
         updatedAt: Date;
         courseId: string;

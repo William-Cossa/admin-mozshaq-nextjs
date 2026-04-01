@@ -8,20 +8,20 @@ export declare const studentService: {
     }>;
     getById(id: string): Promise<any>;
     create(data: CreateStudentInput): Promise<{
-        email: string;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").StudentStatus;
+        id: string;
+        email: string;
+        status: import("../../generated/prisma/index.js").$Enums.StudentStatus;
         avatar: string | null;
         createdAt: Date;
         phone: string | null;
         joinDate: Date;
     }>;
     update(id: string, data: UpdateStudentInput): Promise<{
-        email: string;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").StudentStatus;
+        id: string;
+        email: string;
+        status: import("../../generated/prisma/index.js").$Enums.StudentStatus;
         avatar: string | null;
         updatedAt: Date;
         phone: string | null;

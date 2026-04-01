@@ -22,7 +22,7 @@ export default function CoursesList({
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
         {courses.length === 0 ? (
-          <div className="col-span-full py-20 text-center text-slate-500 bg-white dark:bg-slate-900 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
+          <div className="col-span-full py-20 text-center text-slate-500 bg-white dark:bg-slate-900 rounded-lg border border-dashed border-slate-200 dark:border-slate-800">
             Nenhum curso encontrado.
           </div>
         ) : (

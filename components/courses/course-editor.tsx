@@ -17,8 +17,8 @@ interface CourseEditorProps {
   instructors: any[];
 }
 
-export function CourseEditor({ 
-  initialData, 
+export function CourseEditor({
+  initialData,
   onSubmit,
   categories,
   instructors,
@@ -90,8 +90,8 @@ export function CourseEditor({
         className="w-full flex flex-col gap-6"
       >
         <TabsList className="grid grid-cols-2 w-full">
-          <TabsTrigger value="basic">Informações Básicas</TabsTrigger>
-          <TabsTrigger value="curriculum">Conteúdo do Curso</TabsTrigger>
+          <TabsTrigger className="h-10" value="basic">Informações Básicas</TabsTrigger>
+          <TabsTrigger className="h-10" value="curriculum">Programa</TabsTrigger>
         </TabsList>
 
         {/* --- BASIC TAB --- */}

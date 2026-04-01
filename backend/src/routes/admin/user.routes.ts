@@ -5,7 +5,7 @@ import { authorize } from "../../middleware/authorize.js";
 
 const router = Router();
 
-// router.use(authenticate, authenticatePortal("admin"), authorize("ADMIN"));
+router.use(authenticate, authenticatePortal("admin"), authorize("ADMIN"));
 
 router.get("/", userController.getAll);
 router.get("/:id", userController.getById);

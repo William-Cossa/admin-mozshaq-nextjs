@@ -1,6 +1,7 @@
 import { prisma } from "../../lib/prisma.js";
 import { v7 as uuidv7 } from "uuid";
 import bcrypt from "bcryptjs";
+import { generateAvatarUrl } from "../../lib/avatar.js";
 function formatFrontendStudent(student) {
     const totalInvestido = student.payments
         ? student.payments.reduce((sum, p) => p.status === "APPROVED" ? sum + p.amount : sum, 0)
@@ -87,14 +88,15 @@ export const studentService = {
         if (existing)
             throw new Error("Já existe um aluno com este email.");
         const hashedPassword = await bcrypt.hash(data.password, 10);
+        const avatar = data.avatar || generateAvatarUrl(data.name);
         return prisma.student.create({
             data: {
                 id: uuidv7(),
                 name: data.name,
                 email: data.email,
                 password: hashedPassword,
+                avatar,
                 ...(data.phone && { phone: data.phone }),
-                ...(data.avatar && { avatar: data.avatar }),
                 ...(data.status && { status: data.status }),
             },
             select: {

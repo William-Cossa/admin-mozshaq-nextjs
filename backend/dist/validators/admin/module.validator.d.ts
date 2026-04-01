@@ -18,8 +18,8 @@ export declare const updateModuleSchema: z.ZodObject<{
         ARCHIVED: "ARCHIVED";
     }>>>;
     title: z.ZodOptional<z.ZodString>;
-    order: z.ZodOptional<z.ZodNumber>;
     duration: z.ZodOptional<z.ZodOptional<z.ZodString>>;
+    order: z.ZodOptional<z.ZodNumber>;
     topics: z.ZodOptional<z.ZodDefault<z.ZodArray<z.ZodString>>>;
 }, z.core.$strip>;
 export type CreateModuleInput = z.infer<typeof createModuleSchema>;

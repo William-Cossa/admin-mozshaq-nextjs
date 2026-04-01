@@ -32,6 +32,7 @@ export const instructorController = {
       return;
     }
 
+
     try {
       const instructor = await instructorService.create(result.data);
       res.status(201).json({ success: true, instructor });

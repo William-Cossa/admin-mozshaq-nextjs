@@ -81,7 +81,7 @@ export function RejectModal({
                 }}
                 rows={4}
                 placeholder="Ex: Comprovativo ilegível. Por favor reenvie com melhor qualidade..."
-                className="w-full resize-none rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
+                className="w-full resize-none rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 py-2.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary transition"
               />
               {error && (
                 <p className="text-xs text-red-500 mt-1.5 font-medium">{error}</p>
@@ -95,7 +95,7 @@ export function RejectModal({
               <Dialog.Close asChild>
                 <button
                   type="button"
-                  className="flex-1 h-10 rounded-xl border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  className="flex-1 h-10 rounded-lg border border-slate-200 dark:border-slate-700 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
                 >
                   Cancelar
                 </button>
@@ -103,7 +103,7 @@ export function RejectModal({
               <button
                 type="submit"
                 disabled={isPending}
-                className="flex-1 h-10 rounded-xl bg-red-600 hover:bg-red-700 text-white text-sm font-bold transition-colors disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
+                className="flex-1 h-10 rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-bold transition-colors disabled:opacity-60 flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
               >
                 {isPending && <Loader2 size={14} className="animate-spin" />}
                 {isPending ? "A rejeitar..." : "Confirmar Rejeição"}

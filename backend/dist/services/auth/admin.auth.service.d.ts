@@ -7,11 +7,11 @@ export declare const adminAuthService: {
         accessToken: string;
         refreshToken: string;
         user: {
-            email: string;
-            role: import("../../generated/prisma/enums.js").Role;
-            id: string;
             name: string;
-            status: import("../../generated/prisma/enums.js").UserStatus;
+            id: string;
+            email: string;
+            role: import("../../generated/prisma/index.js").$Enums.Role;
+            status: import("../../generated/prisma/index.js").$Enums.UserStatus;
             avatar: string | null;
             lastLogin: Date | null;
             createdAt: Date;
@@ -33,11 +33,11 @@ export declare const adminAuthService: {
      * Retorna o utilizador pelo ID (para o endpoint /me).
      */
     getMe(userId: string): Promise<{
-        email: string;
-        role: import("../../generated/prisma/enums.js").Role;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").UserStatus;
+        id: string;
+        email: string;
+        role: import("../../generated/prisma/index.js").$Enums.Role;
+        status: import("../../generated/prisma/index.js").$Enums.UserStatus;
         avatar: string | null;
         lastLogin: Date | null;
         createdAt: Date;

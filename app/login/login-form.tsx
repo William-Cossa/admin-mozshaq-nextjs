@@ -23,7 +23,7 @@ export function LoginForm() {
         <form action={formAction} className="p-8 space-y-6">
             {/* Mensagem de erro */}
             {state?.error && (
-                <div className="p-3 text-sm font-medium text-red-600 bg-red-50 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20 rounded-xl animate-in slide-in-from-top-1 fade-in duration-200">
+                <div className="p-3 text-sm font-medium text-red-600 bg-red-50 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20 rounded-lg animate-in slide-in-from-top-1 fade-in duration-200">
                     {state.error}
                 </div>
             )}
@@ -42,7 +42,7 @@ export function LoginForm() {
                             type="email"
                             placeholder="admin@mozshaq.com"
                             required
-                            className="pl-10 rounded-xl border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                            className="pl-10 rounded-lg border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                         />
                     </div>
                 </div>
@@ -68,7 +68,7 @@ export function LoginForm() {
                             name="password"
                             type="password"
                             required
-                            className="pl-10 rounded-xl border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                            className="pl-10 rounded-lg border-slate-200 dark:border-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                             placeholder="••••••••"
                         />
                     </div>
@@ -79,7 +79,7 @@ export function LoginForm() {
             <Button
                 type="submit"
                 disabled={isPending}
-                className="w-full rounded-xl py-6 font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full rounded-lg py-6 font-semibold shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed"
             >
                 {isPending ? (
                     <Loader2 className="animate-spin size-5 mr-2" />

@@ -19,7 +19,7 @@ export async function getStudents(params?: Record<string, string>) {
   try {
     const res = await fetch(`${API_URL}/admin/students${query}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
     });
 
     if (!res.ok) {

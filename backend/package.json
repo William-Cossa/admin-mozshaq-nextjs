@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && cp -r src/docs dist/",
+    "build": "npx prisma generate && tsc && cp -r src/generated dist/generated && cp -r src/docs dist/",
     "start": "node dist/index.js",
     "dev": "tsx watch src/index.ts"
   },

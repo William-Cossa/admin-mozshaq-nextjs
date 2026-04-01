@@ -3,8 +3,8 @@ import { createUserSchema, updateUserSchema } from "../../validators/admin/user.
 export const userController = {
     async getAll(req, res) {
         try {
-            const users = await userService.getAll();
-            res.status(200).json({ success: true, users });
+            const result = await userService.getAll(req.query);
+            res.status(200).json({ success: true, ...result });
         }
         catch (err) {
             res.status(500).json({ success: false, message: err.message });

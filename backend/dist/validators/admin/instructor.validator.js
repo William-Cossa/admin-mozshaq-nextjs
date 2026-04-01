@@ -6,7 +6,7 @@ export const createInstructorSchema = z.object({
     yearsExperience: z.number().int().min(0).optional(),
     bio: z.string().min(10, "Bio deve ter pelo menos 10 caracteres"),
     education: z.string().min(2, "Formação é obrigatória"),
-    linkedin: z.string().url("URL do LinkedIn inválida").optional(),
+    phone: z.string().min(9, "Contacto de celular inválido").optional(),
     professionalEmail: z.string().email("Email profissional inválido").optional(),
     status: z.enum(["ACTIVO", "INACTIVO"]).optional(),
 });

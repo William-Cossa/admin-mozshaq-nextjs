@@ -3,6 +3,7 @@ import { createCourse } from "@/lib/actions/courses";
 import { getCategories } from "@/lib/actions/categories";
 import { getInstructors } from "@/lib/actions/instructors";
 import { redirect } from "next/navigation";
+import Heading from "@/components/Heading";
 
 export default async function NewCoursePage() {
   const [categories, instructorsData] = await Promise.all([
@@ -24,9 +25,15 @@ export default async function NewCoursePage() {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl font-semibold mb-6">Criar Novo Curso</h1>
-      <CourseEditor 
-        onSubmit={createCourseAction} 
+      <div className="flex -mb-12" >
+
+        <Heading
+          title="Criar Novo Curso"
+          text="Preencha os campos abaixo para criar um novo curso."
+        />
+      </div>
+      <CourseEditor
+        onSubmit={createCourseAction}
         categories={categories}
         instructors={instructors}
       />

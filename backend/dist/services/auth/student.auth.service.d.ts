@@ -7,10 +7,10 @@ export declare const studentAuthService: {
         accessToken: string;
         refreshToken: string;
         student: {
-            email: string;
-            id: string;
             name: string;
-            status: import("../../generated/prisma/enums.js").StudentStatus;
+            id: string;
+            email: string;
+            status: import("../../generated/prisma/index.js").$Enums.StudentStatus;
             avatar: string | null;
             createdAt: Date;
             updatedAt: Date;
@@ -25,10 +25,10 @@ export declare const studentAuthService: {
         accessToken: string;
         refreshToken: string;
         student: {
-            email: string;
-            id: string;
             name: string;
-            status: import("../../generated/prisma/enums.js").StudentStatus;
+            id: string;
+            email: string;
+            status: import("../../generated/prisma/index.js").$Enums.StudentStatus;
             avatar: string | null;
             createdAt: Date;
             updatedAt: Date;
@@ -51,15 +51,17 @@ export declare const studentAuthService: {
      * Dados do aluno autenticado.
      */
     getMe(studentId: string): Promise<{
-        email: string;
-        id: string;
         name: string;
-        status: import("../../generated/prisma/enums.js").StudentStatus;
+        id: string;
+        email: string;
+        status: import("../../generated/prisma/index.js").$Enums.StudentStatus;
         avatar: string | null;
         createdAt: Date;
+        phone: string | null;
+        joinDate: Date;
         enrollments: {
             id: string;
-            status: import("../../generated/prisma/enums.js").EnrollmentStatus;
+            status: import("../../generated/prisma/index.js").$Enums.EnrollmentStatus;
             course: {
                 id: string;
                 title: string;
@@ -67,7 +69,5 @@ export declare const studentAuthService: {
             };
             progress: number;
         }[];
-        phone: string | null;
-        joinDate: Date;
     }>;
 };

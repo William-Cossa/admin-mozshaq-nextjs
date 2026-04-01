@@ -41,7 +41,7 @@ export function DeleteCourseDialog({ courseId, courseTitle, trigger }: DeleteCou
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <button className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl transition-all" title="Remover">
+          <button className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-all" title="Remover">
             <Trash2 size={16} />
           </button>
         )}
@@ -61,7 +61,7 @@ export function DeleteCourseDialog({ courseId, courseTitle, trigger }: DeleteCou
             variant="outline"
             onClick={() => setOpen(false)}
             disabled={isPending}
-            className="rounded-xl font-bold"
+            className="rounded-lg font-bold"
           >
             Cancelar
           </Button>
@@ -70,7 +70,7 @@ export function DeleteCourseDialog({ courseId, courseTitle, trigger }: DeleteCou
             variant="destructive"
             onClick={handleDelete}
             disabled={isPending}
-            className="rounded-xl font-bold"
+            className="rounded-lg font-bold"
           >
             {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Confirmar Remoção

@@ -19,7 +19,7 @@ interface Props {
 export default function CourseCard({ course }: Props) {
   // O backend retorna categoria (nome) e category (objeto)
   const categoryName = course.categoria || (typeof course.category === 'object' ? course.category?.name : course.category);
-  
+
   return (
     <div className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
       <div className="relative h-40 w-full overflow-hidden">
@@ -42,8 +42,8 @@ export default function CourseCard({ course }: Props) {
               course.type === "ONLINE"
                 ? "bg-blue-500 text-white"
                 : course.type === "PRESENCIAL"
-                ? "bg-orange-500 text-white"
-                : "bg-purple-500 text-white"
+                  ? "bg-orange-500 text-white"
+                  : "bg-purple-500 text-white"
             )}
           >
             {course.type === "ONLINE" && <Globe size={8} />}
@@ -57,14 +57,14 @@ export default function CourseCard({ course }: Props) {
         <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
           <Link
             href={`/courses/${course.id}/edit`}
-            className="p-1.5 rounded-xl bg-white text-primary shadow-lg hover:bg-primary hover:text-white transition-all"
+            className="p-1.5 rounded-lg bg-white text-primary shadow-lg hover:bg-primary hover:text-white transition-all"
             title="Editar"
           >
             <Edit3 size={16} />
           </Link>
           <Link
             href={`/courses/${course.id}/structure`}
-            className="p-1.5 rounded-xl bg-white text-primary shadow-lg hover:bg-primary hover:text-white transition-all"
+            className="p-1.5 rounded-lg bg-white text-primary shadow-lg hover:bg-primary hover:text-white transition-all"
             title="Estrutura"
           >
             <ListTree size={16} />
@@ -78,9 +78,9 @@ export default function CourseCard({ course }: Props) {
           <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors leading-tight">
             {course.title}
           </h3>
-          <DeleteCourseDialog 
-            courseId={course.id} 
-            courseTitle={course.title} 
+          <DeleteCourseDialog
+            courseId={course.id}
+            courseTitle={course.title}
             trigger={
               <button className="text-slate-400 hover:text-red-500 transition-colors p-1 shrink-0" title="Apagar">
                 <MoreVertical size={18} />
@@ -114,8 +114,8 @@ export default function CourseCard({ course }: Props) {
                 course.status === "PUBLICADO"
                   ? "text-emerald-500"
                   : course.status === "RASCUNHO"
-                  ? "text-amber-500"
-                  : "text-slate-400"
+                    ? "text-amber-500"
+                    : "text-slate-400"
               )}
             >
               {course.status}

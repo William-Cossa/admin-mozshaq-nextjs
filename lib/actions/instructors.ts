@@ -2,13 +2,13 @@
 
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { Instructor } from "@/types/types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
 
 export async function getInstructors(params?: Record<string, string>) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
-
   if (!token) return { data: [], total: 0, page: 1, limit: 10 };
 
   const query = params ? "?" + new URLSearchParams(params).toString() : "";
@@ -16,11 +16,11 @@ export async function getInstructors(params?: Record<string, string>) {
   try {
     const res = await fetch(`${API_URL}/admin/instructors${query}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache"
     });
 
     if (!res.ok) {
-      console.error(`getInstructors failed: ${res.status} ${res.statusText}`);
+      console.error(`getInstructors failed: ${res.status} ${res.statusText}`, await res.json());
       return { data: [], total: 0, page: 1, limit: 10 };
     }
 
@@ -38,18 +38,24 @@ export async function getInstructorById(id: string) {
 
   if (!token) return { success: false, error: "Não autenticado" };
 
-  try {
-    const res = await fetch(`${API_URL}/admin/instructors/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
-    });
+  const instructors = await getInstructors();
+  const instructor = instructors.data.find((instructor: Instructor) => instructor.id === id);
 
-    if (!res.ok) return { success: false, error: "Formador não encontrado" };
-    const data = await res.json();
-    return { success: true, data };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  if (!instructor) {
+    try {
+      const res = await fetch(`${API_URL}/admin/instructors/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "force-cache",
+      });
+
+      if (!res.ok) return { success: false, error: "Formador não encontrado" };
+      const data = await res.json();
+      return { success: true, data: data.instructor };
+    } catch (error: any) {
+      return { success: false, error: error.message };
+    }
   }
+  return { success: true, data: instructor };
 }
 
 export async function createInstructor(data: any) {

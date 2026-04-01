@@ -56,6 +56,9 @@ export const courseService = {
         const skip = (Number(page) - 1) * Number(limit);
         const take = Number(limit);
         const where = {};
+        if (query.search) {
+            where.title = { contains: query.search, mode: "insensitive" };
+        }
         if (category)
             where.categoryId = category;
         if (level)

@@ -2,26 +2,26 @@ import type { CreateModuleInput, UpdateModuleInput } from "../../validators/admi
 export declare const moduleService: {
     getAllByCourse(courseId: string): Promise<({
         lessons: {
-            type: import("../../generated/prisma/enums.js").LessonType | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             title: string;
-            order: number;
+            type: import("../../generated/prisma/index.js").$Enums.LessonType | null;
             duration: string | null;
+            order: number;
             moduleId: string;
             content: string | null;
         }[];
     } & {
         id: string;
-        status: import("../../generated/prisma/enums.js").ModuleStatus;
+        status: import("../../generated/prisma/index.js").$Enums.ModuleStatus;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
-        order: number;
-        duration: string | null;
-        topics: string[];
         courseId: string;
+        title: string;
+        duration: string | null;
+        order: number;
+        topics: string[];
     })[]>;
     getById(id: string): Promise<{
         course: {
@@ -29,97 +29,97 @@ export declare const moduleService: {
             title: string;
         };
         lessons: {
-            type: import("../../generated/prisma/enums.js").LessonType | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             title: string;
-            order: number;
+            type: import("../../generated/prisma/index.js").$Enums.LessonType | null;
             duration: string | null;
+            order: number;
             moduleId: string;
             content: string | null;
         }[];
     } & {
         id: string;
-        status: import("../../generated/prisma/enums.js").ModuleStatus;
+        status: import("../../generated/prisma/index.js").$Enums.ModuleStatus;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
-        order: number;
-        duration: string | null;
-        topics: string[];
         courseId: string;
+        title: string;
+        duration: string | null;
+        order: number;
+        topics: string[];
     }>;
     create(data: CreateModuleInput): Promise<{
         lessons: {
-            type: import("../../generated/prisma/enums.js").LessonType | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             title: string;
-            order: number;
+            type: import("../../generated/prisma/index.js").$Enums.LessonType | null;
             duration: string | null;
+            order: number;
             moduleId: string;
             content: string | null;
         }[];
     } & {
         id: string;
-        status: import("../../generated/prisma/enums.js").ModuleStatus;
+        status: import("../../generated/prisma/index.js").$Enums.ModuleStatus;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
-        order: number;
-        duration: string | null;
-        topics: string[];
         courseId: string;
+        title: string;
+        duration: string | null;
+        order: number;
+        topics: string[];
     }>;
     update(id: string, data: UpdateModuleInput): Promise<{
         lessons: {
-            type: import("../../generated/prisma/enums.js").LessonType | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             title: string;
-            order: number;
+            type: import("../../generated/prisma/index.js").$Enums.LessonType | null;
             duration: string | null;
+            order: number;
             moduleId: string;
             content: string | null;
         }[];
     } & {
         id: string;
-        status: import("../../generated/prisma/enums.js").ModuleStatus;
+        status: import("../../generated/prisma/index.js").$Enums.ModuleStatus;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
-        order: number;
-        duration: string | null;
-        topics: string[];
         courseId: string;
+        title: string;
+        duration: string | null;
+        order: number;
+        topics: string[];
     }>;
     delete(id: string): Promise<{
         success: boolean;
     }>;
     reorder(courseId: string, orderedIds: string[]): Promise<({
         lessons: {
-            type: import("../../generated/prisma/enums.js").LessonType | null;
             id: string;
             createdAt: Date;
             updatedAt: Date;
             title: string;
-            order: number;
+            type: import("../../generated/prisma/index.js").$Enums.LessonType | null;
             duration: string | null;
+            order: number;
             moduleId: string;
             content: string | null;
         }[];
     } & {
         id: string;
-        status: import("../../generated/prisma/enums.js").ModuleStatus;
+        status: import("../../generated/prisma/index.js").$Enums.ModuleStatus;
         createdAt: Date;
         updatedAt: Date;
-        title: string;
-        order: number;
-        duration: string | null;
-        topics: string[];
         courseId: string;
+        title: string;
+        duration: string | null;
+        order: number;
+        topics: string[];
     })[]>;
 };

@@ -21,7 +21,7 @@ export async function getUsers(params?: Record<string, string>) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      cache: "no-store",
+      cache: "force-cache",
     });
 
     if (!res.ok) {

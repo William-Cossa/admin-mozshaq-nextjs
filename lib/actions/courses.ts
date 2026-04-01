@@ -16,7 +16,7 @@ export async function getCourses(params?: Record<string, string>) {
   try {
     const res = await fetch(`${API_URL}/admin/courses${query}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
     });
 
     if (!res.ok) return { data: [], total: 0, page: 1, limit: 10 };
@@ -36,7 +36,7 @@ export async function getCourseById(id: string) {
   try {
     const res = await fetch(`${API_URL}/admin/courses/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
     });
 
     if (!res.ok) return { success: false, error: "Curso não encontrado" };

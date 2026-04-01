@@ -40,7 +40,7 @@ export const instructorService = {
     ]);
 
     // Format to include totalCourses more explicitly for frontend
-    const formatted = instructors.map(ins => ({
+    const formatted = instructors.map((ins: any) => ({
       ...ins,
       totalCourses: ins._count.courses,
     }));
@@ -75,12 +75,19 @@ export const instructorService = {
   },
 
   async create(data: CreateInstructorInput) {
+    console.log("Data", data)
     if (data.professionalEmail) {
       const existingEmail = await prisma.instructor.findFirst({
         where: { professionalEmail: data.professionalEmail },
       });
       if (existingEmail) {
         throw new Error("Já existe um formador com este email profissional.");
+      }
+      const existingPhone = await prisma.instructor.findFirst({
+        where: { phone: data.phone },
+      });
+      if (existingPhone) {
+        throw new Error("Já existe um formador com este número de telefone.");
       }
     }
 
@@ -119,6 +126,14 @@ export const instructorService = {
       });
       if (emailTaken) {
         throw new Error("Já existe outro formador com este email profissional.");
+      }
+    }
+    if (data.phone && data.phone !== existingInstructor.phone) {
+      const phoneTaken = await prisma.instructor.findFirst({
+        where: { phone: data.phone },
+      });
+      if (phoneTaken) {
+        throw new Error("Já existe outro formador com este número de telefone.");
       }
     }
 

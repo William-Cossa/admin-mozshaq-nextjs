@@ -82,7 +82,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Pesquisar por aluno, curso ou ID..."
-              className="w-full h-9 pl-9 pr-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
+              className="w-full h-9 pl-9 pr-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
             />
           </div>
 
@@ -94,7 +94,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
                 key={f.value}
                 onClick={() => setStatusFilter(f.value)}
                 className={[
-                  "h-8 px-3 rounded-xl text-xs font-bold whitespace-nowrap transition-all",
+                  "h-8 px-3 rounded-lg text-xs font-bold whitespace-nowrap transition-all",
                   statusFilter === f.value
                     ? "bg-primary text-white shadow shadow-primary/20"
                     : "border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800",
@@ -115,7 +115,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
               type="date"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="h-9 pl-9 pr-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
+              className="h-9 pl-9 pr-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm text-slate-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
             />
           </div>
         </div>

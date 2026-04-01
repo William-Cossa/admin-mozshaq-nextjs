@@ -101,7 +101,7 @@ export function PaymentDetailModal({
                 ].map(({ icon: Icon, label, value }) => (
                   <div
                     key={label}
-                    className="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3.5"
+                    className="bg-slate-50 dark:bg-slate-800/50 rounded-lg p-3.5"
                   >
                     <div className="flex items-center gap-2 mb-1">
                       <Icon size={13} className="text-slate-400" />
@@ -118,7 +118,7 @@ export function PaymentDetailModal({
 
               {/* Rejection reason */}
               {payment.status === "rejected" && payment.rejectionReason && (
-                <div className="mx-6 mb-4 flex items-start gap-3 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20 p-3.5">
+                <div className="mx-6 mb-4 flex items-start gap-3 rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-900/20 p-3.5">
                   <AlertCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
                   <div>
                     <p className="text-xs font-bold text-red-700 dark:text-red-400 mb-0.5 uppercase tracking-wide">
@@ -147,7 +147,7 @@ export function PaymentDetailModal({
                     Abrir original
                   </a>
                 </div>
-                <div className="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
+                <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
                   {imgError ? (
                     <div className="text-center text-slate-400 py-8">
                       <AlertCircle size={32} className="mx-auto mb-2" />
@@ -170,7 +170,7 @@ export function PaymentDetailModal({
               <div className="flex gap-3 px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50">
                 <button
                   onClick={() => setShowRejectModal(true)}
-                  className="flex-1 h-10 rounded-xl border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm font-bold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 h-10 rounded-lg border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 text-sm font-bold hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center justify-center gap-2"
                 >
                   <XCircle size={15} />
                   Rejeitar
@@ -178,7 +178,7 @@ export function PaymentDetailModal({
                 <button
                   onClick={handleApprove}
                   disabled={isPending}
-                  className="flex-1 h-10 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-60"
+                  className="flex-1 h-10 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-60"
                 >
                   {isPending ? (
                     <Loader2 size={14} className="animate-spin" />

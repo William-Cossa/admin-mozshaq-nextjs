@@ -46,6 +46,7 @@ export type InstructorRow = {
   education: string;
   linkedin: string | null;
   professionalEmail: string | null;
+  phone: string | null;
   status: string;
   totalCourses?: number;
 };
@@ -101,7 +102,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button size="sm" className="gap-2 rounded-xl font-bold bg-primary hover:bg-primary/90">
+          <Button size="sm" className="gap-2 rounded-lg font-bold bg-primary hover:bg-primary/90">
             <Plus size={16} />
             <span>Novo Formador</span>
           </Button>
@@ -129,7 +130,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 placeholder="Ex: Dr. William Cossa"
                 defaultValue={instructor?.name}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
                   errors.name && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -145,7 +146,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 placeholder="exemplo@mozshaq.com"
                 defaultValue={instructor?.professionalEmail || ""}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
                   errors.professionalEmail && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -160,7 +161,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 placeholder="Ex: Engenharia de Software"
                 defaultValue={instructor?.specialization}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
                   errors.specialization && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -175,7 +176,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 type="number"
                 defaultValue={instructor?.yearsExperience || 0}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
                   errors.yearsExperience && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -190,7 +191,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 placeholder="Ex: Mestrado em Ciência de Computação - UEM"
                 defaultValue={instructor?.education}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
                   errors.education && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -206,7 +207,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 defaultValue={instructor?.bio}
                 rows={3}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary resize-none",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary resize-none",
                   errors.bio && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -221,7 +222,7 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
                 placeholder="https://linkedin.com/in/..."
                 defaultValue={instructor?.linkedin || ""}
                 className={cn(
-                  "rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
+                  "rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary",
                   errors.linkedin && "border-red-500 focus:ring-red-500"
                 )}
               />
@@ -231,10 +232,10 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
             <div className="space-y-1.5 col-span-2 sm:col-span-1">
               <Label className="text-xs font-black uppercase tracking-widest text-slate-500">Estado</Label>
               <Select name="status" defaultValue={instructor?.status || "ACTIVO"}>
-                <SelectTrigger className="rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary">
+                <SelectTrigger className="rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 focus:ring-primary">
                   <SelectValue placeholder="Seleccione o estado" />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl border-slate-200 dark:border-slate-800">
+                <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800">
                   <SelectItem value="ACTIVO">Activo</SelectItem>
                   <SelectItem value="INACTIVO">Inactivo</SelectItem>
                 </SelectContent>
@@ -247,14 +248,14 @@ export function InstructorFormDialog({ instructor, trigger }: InstructorFormDial
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
-              className="rounded-xl font-bold border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800"
+              className="rounded-lg font-bold border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800"
             >
               Cancelar
             </Button>
             <Button
               type="submit"
               disabled={loading}
-              className="rounded-xl font-bold bg-primary hover:bg-primary/90 text-white min-w-[120px]"
+              className="rounded-lg font-bold bg-primary hover:bg-primary/90 text-white min-w-[120px]"
             >
               {loading ? <Loader2 className="animate-spin" size={18} /> : instructor ? "Actualizar" : "Salvar Formador"}
             </Button>

@@ -25,12 +25,7 @@ export default function Header() {
           <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full" />
         </Button>
 
-        <Link href="/enrollments" className="hidden sm:flex cursor-pointer">
-          <Button className="cursor-pointer">
-            <Plus size={18} />
-            Nova inscrição
-          </Button>
-        </Link>
+
       </div>
     </header>
   );

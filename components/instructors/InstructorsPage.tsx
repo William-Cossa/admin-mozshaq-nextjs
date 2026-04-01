@@ -12,8 +12,10 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { DeleteInstructorDialog } from "./DeleteInstructorDialog";
+import { ViewInstructorDialog } from "./ViewInstructorDialog";
 import { InstructorFilters } from "./InstructorFilters";
 import { InstructorPagination } from "./InstructorPagination";
+import AddButton from "../add-button";
 
 export type InstructorRow = {
   id: string;
@@ -67,10 +69,7 @@ const InstructorsClient: React.FC<InstructorsClientProps> = ({
           text="Gerencie a equipa de instrutores, especialidades e o impacto nos cursos."
         />
         <Link href="/instructors/new">
-          <button className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition-all text-sm shadow-sm group">
-            <Plus size={16} className="group-hover:rotate-90 transition-transform duration-300" />
-            <span>Novo Formador</span>
-          </button>
+          <AddButton text="Novo formador" />
         </Link>
       </div>
 
@@ -128,12 +127,12 @@ const InstructorsClient: React.FC<InstructorsClientProps> = ({
                             <div className="flex items-center gap-2">
                               {instructor.professionalEmail && (
                                 <Link href={`mailto:${instructor.professionalEmail}`} className="text-slate-400 hover:text-primary transition-colors">
-                                  <Mail size={12} />
+                                  {/* <Mail size={12} /> <span className="text-sm">{instructor.professionalEmail}</span> */}
                                 </Link>
                               )}
                               {instructor.phone && (
-                                <Link href={`tel:${instructor.phone}`} className="text-slate-400 hover:text-green-500 transition-colors">
-                                  <Phone size={12} />
+                                <Link href={`tel:${instructor.phone}`} className="text-slate-400 flex items-center gap-2 hover:text-green-500 transition-colors">
+                                  <Phone size={12} /> <span className="text-xs font-semibold">{instructor.phone}</span>
                                 </Link>
                               )}
                             </div>
@@ -170,6 +169,7 @@ const InstructorsClient: React.FC<InstructorsClientProps> = ({
                       </td>
                       <td className="px-4 py-3 text-right">
                         <div className="flex items-center justify-end gap-1">
+                          <ViewInstructorDialog instructor={instructor} />
                           <Link href={`/instructors/${instructor.id}/edit`}>
                             <button className="p-1.5 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-md transition-all" title="Editar">
                               <Edit2 size={14} />

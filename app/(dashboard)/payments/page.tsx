@@ -73,7 +73,7 @@ export default async function PaymentsPage() {
         </div>
 
         {pending > 0 && (
-          <div className="inline-flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 text-sm font-bold px-4 py-2 rounded-xl">
+          <div className="inline-flex items-center gap-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-400 text-sm font-bold px-4 py-2 rounded-lg">
             <Clock size={15} />
             {pending} pagamento{pending > 1 ? "s" : ""} pendente
             {pending > 1 ? "s" : ""}
@@ -89,7 +89,7 @@ export default async function PaymentsPage() {
             className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm"
           >
             <div className="flex justify-between items-start mb-3">
-              <div className={cn("p-2 rounded-xl", stat.color)}>
+              <div className={cn("p-2 rounded-lg", stat.color)}>
                 <stat.icon size={16} />
               </div>
               <span

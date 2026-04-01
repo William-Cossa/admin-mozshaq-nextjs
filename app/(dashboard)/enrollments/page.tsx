@@ -111,11 +111,11 @@ export default async function EnrollmentsPage({
         <div className="p-3 border-b border-slate-100 dark:border-slate-800 flex flex-col md:flex-row gap-3 items-center">
           <SearchEnrollments placeholder="Pesquisar por aluno, curso ou ID..." />
           <div className="flex gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
-            <button className="flex items-center gap-2 h-9 px-3 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-50 transition-colors">
+            <button className="flex items-center gap-2 h-9 px-3 rounded-lg border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-50 transition-colors">
               <Filter size={16} className="text-slate-400" />
               <span>Filtros</span>
             </button>
-            <button className="flex items-center gap-2 h-9 px-3 rounded-xl border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-50 transition-colors">
+            <button className="flex items-center gap-2 h-9 px-3 rounded-lg border border-slate-200 dark:border-slate-800 text-sm font-bold text-slate-700 dark:text-white hover:bg-slate-50 transition-colors">
               <Calendar size={16} className="text-slate-400" />
               <span>Intervalo de Datas</span>
             </button>
