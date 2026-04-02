@@ -15,6 +15,7 @@ import {
   Check,
   X,
 } from "lucide-react";
+import { Reorder } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Module, Lesson } from "@/types/types";
 import { Button } from "@/components/ui/button";
@@ -22,13 +23,28 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { 
+  createModule as apiCreateModule, 
+  updateModule as apiUpdateModule, 
+  deleteModule as apiDeleteModule,
+  reorderModules as apiReorderModules
+} from "@/lib/actions/modules";
+import { 
+  createLesson as apiCreateLesson, 
+  updateLesson as apiUpdateLesson, 
+  deleteLesson as apiDeleteLesson,
+  reorderLessons as apiReorderLessons
+} from "@/lib/actions/lessons";
 
 interface CourseFormCurriculumProps {
+  courseId: string;
   modules: Module[];
   setModules: (modules: Module[]) => void;
 }
 
 export function CourseFormCurriculum({
+  courseId,
   modules,
   setModules,
 }: CourseFormCurriculumProps) {
@@ -50,26 +66,71 @@ export function CourseFormCurriculum({
     setExpandedModules({});
   };
 
-  const addModule = () => {
+  const addModule = async () => {
+    const tempId = `temp-${Math.random().toString(36).substring(2, 9)}`;
+    const newTitle = `Módulo ${modules.length + 1}: Novo Módulo`;
     const newModule: Module = {
-      id: Math.random().toString(36).substr(2, 9),
-      title: `Módulo ${modules.length + 1}: Novo Módulo`,
+      id: tempId,
+      title: newTitle,
       order: modules.length,
       status: "draft",
       lessons: [],
     };
-    setModules([...modules, newModule]);
-    setExpandedModules((prev) => ({ ...prev, [newModule.id]: true }));
+    
+    // Optimistic UI updates
+    const updatedModules = [...modules, newModule];
+    setModules(updatedModules);
+    setExpandedModules((prev) => ({ ...prev, [tempId]: true }));
+    
+    const res = await apiCreateModule(courseId, { title: newTitle, order: modules.length });
+    
+    if (res.success) {
+      setModules(updatedModules.map(m => m.id === tempId ? { ...res.data, lessons: [] } : m));
+      setExpandedModules((prev) => {
+        const next = { ...prev };
+        delete next[tempId];
+        next[res.data.id] = true;
+        return next;
+      });
+    } else {
+      setModules(modules);
+      toast.error(res.error || "Erro ao criar módulo");
+    }
   };
 
-  const updateModule = (moduleId: string, updates: Partial<Module>) => {
-    setModules(
-      modules.map((m) => (m.id === moduleId ? { ...m, ...updates } : m))
-    );
+  const updateModule = async (moduleId: string, updates: Partial<Module>) => {
+    const prevModules = modules;
+    setModules(modules.map((m) => (m.id === moduleId ? { ...m, ...updates } : m)));
+
+    const res = await apiUpdateModule(courseId, moduleId, updates);
+    if (!res.success) {
+      setModules(prevModules);
+      toast.error(res.error || "Erro ao atualizar módulo");
+    }
   };
 
-  const deleteModule = (moduleId: string) => {
+  const deleteModule = async (moduleId: string) => {
+    const prevModules = modules;
     setModules(modules.filter((m) => m.id !== moduleId));
+    
+    const res = await apiDeleteModule(courseId, moduleId);
+    if (!res.success) {
+      setModules(prevModules);
+      toast.error(res.error || "Erro ao apagar módulo");
+    }
+  };
+
+  const handleReorderModules = async (reordered: Module[]) => {
+    const orderedModules = reordered.map((m, idx) => ({ ...m, order: idx }));
+    const prevModules = modules;
+    
+    setModules(orderedModules);
+    const orderedIds = orderedModules.map(m => m.id);
+    const res = await apiReorderModules(courseId, orderedIds);
+    if (!res.success) {
+      setModules(prevModules);
+      toast.error(res.error || "Erro ao reordenar módulos");
+    }
   };
 
   const startEditingModule = (module: Module) => {
@@ -88,55 +149,85 @@ export function CourseFormCurriculum({
     setTempModuleTitle("");
   };
 
-  const addLesson = (moduleId: string) => {
+  const addLesson = async (moduleId: string) => {
     const module = modules.find((m) => m.id === moduleId);
     const moduleIndex = modules.findIndex((m) => m.id === moduleId);
     const lessonNumber = (module?.lessons?.length || 0) + 1;
+    const order = module?.lessons?.length || 0;
+    const title = `${moduleIndex + 1}.${lessonNumber} New Lesson`;
+    const tempId = `temp-${Math.random().toString(36).substring(2, 9)}`;
 
     const newLesson: Lesson = {
-      id: Math.random().toString(36).substr(2, 9),
-      title: `${moduleIndex + 1}.${lessonNumber} New Lesson`,
-      content: "",
-      order: module?.lessons?.length || 0,
+      id: tempId,
+      title,
+      order,
       duration: "15min",
     };
 
-    setModules(
-      modules.map((m) =>
-        m.id === moduleId
-          ? { ...m, lessons: [...(m.lessons || []), newLesson] }
-          : m
-      )
+    const updatedModules = modules.map((m) =>
+      m.id === moduleId ? { ...m, lessons: [...(m.lessons || []), newLesson] } : m
     );
+    setModules(updatedModules);
+
+    const res = await apiCreateLesson(courseId, moduleId, {
+      title,
+      order,
+      duration: "15min",
+    });
+
+    if (res.success) {
+      setModules(updatedModules.map((m) =>
+        m.id === moduleId ? { ...m, lessons: m.lessons?.map(l => l.id === tempId ? res.data : l) } : m
+      ));
+    } else {
+      setModules(modules);
+      toast.error(res.error || "Erro ao criar aula");
+    }
   };
 
-  const updateLesson = (
-    moduleId: string,
-    lessonId: string,
-    updates: Partial<Lesson>
-  ) => {
+  const updateLesson = async (moduleId: string, lessonId: string, updates: Partial<Lesson>) => {
+    const prevModules = modules;
     setModules(
-      modules.map((m) =>
-        m.id === moduleId
-          ? {
-              ...m,
-              lessons: m.lessons?.map((l) =>
-                l.id === lessonId ? { ...l, ...updates } : l
-              ),
-            }
-          : m
-      )
+      modules.map((m) => m.id === moduleId ? {
+        ...m,
+        lessons: m.lessons?.map((l) => l.id === lessonId ? { ...l, ...updates } : l),
+      } : m)
     );
+
+    const res = await apiUpdateLesson(courseId, moduleId, lessonId, updates);
+    if (!res.success) {
+      setModules(prevModules);
+      toast.error(res.error || "Erro ao atualizar aula");
+    }
   };
 
-  const deleteLesson = (moduleId: string, lessonId: string) => {
+  const deleteLesson = async (moduleId: string, lessonId: string) => {
+    const prevModules = modules;
     setModules(
-      modules.map((m) =>
-        m.id === moduleId
-          ? { ...m, lessons: m.lessons?.filter((l) => l.id !== lessonId) }
-          : m
-      )
+      modules.map((m) => m.id === moduleId ? { ...m, lessons: m.lessons?.filter((l) => l.id !== lessonId) } : m)
     );
+
+    const res = await apiDeleteLesson(courseId, moduleId, lessonId);
+    if (!res.success) {
+      setModules(prevModules);
+      toast.error(res.error || "Erro ao apagar aula");
+    }
+  };
+
+  const handleReorderLessons = async (moduleId: string, reorderedLessons: Lesson[]) => {
+    const orderedLessons = reorderedLessons.map((l, idx) => ({ ...l, order: idx }));
+    const prevModules = modules;
+
+    setModules(
+      modules.map((m) => m.id === moduleId ? { ...m, lessons: orderedLessons } : m)
+    );
+
+    const orderedIds = orderedLessons.map(l => l.id.toString());
+    const res = await apiReorderLessons(courseId, moduleId, orderedIds);
+    if (!res.success) {
+      setModules(prevModules);
+      toast.error(res.error || "Erro ao reordenar aulas");
+    }
   };
 
   const startEditingLesson = (lesson: Lesson) => {
@@ -183,7 +274,7 @@ export function CourseFormCurriculum({
       </div>
 
       {/* Module List */}
-      <div className="space-y-3">
+      <Reorder.Group axis="y" values={modules} onReorder={handleReorderModules} className="space-y-3">
         {modules.length === 0 ? (
           <Card className="border-dashed">
             <div className="flex flex-col items-center justify-center py-12">
@@ -200,16 +291,16 @@ export function CourseFormCurriculum({
           </Card>
         ) : (
           modules.map((module, mIdx) => (
-            <Card
-              key={module.id}
-              className={cn(
-                "overflow-hidden transition-all",
-                expandedModules[module.id]
-                  ? "border-primary/50 shadow-md"
-                  : "border-slate-200 dark:border-slate-800 shadow-sm"
-              )}
-            >
-              {/* Module Header */}
+            <Reorder.Item key={module.id} value={module}>
+              <Card
+                className={cn(
+                  "overflow-hidden transition-all",
+                  expandedModules[module.id]
+                    ? "border-primary/50 shadow-md"
+                    : "border-slate-200 dark:border-slate-800 shadow-sm"
+                )}
+              >
+                {/* Module Header */}
               <div className="p-3 flex items-center gap-2.5">
                 <Button
                   variant="ghost"
@@ -328,18 +419,17 @@ export function CourseFormCurriculum({
                 <div className="border-t border-slate-100 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-900/30">
                   <div className="p-4 space-y-2">
                     {/* Lessons */}
-                    {module.lessons?.map((lesson, lIdx) => (
-                      <div
-                        key={lesson.id}
-                        className="group/lesson flex items-start gap-2.5 p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 transition-all"
-                      >
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="cursor-grab active:cursor-grabbing h-5 w-5 mt-0.5 text-slate-300 group-hover/lesson:text-slate-400 shrink-0 p-0"
-                        >
-                          <GripVertical className="h-3.5 w-3.5" />
-                        </Button>
+                    {module.lessons && module.lessons.length > 0 && (
+                      <Reorder.Group axis="y" values={module.lessons} onReorder={(reordered) => handleReorderLessons(module.id, reordered)} className="space-y-2 mb-2">
+                        {module.lessons.map((lesson, lIdx) => (
+                          <Reorder.Item
+                            key={lesson.id}
+                            value={lesson}
+                            className="group/lesson flex items-start gap-2.5 p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 transition-all"
+                          >
+                            <div className="cursor-grab active:cursor-grabbing text-slate-300 group-hover/lesson:text-slate-400 mt-0.5 shrink-0 p-0 flex items-center justify-center pointer-events-auto h-5 w-5">
+                              <GripVertical className="h-3.5 w-3.5" />
+                            </div>
 
                         <div className="flex-1 min-w-0 space-y-1.5">
                           {/* Title */}
@@ -443,8 +533,10 @@ export function CourseFormCurriculum({
                         >
                           <Trash2 className="h-3 w-3" />
                         </Button>
-                      </div>
+                      </Reorder.Item>
                     ))}
+                    </Reorder.Group>
+                    )}
 
                     {/* Add Lesson */}
                     <Button
@@ -458,10 +550,11 @@ export function CourseFormCurriculum({
                   </div>
                 </div>
               )}
-            </Card>
+              </Card>
+            </Reorder.Item>
           ))
         )}
-      </div>
+      </Reorder.Group>
 
       {/* Add Module Button */}
       {modules.length > 0 && (

@@ -125,12 +125,25 @@ export function CourseEditor({
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.18 }}
             >
-              <CourseFormCurriculum
-                modules={formData.modules || []}
-                setModules={(modules: Module[]) =>
-                  updateField("modules", modules)
-                }
-              />
+              {formData.id ? (
+                <CourseFormCurriculum
+                  courseId={formData.id}
+                  modules={formData.modules || []}
+                  setModules={(modules: Module[]) =>
+                    updateField("modules", modules)
+                  }
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center p-12 text-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                    <Save className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2">Salve o curso primeiro</h3>
+                  <p className="text-slate-500 max-w-sm">
+                    Para adicionar os módulos e estruturar o currículo, é necessário primeiro guardar as informações básicas do curso.
+                  </p>
+                </div>
+              )}
             </motion.div>
           </AnimatePresence>
         </TabsContent>

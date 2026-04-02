@@ -25,7 +25,7 @@ export const courseSchema = z.object({
         lessons: z.array(z.any()).optional(), // Curriculum handles lessons internally
       })
     )
-    .min(1, "Adicione pelo menos um módulo"),
+    .optional(),
 }).refine(data => {
   if (data.discountPrice !== undefined && data.discountPrice >= data.price) {
     return false;
