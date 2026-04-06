@@ -25,32 +25,52 @@ export default async function Page({ params }: { params: { id: string } }) {
   // Map backend data to frontend form data
   const course = {
     ...rawCourse,
-    instructorIds: rawCourse.instructors?.map((i: any) => i.instructorId) || [],
+    instructorIds: rawCourse.instructorIds || rawCourse.instructors?.map((i: any) => i.id || i.instructorId) || [],
+    price: typeof rawCourse.price === "string" ? parseFloat(rawCourse.price) : rawCourse.price,
+    discountPrice: rawCourse.discountPrice 
+      ? (typeof rawCourse.discountPrice === "string" ? parseFloat(rawCourse.discountPrice) : rawCourse.discountPrice) 
+      : undefined,
     duration: rawCourse.duration || "",
-    discountPrice: rawCourse.discountPrice ?? undefined,
     thumbnail: rawCourse.thumbnail || "",
   };
   async function mapCourseToApi(data: any) {
     "use server"
-    return {
-      title: data.title,
-      description: data.description,
-      longDescription: data.longDescription,
-      thumbnail: data.thumbnail || undefined,
-      categoryId: data.categoryId,
-      level: data.level,
-      type: data.type,
-      status: data.status,
-      price: data.price,
-      discountPrice: data.discountPrice,
-      duration: data.duration,
-      objectives: data.objectives,
-      targetAudience: data.targetAudience,
-      requirements: data.requirements,
-      skills: data.skills,
-      locationDefault: data.locationDefault,
-      instructorIds: data.instructorIds,
-    };
+    
+    const payload: any = {};
+    
+    // String fields - only send if not empty
+    const stringFields = ["title", "description", "longDescription", "thumbnail", "categoryId", "level", "type", "status", "duration", "locationDefault", "objective"];
+    stringFields.forEach(f => {
+      if (data[f] !== undefined && data[f] !== null) {
+        const val = String(data[f]).trim();
+        if (val !== "") {
+          payload[f] = val;
+        }
+      }
+    });
+
+    // Numeric fields - cast to float
+    const numFields = ["price", "discountPrice"];
+    numFields.forEach(f => {
+      if (data[f] !== undefined && data[f] !== null && String(data[f]).trim() !== "") {
+        const val = parseFloat(data[f]);
+        if (!isNaN(val)) {
+          payload[f] = val;
+        }
+      }
+    });
+
+    // Array fields - filter out empty/null values
+    const arrayFields = ["objectives", "targetAudience", "requirements", "skills", "instructorIds"];
+    arrayFields.forEach(f => {
+      if (Array.isArray(data[f])) {
+        payload[f] = data[f].filter((item: any) => 
+          item !== null && item !== undefined && String(item).trim() !== ""
+        );
+      }
+    });
+
+    return payload;
   }
 
   async function updateCourseAction(data: any) {
@@ -59,15 +79,20 @@ export default async function Page({ params }: { params: { id: string } }) {
     // Clean payload before updating
     const payload = await mapCourseToApi(data);
 
-    // Validate thumbnail schema correctly (backend expects Valid URL or undefined)
-    if (payload.thumbnail === "") {
-      delete payload.thumbnail;
-    }
     const res = await updateCourse(id, payload);
     if (res.success) {
       redirect("/courses");
     } else {
-      throw new Error(res.error);
+      const errorData = res.error || {};
+      let msg = typeof errorData === 'string' ? errorData : (errorData.message || "Erro ao actualizar curso");
+      if (errorData.errors) {
+        // Formatar erros de validação se existirem
+        const details = Object.entries(errorData.errors)
+          .map(([field, msgs]: [string, any]) => `${field}: ${Array.isArray(msgs) ? msgs.join(", ") : msgs}`)
+          .join(" | ");
+        msg = `${msg} (${details})`;
+      }
+      throw new Error(msg);
     }
   }
 

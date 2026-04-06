@@ -1,86 +1,111 @@
-import React, { useState, useMemo } from "react";
-import { X, Search } from "lucide-react";
+"use client";
+
+import React, { useState } from "react";
+import { Check, ChevronsUpDown, UserPlus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface Instructor {
   id: string;
   name: string;
-  avatar: string;
+  photo?: string;
+  specialization?: string;
 }
 
 interface InstructorSelectProps {
-  selected: string[];
-  onChange: (value: string[]) => void;
+  instructors: Instructor[];
+  selectedIds: string[];
+  onToggle: (id: string) => void;
 }
 
-const MOCK_INSTRUCTORS: Instructor[] = [
-  { id: "1", name: "Ana Duarte", avatar: "https://i.pravatar.cc/150?u=1" },
-  { id: "2", name: "Bruno Silva", avatar: "https://i.pravatar.cc/150?u=2" },
-  { id: "3", name: "Carla Mendes", avatar: "https://i.pravatar.cc/150?u=3" },
-  { id: "4", name: "Daniel Rocha", avatar: "https://i.pravatar.cc/150?u=4" },
-];
-
-export const InstructorSelect: React.FC<InstructorSelectProps> = ({
-  selected,
-  onChange,
-}) => {
-  const [query, setQuery] = useState("");
+export function InstructorSelect({
+  instructors,
+  selectedIds,
+  onToggle,
+}: InstructorSelectProps) {
   const [open, setOpen] = useState(false);
 
-  const filtered = useMemo(() => {
-    return MOCK_INSTRUCTORS.filter((i) =>
-      i.name.toLowerCase().includes(query.toLowerCase())
-    );
-  }, [query]);
-
-  const toggle = (id: string) => {
-    if (selected.includes(id)) {
-      onChange(selected.filter((i) => i !== id));
-    } else {
-      onChange([...selected, id]);
-    }
-  };
-
   return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="px-3 py-2 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-lg text-xs font-bold text-slate-400 hover:text-primary hover:border-primary transition-all flex items-center gap-1.5"
-      >
-        Selecionar Formadores
-      </button>
-
-      {open && (
-        <div className="absolute z-20 mt-2 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg shadow-xl p-4 space-y-3 animate-in fade-in slide-in-from-top-2">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800">
-            <Search size={14} className="text-slate-400" />
-            <input
-              autoFocus
-              className="bg-transparent w-full text-sm focus:outline-none"
-              placeholder="Buscar formador..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
-
-          <div className="max-h-48 overflow-y-auto space-y-2 pr-1">
-            {filtered.map((inst) => (
-              <button
-                key={inst.id}
-                type="button"
-                onClick={() => toggle(inst.id)}
-                className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-all border ${selected.includes(inst.id)
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  }`}
-              >
-                <img src={inst.avatar} className="size-7 rounded-full" />
-                <span className="text-sm font-bold">{inst.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between h-12 border-dashed border-2 bg-slate-50/50 dark:bg-slate-800/50 hover:border-primary hover:bg-primary/5 transition-all rounded-xl"
+        >
+          <span className="flex items-center gap-2 text-muted-foreground font-bold text-xs uppercase tracking-wider">
+            <UserPlus className="h-4 w-4 text-primary" />
+            Selecionar Formadores
+          </span>
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full min-w-[300px] p-0" align="start">
+        <Command className="rounded-xl border shadow-md">
+          <CommandInput placeholder="Pesquisar formador..." className="h-11" />
+          <CommandList className="max-h-72">
+            <CommandEmpty>Nenhum formador encontrado.</CommandEmpty>
+            <CommandGroup heading="Corpo Docente">
+              {instructors.map((instructor) => (
+                <CommandItem
+                  key={instructor.id}
+                  value={instructor.name}
+                  onSelect={() => {
+                    onToggle(instructor.id);
+                  }}
+                  className="flex items-center gap-3 py-3 px-4 cursor-pointer data-[selected=true]:bg-slate-100 dark:data-[selected=true]:bg-slate-800"
+                >
+                  <div className={cn(
+                    "flex size-5 items-center justify-center rounded-md border-2 transition-colors",
+                    selectedIds.includes(instructor.id)
+                      ? "bg-primary border-primary text-primary-foreground"
+                      : "border-slate-200 dark:border-slate-700 bg-transparent"
+                  )}>
+                    {selectedIds.includes(instructor.id) && <Check className="h-3.5 w-3.5 stroke-3" />}
+                  </div>
+                  
+                  {instructor.photo ? (
+                    <img
+                      src={instructor.photo}
+                      alt={instructor.name}
+                      className="size-9 rounded-full object-cover border border-slate-100 dark:border-slate-800 shadow-sm"
+                    />
+                  ) : (
+                    <div className="size-9 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold">
+                      {instructor.name.charAt(0)}
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-col min-w-0 flex-1">
+                    <span className="text-sm font-bold truncate">
+                      {instructor.name}
+                    </span>
+                    {instructor.specialization && (
+                      <span className="text-[10px] text-muted-foreground truncate font-medium">
+                        {instructor.specialization}
+                      </span>
+                    )}
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
   );
-};
+}

@@ -66,7 +66,7 @@ export async function createCourse(data: any) {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
-      return { success: false, error: errorData.message || "Erro ao criar curso" };
+      return { success: false, error: errorData };
     }
 
     revalidatePath("/courses");
@@ -95,7 +95,7 @@ export async function updateCourse(id: string, data: any) {
 
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
-      return { success: false, error: errorData.message || "Erro ao actualizar curso" };
+      return { success: false, error: errorData };
     }
 
     revalidatePath("/courses");

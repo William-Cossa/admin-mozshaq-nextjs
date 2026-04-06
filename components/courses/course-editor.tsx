@@ -56,7 +56,8 @@ export function CourseEditor({
         fieldErrors[i.path[0]] = i.message;
       });
       setErrors(fieldErrors);
-      toast.error("Por favor, corrija os erros no formulário.");
+      const firstError = parsed.error.issues[0];
+      toast.error(`Verifique os erros: ${firstError.message} (${firstError.path.join(".")})`);
       return;
     }
 
@@ -64,8 +65,11 @@ export function CourseEditor({
     try {
       await onSubmit(formData as Course);
       toast.success("Curso salvo com sucesso!");
-    } catch (error) {
-      toast.error("Erro ao salvar o curso.");
+    } catch (error: any) {
+      // Don't show error toast if it's a redirect error (though it shouldn't reach here if handled correctly)
+      if (error.message !== "NEXT_REDIRECT") {
+        toast.error(error.message || "Erro ao salvar o curso.");
+      }
       console.error(error);
     } finally {
       setIsSubmitting(false);

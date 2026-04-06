@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { InstructorSelect } from "./instrutor-select";
 
 function ArrayStringField({ label, placeholder, values = [], onChange }: { label: string, placeholder?: string, values: string[], onChange: (v: string[]) => void }) {
   const [inputValue, setInputValue] = useState("");
@@ -333,38 +334,11 @@ export function CourseFormBasic({
                 })}
               </div>
 
-              <div className="border rounded-lg p-4 bg-slate-50/50 dark:bg-slate-800/50">
-                <Label className="text-[10px] font-bold uppercase tracking-wider mb-3 block text-muted-foreground">
-                  Adicionar Formadores
-                </Label>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-2">
-                  {allInstructors.map((inst: any) => (
-                    <button
-                      key={inst.id}
-                      type="button"
-                      onClick={() => toggleInstructor(inst.id)}
-                      className={cn(
-                        "flex items-center gap-2 p-2 rounded-lg border text-left transition-all",
-                        selectedInstructors.includes(inst.id)
-                          ? "bg-primary/10 border-primary"
-                          : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-primary/50"
-                      )}
-                    >
-                      {inst.photo ? (
-                        <img src={inst.photo} className="size-6 rounded-full object-cover" />
-                      ) : (
-                        <div className="size-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold">
-                          {inst.name.charAt(0)}
-                        </div>
-                      )}
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-xs font-bold truncate">{inst.name}</span>
-                        <span className="text-[10px] text-muted-foreground truncate">{inst.specialization}</span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <InstructorSelect 
+                instructors={allInstructors}
+                selectedIds={selectedInstructors}
+                onToggle={toggleInstructor}
+              />
 
               {errors.instructorIds && (
                 <motion.p
