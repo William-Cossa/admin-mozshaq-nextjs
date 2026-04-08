@@ -16,7 +16,8 @@ export async function getInstructors(params?: Record<string, string>) {
   try {
     const res = await fetch(`${API_URL}/admin/instructors${query}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "force-cache"
+      cache: "force-cache",
+      next: { revalidate: 600 },
     });
 
     if (!res.ok) {

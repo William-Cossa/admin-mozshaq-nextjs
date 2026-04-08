@@ -6,6 +6,7 @@ import { PaymentStatusBadge } from "./PaymentStatusBadge";
 import { PaymentDetailModal } from "./PaymentDetailModal";
 import { Search, Calendar, SlidersHorizontal, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { DeletePaymentDialog } from "./DeletePaymentDialog";
 
 const STATUS_FILTERS = [
   { label: "Todos", value: "" },
@@ -51,6 +52,11 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
     router.refresh();
     // Optimistically sync local payments from server response is handled by server refresh
   }, [router]);
+
+  const handleDeleteSuccess = (id: string) => {
+    setPayments((prev) => prev.filter((p) => p.id !== id));
+    router.refresh();
+  };
 
   const formatAmount = (amount: number) =>
     new Intl.NumberFormat("pt-MZ", {
@@ -167,10 +173,18 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
                     <PaymentStatusBadge status={p.status} />
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <button className="opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
-                      <Eye size={13} />
-                      Ver
-                    </button>
+                    <div className="flex items-center justify-end gap-3">
+                      <button className="opacity-0 group-hover:opacity-100 transition-opacity inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+                        <Eye size={13} />
+                        Ver
+                      </button>
+                      <div onClick={(e) => e.stopPropagation()}>
+                        <DeletePaymentDialog 
+                          payment={p} 
+                          onSuccess={handleDeleteSuccess} 
+                        />
+                      </div>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -187,6 +201,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
             </tbody>
           </table>
         </div>
+
 
         {/* Footer row count */}
         <div className="px-4 py-2.5 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400 font-medium">

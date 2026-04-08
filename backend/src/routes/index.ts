@@ -7,6 +7,7 @@ import adminCategoryRoutes from "./admin/category.routes.js";
 import adminStudentRoutes from "./admin/student.routes.js";
 import adminEnrollmentRoutes from "./admin/enrollment.routes.js";
 import adminPaymentRoutes from "./admin/payment.routes.js";
+import adminDashboardRoutes from "./admin/dashboard.routes.js";
 import adminCourseNestedRoutes from "./admin/course.nested.routes.js";
 import adminUploadRoutes from "./admin/upload.routes.js";
 import studentAuthRoutes from "./auth/student.auth.routes.js";
@@ -24,6 +25,7 @@ router.get("/health", (_req, res) => {
 });
 
 // ─── Admin Portal ─────────────────────────────────────────────────────────────
+router.use("/admin/dashboard", adminDashboardRoutes);
 router.use("/admin/auth", adminAuthRoutes);
 router.use("/admin/users", adminUserRoutes);
 router.use("/admin/categories", adminCategoryRoutes);

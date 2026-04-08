@@ -12,17 +12,17 @@ export async function getPayments(): Promise<Payment[]> {
   const token = cookieStore.get("accessToken")?.value;
 
   if (!token) return [];
-
   try {
     const res = await fetch(`${API_URL}/admin/payments`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
+      next: { revalidate: 60 },
     });
     if (!res.ok) throw new Error("Failed to fetch payments");
-    
+
     const responseData = await res.json();
     const data = responseData.data || [];
-    
+
     return data.map((item: any) => ({
       id: item.id,
       studentName: item.student?.name || item.studentName || "Desconhecido",
@@ -47,9 +47,9 @@ export async function approvePayment(id: string): Promise<Payment> {
 
   const res = await fetch(`${API_URL}/admin/payments/${id}/review`, {
     method: "POST",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}` 
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ status: "APPROVED" }),
   });
@@ -72,9 +72,9 @@ export async function rejectPayment(
 
   const res = await fetch(`${API_URL}/admin/payments/${id}/review`, {
     method: "POST",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}` 
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({ status: "REJECTED", rejectionReason }),
   });
@@ -84,4 +84,23 @@ export async function rejectPayment(
   revalidatePath("/payments");
   const data = await res.json();
   return data.payment || data;
+}
+
+export async function deletePayment(id: string): Promise<boolean> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value;
+
+  if (!token) throw new Error("Não autenticado");
+
+  const res = await fetch(`${API_URL}/admin/payments/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+  });
+
+  if (!res.ok) throw new Error("Failed to delete payment");
+
+  revalidatePath("/payments");
+  return true;
 }

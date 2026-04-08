@@ -19,6 +19,8 @@ import { PaymentStatusBadge } from "./PaymentStatusBadge";
 import { RejectModal } from "./RejectModal";
 import { approvePayment } from "@/lib/actions/payments";
 import { toast } from "sonner";
+import Link from "next/link";
+import Image from "next/image";
 
 interface PaymentDetailModalProps {
   payment: Payment | null;
@@ -137,7 +139,7 @@ export function PaymentDetailModal({
                   <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
                     Comprovativo de Pagamento
                   </p>
-                  <a
+                  <Link
                     href={payment.paymentProof}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -145,7 +147,7 @@ export function PaymentDetailModal({
                   >
                     <ExternalLink size={11} />
                     Abrir original
-                  </a>
+                  </Link>
                 </div>
                 <div className="rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
                   {imgError ? (
@@ -154,11 +156,14 @@ export function PaymentDetailModal({
                       <p className="text-sm">Não foi possível carregar a imagem</p>
                     </div>
                   ) : (
-                    <img
+                    <Image
                       src={payment.paymentProof}
                       alt="Comprovativo de pagamento"
                       className="w-full h-full object-cover"
                       onError={() => setImgError(true)}
+                      unoptimized
+                      width={800}
+                      height={800}
                     />
                   )}
                 </div>

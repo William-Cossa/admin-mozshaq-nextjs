@@ -16,13 +16,14 @@ export async function getEnrollments(): Promise<Enrollment[]> {
   try {
     const res = await fetch(`${API_URL}/admin/enrollments`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
+      next: { revalidate: 60 },
     });
     if (!res.ok) throw new Error("Failed to fetch enrollments");
-    
+
     const responseData = await res.json();
     const data = responseData.data || [];
-    
+
     return data.map((item: any) => ({
       id: item.id,
       studentId: item.studentId,
@@ -83,7 +84,7 @@ export async function getEnrollmentMetrics() {
   try {
     const res = await fetch(`${API_URL}/admin/enrollments/metrics`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
     });
     if (!res.ok) return { active: 0, pending: 0, completedMonth: 0, droppedMonth: 0 };
     return await res.json();

@@ -18,6 +18,7 @@ export async function getCourses(params?: Record<string, string>) {
     const res = await fetch(`${API_URL}/admin/courses${query}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "force-cache",
+      next: { revalidate: 600 },
     });
 
     if (!res.ok) return { data: [], total: 0, page: 1, limit: 10 };

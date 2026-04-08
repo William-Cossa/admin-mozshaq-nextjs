@@ -13,7 +13,8 @@ export async function getCategories() {
   try {
     const res = await fetch(`${API_URL}/admin/categories`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: "force-cache",
+      next: { revalidate: 300 },
     });
 
     if (!res.ok) return [];

@@ -12,15 +12,17 @@ import {
   YAxis,
 } from "recharts";
 import { ChartTooltip } from "../ui/chart";
-import { enrollmentsTrendsData, performanceData } from "@/data";
 
-function EnrollmentsTrends() {
+function EnrollmentsTrends({ enrollmentsTrends = [], performanceTrends = [] }: any) {
+  const safeEnrollments = enrollmentsTrends.length > 0 ? enrollmentsTrends : [{ name: "N/A", enrollments: 0 }];
+  const safePerformance = performanceTrends.length > 0 ? performanceTrends : [{ label: "N/A", value: 0, color: "#9ca3af" }];
+
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
       <div className="xl:col-span-2 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 shadow-sm p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-            Enrollment Trends
+            Evolução de Inscrições
           </h3>
           <button className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors">
             <MoreHorizontal size={20} />
@@ -28,7 +30,7 @@ function EnrollmentsTrends() {
         </div>
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={enrollmentsTrendsData}>
+            <AreaChart data={safeEnrollments}>
               <defs>
                 <linearGradient id="colorEnroll" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#2b2bee" stopOpacity={0.1} />
@@ -64,7 +66,7 @@ function EnrollmentsTrends() {
       <div className="bg-background rounded-lg border  shadow-sm p-4 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">
-            Performance
+            Performance Financeira
           </h3>
           <button className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg transition-colors">
             <MoreHorizontal size={20} />
@@ -73,9 +75,9 @@ function EnrollmentsTrends() {
         <div className="flex-1 flex flex-col justify-center items-center">
           <div className="h-[200px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={performanceData}>
+              <BarChart data={safePerformance}>
                 <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-                  {performanceData.map((entry, index) => (
+                  {safePerformance.map((entry: any, index: number) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={entry.color}
@@ -94,9 +96,9 @@ function EnrollmentsTrends() {
           </div>
           <div className="w-full pt-6 mt-6 border-t border-slate-100 dark:border-slate-800">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-slate-500 font-medium">Average Grade</span>
+              <span className="text-slate-500 font-medium">Actividade Geral</span>
               <span className="font-black text-slate-900 dark:text-white text-lg">
-                B+ (84%)
+                Positivo
               </span>
             </div>
           </div>

@@ -56,9 +56,9 @@ function ArrayStringField({ label, placeholder, values = [], onChange }: { label
     <div className="space-y-2">
       <Label className="text-xs font-semibold uppercase text-muted-foreground">{label}</Label>
       <div className="flex gap-2">
-        <Input 
-          value={inputValue} 
-          onChange={e => setInputValue(e.target.value)} 
+        <Input
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleAdd(); } }}
           placeholder={placeholder}
           className="h-10"
@@ -92,7 +92,7 @@ export function CourseFormBasic({
 }: any) {
   const allInstructors = instructors;
   const selectedInstructors = data.instructorIds || [];
-  
+
   const [uploadingImage, setUploadingImage] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -270,17 +270,17 @@ export function CourseFormBasic({
 
         {/* Preços */}
         <Card>
-          <CardHeader className="pb-4">
-            <CardTitle className="text-base text-sm uppercase tracking-wider">Preços e Investimento</CardTitle>
+          <CardHeader>
+            <CardTitle className="text-sm uppercase tracking-wider">Preço</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div className="space-y-2">
                 <Label
                   htmlFor="price"
                   className="text-xs font-semibold uppercase text-muted-foreground"
                 >
-                  Preço Base (MT)
+                  Preço do Curso (MT)
                 </Label>
                 <Input
                   id="price"
@@ -296,30 +296,6 @@ export function CourseFormBasic({
                     className="text-destructive text-xs font-medium"
                   >
                     {errors.price}
-                  </motion.p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label
-                  htmlFor="discountPrice"
-                  className="text-xs font-semibold uppercase text-muted-foreground"
-                >
-                  Preço com Desconto (MT)
-                </Label>
-                <Input
-                  id="discountPrice"
-                  type="number"
-                  value={data.discountPrice || ""}
-                  onChange={(e) => updateField("discountPrice", e.target.value ? parseFloat(e.target.value) : undefined)}
-                  className="h-10"
-                />
-                {errors.discountPrice && (
-                  <motion.p
-                    initial={{ opacity: 0, x: -5 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="text-destructive text-xs font-medium"
-                  >
-                    {errors.discountPrice}
                   </motion.p>
                 )}
               </div>
@@ -374,7 +350,7 @@ export function CourseFormBasic({
                 })}
               </div>
 
-              <InstructorSelect 
+              <InstructorSelect
                 instructors={allInstructors}
                 selectedIds={selectedInstructors}
                 onToggle={toggleInstructor}
@@ -402,29 +378,29 @@ export function CourseFormBasic({
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <ArrayStringField 
-              label="Requisitos" 
-              placeholder="Ex: Conhecimentos básicos de informática" 
-              values={data.requirements || []} 
-              onChange={(v) => updateField("requirements", v)} 
+            <ArrayStringField
+              label="Requisitos"
+              placeholder="Ex: Conhecimentos básicos de informática"
+              values={data.requirements || []}
+              onChange={(v) => updateField("requirements", v)}
             />
-            <ArrayStringField 
-              label="Objetivos" 
-              placeholder="Ex: Compreender os fundamentos da cibersegurança" 
-              values={data.objectives || []} 
-              onChange={(v) => updateField("objectives", v)} 
+            <ArrayStringField
+              label="Objetivos"
+              placeholder="Ex: Compreender os fundamentos da cibersegurança"
+              values={data.objectives || []}
+              onChange={(v) => updateField("objectives", v)}
             />
-            <ArrayStringField 
-              label="Público-Alvo" 
-              placeholder="Ex: Iniciantes em TI" 
-              values={data.targetAudience || []} 
-              onChange={(v) => updateField("targetAudience", v)} 
+            <ArrayStringField
+              label="Público-Alvo"
+              placeholder="Ex: Iniciantes em TI"
+              values={data.targetAudience || []}
+              onChange={(v) => updateField("targetAudience", v)}
             />
-            <ArrayStringField 
-              label="Habilidades (Skills)" 
-              placeholder="Ex: Segurança de redes" 
-              values={data.skills || []} 
-              onChange={(v) => updateField("skills", v)} 
+            <ArrayStringField
+              label="Habilidades (Skills)"
+              placeholder="Ex: Segurança de redes"
+              values={data.skills || []}
+              onChange={(v) => updateField("skills", v)}
             />
           </CardContent>
         </Card>
@@ -525,12 +501,12 @@ export function CourseFormBasic({
             Imagem de Capa
           </Label>
           <div className="space-y-4">
-            
+
             <div className="flex gap-3">
-              <Button 
-                type="button" 
+              <Button
+                type="button"
                 variant="outline"
-                className="w-full text-xs" 
+                className="w-full text-xs"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={uploadingImage}
               >
@@ -541,10 +517,10 @@ export function CourseFormBasic({
                 )}
                 {uploadingImage ? "A Carregar..." : "Procurar no Dispositivo"}
               </Button>
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                className="hidden" 
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
                 accept="image/jpeg,image/png,image/webp"
                 onChange={handleImageUpload}
               />
@@ -562,14 +538,14 @@ export function CourseFormBasic({
                 </>
               )}
               {uploadingImage && (
-                 <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 flex flex-col items-center justify-center backdrop-blur-sm">
-                   <Loader2 className="h-8 w-8 animate-spin text-primary mb-2" />
-                 </div>
+                <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 flex flex-col items-center justify-center backdrop-blur-sm">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary mb-2" />
+                </div>
               )}
             </div>
-            
+
             {data.thumbnail && (
-               <p className="text-[9px] text-muted-foreground break-all">URL: {data.thumbnail}</p>
+              <p className="text-[9px] text-muted-foreground break-all">URL: {data.thumbnail}</p>
             )}
           </div>
         </div>

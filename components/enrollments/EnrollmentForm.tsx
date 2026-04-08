@@ -3,7 +3,7 @@
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Loader2, Plus, CreditCard, User, BookOpen } from "lucide-react";
+import { Loader2, Plus, CreditCard, User, BookOpen, Check, ChevronsUpDown } from "lucide-react";
 import { createEnrollment } from "@/lib/actions/enrollments";
 import { createStudent } from "@/lib/actions/students";
 import {
@@ -13,6 +13,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 
 interface EnrollmentFormProps {
   students: any[];
@@ -31,9 +41,13 @@ export function EnrollmentForm({ students: initialStudents, courses }: Enrollmen
     status: "PENDING",
   });
 
+  // For Searchable Comboboxes
+  const [openStudentCombo, setOpenStudentCombo] = useState(false);
+  const [openCourseCombo, setOpenCourseCombo] = useState(false);
+
   // For Add Student Dialog
   const [openStudentDialog, setOpenStudentDialog] = useState(false);
-  const [newStudent, setNewStudent] = useState({ name: "", email: "", phone: "", status: "ACTIVE" });
+  const [newStudent, setNewStudent] = useState({ name: "", email: "", phone: "", status: "ACTIVE", password: "Password123!" });
   const [isCreatingStudent, startStudentTransition] = useTransition();
 
   const handleCreateStudent = () => {
@@ -52,7 +66,7 @@ export function EnrollmentForm({ students: initialStudents, courses }: Enrollmen
           setStudents((prev) => [created, ...prev]);
           setFormData((prev) => ({ ...prev, studentId: tempId }));
           setOpenStudentDialog(false);
-          setNewStudent({ name: "", email: "", phone: "", status: "ACTIVE" });
+          setNewStudent({ name: "", email: "", phone: "", status: "ACTIVE", password: "Password123!" });
         } else {
           toast.error(res.error || "Erro ao criar aluno.");
         }
@@ -151,19 +165,57 @@ export function EnrollmentForm({ students: initialStudents, courses }: Enrollmen
             </Dialog>
 
           </label>
-          <select
-            value={formData.studentId}
-            onChange={(e) => setFormData({ ...formData, studentId: e.target.value })}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:border-primary dark:text-white"
-            required
-          >
-            <option value="">Selecione um aluno da lista</option>
-            {students.map((stu) => (
-              <option key={stu.id} value={stu.id}>
-                {stu.name} ({stu.email})
-              </option>
-            ))}
-          </select>
+          <Popover open={openStudentCombo} onOpenChange={setOpenStudentCombo}>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                role="combobox"
+                aria-expanded={openStudentCombo}
+                className={cn(
+                  "w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:border-primary dark:text-white flex items-center justify-between",
+                  !formData.studentId && "text-slate-500"
+                )}
+              >
+                <div className="truncate">
+                  {formData.studentId
+                    ? students.find((stu) => stu.id === formData.studentId)?.name || "Aluno Selecionado"
+                    : "Selecione um aluno da lista..."}
+                </div>
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[300px] sm:w-[400px] p-0 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+              <Command>
+                <CommandInput placeholder="Pesquisar por nome ou e-mail..." />
+                <CommandList>
+                  <CommandEmpty>Nenhum aluno encontrado.</CommandEmpty>
+                  <CommandGroup>
+                    {students.map((stu) => (
+                      <CommandItem
+                        key={stu.id}
+                        value={`${stu.name} ${stu.email}`}
+                        onSelect={() => {
+                          setFormData({ ...formData, studentId: stu.id });
+                          setOpenStudentCombo(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4 shrink-0",
+                            formData.studentId === stu.id ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        <div className="flex flex-col truncate">
+                          <span className="font-semibold text-slate-900 dark:text-white truncate">{stu.name}</span>
+                          <span className="text-xs text-slate-500 truncate">{stu.email}</span>
+                        </div>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
         {/* Course Selector */}
@@ -171,19 +223,54 @@ export function EnrollmentForm({ students: initialStudents, courses }: Enrollmen
           <label className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
             <BookOpen size={16} className="text-slate-400" /> Curso
           </label>
-          <select
-            value={formData.courseId}
-            onChange={(e) => setFormData({ ...formData, courseId: e.target.value })}
-            className="w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:border-primary dark:text-white"
-            required
-          >
-            <option value="">Selecione um curso para inscrever</option>
-            {courses.map((course) => (
-              <option key={course.id} value={course.id}>
-                {course.title}
-              </option>
-            ))}
-          </select>
+          <Popover open={openCourseCombo} onOpenChange={setOpenCourseCombo}>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                role="combobox"
+                aria-expanded={openCourseCombo}
+                className={cn(
+                  "w-full h-10 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-sm focus:outline-none focus:border-primary dark:text-white flex items-center justify-between",
+                  !formData.courseId && "text-slate-500"
+                )}
+              >
+                <div className="truncate">
+                  {formData.courseId
+                    ? courses.find((course) => course.id === formData.courseId)?.title || "Curso Selecionado"
+                    : "Selecione um curso para inscrever..."}
+                </div>
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[300px] sm:w-[400px] p-0 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+              <Command>
+                <CommandInput placeholder="Pesquisar por nome do curso..." />
+                <CommandList>
+                  <CommandEmpty>Nenhum curso encontrado.</CommandEmpty>
+                  <CommandGroup>
+                    {courses.map((course) => (
+                      <CommandItem
+                        key={course.id}
+                        value={course.title}
+                        onSelect={() => {
+                          setFormData({ ...formData, courseId: course.id });
+                          setOpenCourseCombo(false);
+                        }}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4 shrink-0",
+                            formData.courseId === course.id ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        <span className="truncate">{course.title}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
 
       </div>

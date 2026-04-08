@@ -20,6 +20,7 @@ export async function getStudents(params?: Record<string, string>) {
     const res = await fetch(`${API_URL}/admin/students${query}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "force-cache",
+      next: { revalidate: 60 },
     });
 
     if (!res.ok) {
@@ -54,8 +55,9 @@ export async function createStudent(data: any) {
       return { success: false, error: errorData.message || "Erro ao criar estudante" };
     }
 
+    const responseData = await res.json().catch(() => ({}));
     revalidatePath("/students");
-    return { success: true };
+    return { success: true, student: responseData.student || responseData };
   } catch (error: any) {
     return { success: false, error: error.message };
   }

@@ -22,6 +22,7 @@ export async function getUsers(params?: Record<string, string>) {
         Authorization: `Bearer ${token}`,
       },
       cache: "force-cache",
+      next: { revalidate: 300 },
     });
 
     if (!res.ok) {

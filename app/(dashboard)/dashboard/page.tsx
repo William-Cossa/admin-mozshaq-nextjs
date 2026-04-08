@@ -1,68 +1,85 @@
 import EnrollmentsTrends from "@/components/charts/EnrollmentsTrends";
 import { StatCard } from "@/components/StatCards";
-import Title from "@/components/Heading";
+import DashboardFilter from "@/components/dashboard/DashboardFilter";
+import RecentEnrollments from "@/components/dashboard/RecentEnrollments";
 import { Button } from "@/components/ui/button";
 import {
   BookOpen,
   Calendar,
   CheckCircle,
-  ChevronDown,
   GraduationCap,
   Users,
 } from "lucide-react";
 import React from "react";
 import Heading from "@/components/Heading";
+import { getDashboardOverview } from "@/lib/actions/dashboard";
 
-async function Dashboard() {
+async function Dashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const period = typeof resolvedParams.period === "string" ? resolvedParams.period : "30d";
+
+  const data = await getDashboardOverview(period);
+  const cards = data?.success !== false && data?.cards ? data.cards : {
+    instructors: { value: 0, trend: "0%" },
+    students: { value: 0, trend: "0%" },
+    courses: { value: 0, trend: "0%" },
+    enrollments: { value: 0, trend: "0%" },
+    revenue: { value: 0, trend: "0%" }
+  };
+
   return (
-    <section className="max-w-7xl mx-auto space-y-4">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <section className="max-w-7xl mx-auto space-y-3">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3">
         <Heading
           title="Dashboard"
           text="Visão geral das métricas e estatísticas do portal"
         />
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 text-sm font-bold  py-2 px-4 transition-all"
-        >
-          <Calendar size={18} className="text-primary" />
-          <span>Últimos 30 Dias</span>
-          <ChevronDown size={16} />
-        </Button>
+        <DashboardFilter />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard
           title="Total de Professores"
-          value="10"
+          value={cards.instructors.value.toString()}
           icon={Users}
-          trend="+5.2%"
+          trend={cards.instructors.trend}
           color="bg-blue-50 text-blue-600 "
         />
         <StatCard
           title="Total de Alunos"
-          value="8,320"
+          value={cards.students.value.toString()}
           icon={GraduationCap}
-          trend="+2.4%"
+          trend={cards.students.trend}
           color="bg-indigo-50 text-indigo-600 dark:bg-indigo-900/20"
         />
         <StatCard
           title="Total de Inscrições"
-          value="1,240"
+          value={cards.enrollments.value.toString()}
           icon={CheckCircle}
-          trend="+12%"
+          trend={cards.enrollments.trend}
           color="bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20"
         />
         <StatCard
           title="Total de Cursos"
-          value="48"
+          value={cards.courses.value.toString()}
           icon={BookOpen}
-          trend="0%"
+          trend={cards.courses.trend}
           color="bg-orange-50 text-orange-600 dark:bg-orange-900/20"
         />
       </div>
 
-      <EnrollmentsTrends />
+      <EnrollmentsTrends 
+        enrollmentsTrends={data?.enrollmentsTrends || []} 
+        performanceTrends={data?.performanceTrends || []} 
+      />
+
+      {data?.recentEnrollments && (
+        <RecentEnrollments enrollments={data.recentEnrollments} />
+      )}
     </section>
   );
 }
