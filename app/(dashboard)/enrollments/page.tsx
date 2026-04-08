@@ -9,11 +9,19 @@ import {
   XCircle,
   Users,
   Phone,
+  Eye,
+  Edit2,
+  Trash2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { SearchEnrollments } from "@/components/enrollments/search-enrollments";
-import { getEnrollments } from "@/lib/actions/enrollments";
+import { getEnrollments, getEnrollmentMetrics } from "@/lib/actions/enrollments";
 import { StatusSelect } from "@/components/enrollments/status-select";
+import { DeleteEnrollmentDialog } from "@/components/enrollments/DeleteEnrollmentDialog";
+import Heading from "@/components/Heading";
+import Link from "next/link";
+import AddButton from "@/components/add-button";
+import Image from "next/image";
 
 export default async function EnrollmentsPage({
   searchParams,
@@ -23,7 +31,12 @@ export default async function EnrollmentsPage({
   const query = (await searchParams).q?.toLowerCase() || "";
   const statusFilter = (await searchParams).status || "";
 
-  const enrollments = await getEnrollments();
+  const [enrollments, metricsData] = await Promise.all([
+    getEnrollments(),
+    getEnrollmentMetrics(),
+  ]);
+
+  const metrics = metricsData.success ? metricsData : { active: 0, pending: 0, completedMonth: 0, droppedMonth: 0 };
 
   const filteredEnrollments = enrollments.filter((enr) => {
     const matchesQuery =
@@ -40,47 +53,40 @@ export default async function EnrollmentsPage({
     <div className="max-w-7xl mx-auto space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Gestão de Inscrições
-          </h1>
-          <p className="text-slate-500 dark:text-slate-400 font-medium">
-            Gerencie o acesso dos alunos, acompanhe o progresso e actualize os
-            estados das inscrições.
-          </p>
+          <Heading title="Gestão de inscrições" text="Gerencie o acesso dos alunos, acompanhe o progresso e actualize os estados das inscrições." />
         </div>
-        <button className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white shadow-xl shadow-primary/20 hover:bg-blue-600 transition-all active:scale-95">
-          <Plus size={16} />
-          <span>Nova Inscrição</span>
-        </button>
+        <Link href="/enrollments/new">
+          <AddButton text="Nova Inscrição" />
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {[
           {
             label: "Total Activos",
-            value: "854",
-            trend: "+12%",
+            value: metrics.active.toString(),
+            trend: "Em curso",
             icon: CheckCircle2,
             color: "text-emerald-500 bg-emerald-50 dark:bg-emerald-500/10",
           },
           {
             label: "Pendente de Aprovação",
-            value: "42",
+            value: metrics.pending.toString(),
             trend: "Acção Necessária",
             icon: Clock,
             color: "text-amber-500 bg-amber-50 dark:bg-amber-500/10",
           },
           {
             label: "Concluídos (Mês)",
-            value: "128",
-            trend: "+5%",
+            value: metrics.completedMonth.toString(),
+            trend: "Sucesso",
             icon: CheckCircle2,
             color: "text-blue-500 bg-blue-50 dark:bg-blue-500/10",
           },
           {
             label: "Cancelados (Mês)",
-            value: "14",
-            trend: "-2%",
+            value: metrics.droppedMonth.toString(),
+            trend: "Atenção",
             icon: XCircle,
             color: "text-red-500 bg-red-50 dark:bg-red-500/10",
           },
@@ -126,7 +132,7 @@ export default async function EnrollmentsPage({
           <table className="w-full text-left border-collapse">
             <thead className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
               <tr className="text-[10px] uppercase tracking-widest text-slate-500 font-black">
-                <th className="px-4 py-2">ID</th>
+                {/* <th className="px-4 py-2">ID</th> */}
                 <th className="px-4 py-2">Aluno</th>
                 <th className="px-4 py-2">Contacto</th>
                 <th className="px-4 py-2">Curso</th>
@@ -141,17 +147,19 @@ export default async function EnrollmentsPage({
                   key={enr.id}
                   className="group hover:bg-primary/[0.03] transition-colors"
                 >
-                  <td className="px-4 py-1.5 text-slate-500 font-mono text-xs">
+                  <td className="hidden px-4 py-1.5 text-slate-500 font-mono text-xs">
                     {enr.id}
                   </td>
                   <td className="px-4 py-1.5">
                     <div className="flex items-center gap-3">
                       <div className="size-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden shrink-0 border border-slate-100 dark:border-slate-800">
                         {enr.studentAvatar ? (
-                          <img
+                          <Image
                             src={enr.studentAvatar}
                             className="size-full object-cover"
                             alt=""
+                            width={24}
+                            height={24}
                           />
                         ) : (
                           <Users size={16} className="text-slate-400" />
@@ -185,9 +193,18 @@ export default async function EnrollmentsPage({
                     />
                   </td>
                   <td className="px-4 py-1.5 text-right">
-                    <button className="text-slate-400 hover:text-primary transition-colors p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
-                      <MoreVertical size={16} />
-                    </button>
+                    <div className="flex items-center justify-end gap-1">
+                      {/* For now, just a button for View. We can create a ViewEnrollmentDialog later. */}
+                      <button className="p-1.5 text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all" title="Ver">
+                        <Eye size={14} />
+                      </button>
+                      <Link href={`/enrollments/${enr.id}/edit`}>
+                        <button className="p-1.5 text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-all" title="Editar">
+                          <Edit2 size={14} />
+                        </button>
+                      </Link>
+                      <DeleteEnrollmentDialog enrollmentId={enr.id} studentName={enr.studentName} />
+                    </div>
                   </td>
                 </tr>
               ))}

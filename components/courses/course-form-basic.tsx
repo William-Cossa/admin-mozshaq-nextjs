@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import {
   Info,
@@ -11,7 +11,10 @@ import {
   Plus,
   AlertCircle,
   ImageIcon,
+  Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
+import { uploadImage } from "@/lib/actions/upload";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -89,6 +92,43 @@ export function CourseFormBasic({
 }: any) {
   const allInstructors = instructors;
   const selectedInstructors = data.instructorIds || [];
+  
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate size (5MB max) and type
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("A imagem deve ter no máximo 5MB");
+      return;
+    }
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      toast.error("Apenas JPEG, PNG ou WebP são permitidos");
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("folder", "mozshaq/courses"); // Optional folder override
+
+      const res = await uploadImage(formData);
+      if (res.success && res.url) {
+        updateField("thumbnail", res.url);
+        toast.success("Imagem carregada com sucesso");
+      } else {
+        toast.error(res.error || "Erro ao fazer upload da imagem");
+      }
+    } catch (error) {
+      toast.error("Erro na comunicação com o servidor");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   const toggleInstructor = (id: string) => {
     let updated;
@@ -480,29 +520,57 @@ export function CourseFormBasic({
           </CardContent>
         </Card>
 
-        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm relative">
           <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-4 block">
-            Imagem de Capa (URL)
+            Imagem de Capa
           </Label>
-          <div className="space-y-3">
-            <Input
-              value={data.thumbnail || ""}
-              onChange={(e) => updateField("thumbnail", e.target.value)}
-              placeholder="https://exemplo.com/imagem.jpg"
-              className="h-10 rounded-lg"
-            />
+          <div className="space-y-4">
+            
+            <div className="flex gap-3">
+              <Button 
+                type="button" 
+                variant="outline"
+                className="w-full text-xs" 
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingImage}
+              >
+                {uploadingImage ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <ImageIcon className="h-4 w-4 mr-2" />
+                )}
+                {uploadingImage ? "A Carregar..." : "Procurar no Dispositivo"}
+              </Button>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                className="hidden" 
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleImageUpload}
+              />
+            </div>
+
             <div className="aspect-video w-full rounded-lg bg-slate-50 dark:bg-slate-800/50 border-2 border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center gap-3 overflow-hidden group relative">
               {data.thumbnail ? (
-                <img src={data.thumbnail} className="w-full h-full object-cover" />
+                <img src={data.thumbnail} className="w-full h-full object-cover" alt="Capa do Curso" />
               ) : (
                 <>
                   <ImageIcon className="text-slate-300" size={32} />
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest text-center px-4">
-                    Cole uma URL ou use uma imagem padrão
+                    Nenhuma imagem seleccionada
                   </p>
                 </>
               )}
+              {uploadingImage && (
+                 <div className="absolute inset-0 bg-white/50 dark:bg-slate-900/50 flex flex-col items-center justify-center backdrop-blur-sm">
+                   <Loader2 className="h-8 w-8 animate-spin text-primary mb-2" />
+                 </div>
+              )}
             </div>
+            
+            {data.thumbnail && (
+               <p className="text-[9px] text-muted-foreground break-all">URL: {data.thumbnail}</p>
+            )}
           </div>
         </div>
 

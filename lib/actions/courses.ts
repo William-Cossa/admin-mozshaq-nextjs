@@ -3,7 +3,8 @@
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+const BASE_URL = (process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:3001/api").replace(/\/$/, "");
+const API_URL = BASE_URL;
 
 export async function getCourses(params?: Record<string, string>) {
   const cookieStore = await cookies();

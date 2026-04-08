@@ -125,7 +125,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
           <table className="w-full text-left border-collapse">
             <thead className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
               <tr className="text-[10px] uppercase tracking-widest text-slate-500 font-black">
-                <th className="px-4 py-2.5">ID</th>
+                {/* <th className="px-4 py-2.5">ID</th> */}
                 <th className="px-4 py-2.5">Aluno</th>
                 <th className="px-4 py-2.5">Curso</th>
                 <th className="px-4 py-2.5">Montante</th>
@@ -141,9 +141,9 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
                   className="group hover:bg-primary/[0.03] transition-colors cursor-pointer"
                   onClick={() => handleRowClick(p)}
                 >
-                  <td className="px-4 py-3 font-mono text-xs text-slate-500">
+                  {/* <td className="px-4 py-3 font-mono text-xs text-slate-500">
                     {p.id}
-                  </td>
+                  </td> */}
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center text-primary font-bold text-xs shrink-0">
@@ -154,7 +154,7 @@ export function PaymentTable({ initialPayments }: PaymentTableProps) {
                       </span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300 max-w-[180px] truncate font-medium">
+                  <td className="px-4 py-3 text-slate-600 dark:text-slate-300 max-w-[320px] truncate font-medium">
                     {p.courseName}
                   </td>
                   <td className="px-4 py-3 font-bold text-slate-800 dark:text-white">

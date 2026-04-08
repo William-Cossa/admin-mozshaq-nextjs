@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { Instructor } from "@/types/types";
 
-const API_URL = process.env.API_URL || process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:3001/api";
 
 export async function getInstructors(params?: Record<string, string>) {
   const cookieStore = await cookies();
