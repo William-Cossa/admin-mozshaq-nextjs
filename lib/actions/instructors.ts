@@ -9,7 +9,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http:
 export async function getInstructors(params?: Record<string, string>) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
-  if (!token) return { data: [], total: 0, page: 1, limit: 10 };
+  if (!token) return { data: [], total: 0 };
 
   const query = params ? "?" + new URLSearchParams(params).toString() : "";
 
@@ -22,14 +22,14 @@ export async function getInstructors(params?: Record<string, string>) {
 
     if (!res.ok) {
       console.error(`getInstructors failed: ${res.status} ${res.statusText}`, await res.json());
-      return { data: [], total: 0, page: 1, limit: 10 };
+      return { data: [], total: 0 };
     }
 
     const data = await res.json();
     return data;
   } catch (error) {
     console.error("Error fetching instructors:", error);
-    return { data: [], total: 0, page: 1, limit: 10 };
+    return { data: [], total: 0 };
   }
 }
 

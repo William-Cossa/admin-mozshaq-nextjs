@@ -5,4 +5,5 @@ export declare const enrollmentController: {
     create(req: Request, res: Response): Promise<void>;
     update(req: Request, res: Response): Promise<void>;
     delete(req: Request, res: Response): Promise<void>;
+    getMetrics(req: Request, res: Response): Promise<void>;
 };

@@ -3,11 +3,8 @@ import { v7 as uuidv7 } from "uuid";
 import { generateAvatarUrl } from "../../lib/avatar.js";
 export const instructorService = {
     async getAll(query) {
-        const page = Number(query.page) || 1;
-        const limit = Number(query.limit) || 10;
         const search = query.search?.toString() || "";
         const status = query.status?.toString();
-        const skip = (page - 1) * limit;
         const where = {
             OR: [
                 { name: { contains: search, mode: "insensitive" } },
@@ -21,8 +18,6 @@ export const instructorService = {
         const [instructors, total] = await Promise.all([
             prisma.instructor.findMany({
                 where,
-                skip,
-                take: limit,
                 orderBy: { createdAt: "desc" },
                 include: {
                     _count: {
@@ -41,8 +36,6 @@ export const instructorService = {
             success: true,
             data: formatted,
             total,
-            page,
-            limit,
         };
     },
     async getById(id) {
@@ -63,12 +56,19 @@ export const instructorService = {
         };
     },
     async create(data) {
+        console.log("Data", data);
         if (data.professionalEmail) {
             const existingEmail = await prisma.instructor.findFirst({
                 where: { professionalEmail: data.professionalEmail },
             });
             if (existingEmail) {
                 throw new Error("Já existe um formador com este email profissional.");
+            }
+            const existingPhone = await prisma.instructor.findFirst({
+                where: { phone: data.phone },
+            });
+            if (existingPhone) {
+                throw new Error("Já existe um formador com este número de telefone.");
             }
         }
         const photo = data.photo || generateAvatarUrl(data.name);
@@ -101,6 +101,14 @@ export const instructorService = {
             });
             if (emailTaken) {
                 throw new Error("Já existe outro formador com este email profissional.");
+            }
+        }
+        if (data.phone && data.phone !== existingInstructor.phone) {
+            const phoneTaken = await prisma.instructor.findFirst({
+                where: { phone: data.phone },
+            });
+            if (phoneTaken) {
+                throw new Error("Já existe outro formador com este número de telefone.");
             }
         }
         const updateData = {};

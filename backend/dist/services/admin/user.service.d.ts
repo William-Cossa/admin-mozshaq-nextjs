@@ -2,8 +2,6 @@ import type { CreateUserInput, UpdateUserInput } from "../../validators/admin/us
 export declare const userService: {
     getAll(query?: any): Promise<{
         total: number;
-        page: number;
-        limit: number;
         users: {
             name: string;
             id: string;

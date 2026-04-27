@@ -12,4 +12,10 @@ export declare const enrollmentService: {
     delete(id: string): Promise<{
         success: boolean;
     }>;
+    getMetrics(): Promise<{
+        active: number;
+        pending: number;
+        completedMonth: number;
+        droppedMonth: number;
+    }>;
 };

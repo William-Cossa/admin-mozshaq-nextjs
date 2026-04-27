@@ -6,9 +6,7 @@ import { generateAvatarUrl } from "../../lib/avatar.js";
 
 export const userService = {
   async getAll(query: any = {}) {
-    const { page = 1, limit = 10, status, role, search } = query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const take = Number(limit);
+    const { status, role, search } = query;
 
     const where: any = {};
     if (status) where.status = status;
@@ -24,8 +22,6 @@ export const userService = {
       prisma.user.count({ where }),
       prisma.user.findMany({
         where,
-        skip,
-        take,
         select: {
           id: true,
           name: true,
@@ -43,8 +39,6 @@ export const userService = {
 
     return {
       total,
-      page: Number(page),
-      limit: take,
       users,
     };
   },

@@ -5,12 +5,8 @@ import { generateAvatarUrl } from "../../lib/avatar.js";
 
 export const instructorService = {
   async getAll(query: any) {
-    const page = Number(query.page) || 1;
-    const limit = Number(query.limit) || 10;
     const search = query.search?.toString() || "";
     const status = query.status?.toString();
-
-    const skip = (page - 1) * limit;
 
     const where: any = {
       OR: [
@@ -27,8 +23,6 @@ export const instructorService = {
     const [instructors, total] = await Promise.all([
       prisma.instructor.findMany({
         where,
-        skip,
-        take: limit,
         orderBy: { createdAt: "desc" },
         include: {
           _count: {
@@ -49,8 +43,6 @@ export const instructorService = {
       success: true,
       data: formatted,
       total,
-      page,
-      limit,
     };
   },
 

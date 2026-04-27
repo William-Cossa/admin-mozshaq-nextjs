@@ -10,7 +10,7 @@ export async function getCourses(params?: Record<string, string>) {
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
-  if (!token) return { data: [], total: 0, page: 1, limit: 10 };
+  if (!token) return { data: [], total: 0 };
 
   const query = params ? "?" + new URLSearchParams(params).toString() : "";
 
@@ -21,11 +21,11 @@ export async function getCourses(params?: Record<string, string>) {
       next: { revalidate: 600 },
     });
 
-    if (!res.ok) return { data: [], total: 0, page: 1, limit: 10 };
+    if (!res.ok) return { data: [], total: 0 };
     return await res.json();
   } catch (error) {
     console.error("Error fetching courses:", error);
-    return { data: [], total: 0, page: 1, limit: 10 };
+    return { data: [], total: 0 };
   }
 }
 

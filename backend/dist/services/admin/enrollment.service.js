@@ -90,6 +90,21 @@ export const enrollmentService = {
         if (enrollment.status === "ACTIVE") {
             await updateCourseStudentsCount(data.courseId);
         }
+        // Automatically create a corresponding payment with matching status
+        const paymentStatus = enrollment.status === "ACTIVE" ? "APPROVED" : "PENDING";
+        await prisma.payment.create({
+            data: {
+                id: uuidv7(),
+                studentId: student.id,
+                courseId: course.id,
+                studentName: student.name,
+                courseName: course.title,
+                amount: course.price,
+                paymentProof: "manual-admin-enrollment",
+                status: paymentStatus,
+                ...(paymentStatus === "APPROVED" ? { approvedAt: new Date() } : {}),
+            }
+        });
         return formatFrontendEnrollment(enrollment);
     },
     async update(id, data) {
@@ -123,5 +138,31 @@ export const enrollmentService = {
             await updateCourseStudentsCount(existing.courseId);
         }
         return { success: true };
+    },
+    async getMetrics() {
+        const now = new Date();
+        const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const [totalActive, totalPending, completedThisMonth, droppedThisMonth] = await Promise.all([
+            prisma.enrollment.count({ where: { status: "ACTIVE" } }),
+            prisma.enrollment.count({ where: { status: "PENDING" } }),
+            prisma.enrollment.count({
+                where: {
+                    status: "COMPLETED",
+                    updatedAt: { gte: firstDayOfMonth },
+                },
+            }),
+            prisma.enrollment.count({
+                where: {
+                    status: "DROPPED",
+                    updatedAt: { gte: firstDayOfMonth },
+                },
+            }),
+        ]);
+        return {
+            active: totalActive,
+            pending: totalPending,
+            completedMonth: completedThisMonth,
+            droppedMonth: droppedThisMonth,
+        };
     },
 };

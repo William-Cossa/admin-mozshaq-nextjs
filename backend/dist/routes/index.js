@@ -7,9 +7,12 @@ import adminCategoryRoutes from "./admin/category.routes.js";
 import adminStudentRoutes from "./admin/student.routes.js";
 import adminEnrollmentRoutes from "./admin/enrollment.routes.js";
 import adminPaymentRoutes from "./admin/payment.routes.js";
+import adminDashboardRoutes from "./admin/dashboard.routes.js";
 import adminCourseNestedRoutes from "./admin/course.nested.routes.js";
+import adminUploadRoutes from "./admin/upload.routes.js";
 import studentAuthRoutes from "./auth/student.auth.routes.js";
 import studentEnrollmentRoutes from "./student/enrollment.routes.js";
+import studentPaymentRoutes from "./student/payment.routes.js";
 import publicCategoryRoutes from "./public/category.routes.js";
 import publicCourseRoutes from "./public/course.routes.js";
 const router = Router();
@@ -18,6 +21,7 @@ router.get("/health", (_req, res) => {
     res.json({ success: true, status: "ok", timestamp: new Date().toISOString() });
 });
 // ─── Admin Portal ─────────────────────────────────────────────────────────────
+router.use("/admin/dashboard", adminDashboardRoutes);
 router.use("/admin/auth", adminAuthRoutes);
 router.use("/admin/users", adminUserRoutes);
 router.use("/admin/categories", adminCategoryRoutes);
@@ -27,9 +31,11 @@ router.use("/admin/courses/:courseId", adminCourseNestedRoutes);
 router.use("/admin/students", adminStudentRoutes);
 router.use("/admin/enrollments", adminEnrollmentRoutes);
 router.use("/admin/payments", adminPaymentRoutes);
+router.use("/admin/upload", adminUploadRoutes);
 // ─── Student Portal ───────────────────────────────────────────────────────────
 router.use("/student/auth", studentAuthRoutes);
 router.use("/student/enrollments", studentEnrollmentRoutes);
+router.use("/student/payments", studentPaymentRoutes);
 // ─── Public Portal ────────────────────────────────────────────────────────────
 router.use("/public/categories", publicCategoryRoutes);
 router.use("/public/courses", publicCourseRoutes);

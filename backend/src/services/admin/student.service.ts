@@ -32,9 +32,7 @@ function formatFrontendStudent(student: any) {
 
 export const studentService = {
   async getAll(query: any = {}) {
-    const { page = 1, limit = 10, status, search, courseId } = query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const take = Number(limit);
+    const { status, search, courseId } = query;
 
     const where: any = {};
     if (status) where.status = status;
@@ -54,8 +52,6 @@ export const studentService = {
       prisma.student.count({ where }),
       prisma.student.findMany({
         where,
-        skip,
-        take,
         include: {
           enrollments: true,
           payments: {
@@ -69,8 +65,6 @@ export const studentService = {
 
     return {
       total,
-      page: Number(page),
-      limit: take,
       data: students.map(formatFrontendStudent),
     };
   },

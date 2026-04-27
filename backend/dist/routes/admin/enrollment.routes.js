@@ -4,6 +4,7 @@ import { authenticate, authenticatePortal } from "../../middleware/authenticate.
 import { authorize } from "../../middleware/authorize.js";
 const router = Router();
 router.use(authenticate, authenticatePortal("admin"), authorize("ADMIN", "MANAGER"));
+router.get("/metrics", enrollmentController.getMetrics);
 router.get("/", enrollmentController.getAll);
 router.get("/:id", enrollmentController.getById);
 router.post("/", enrollmentController.create);

@@ -56,4 +56,13 @@ export const enrollmentController = {
             res.status(400).json({ success: false, message: err.message });
         }
     },
+    async getMetrics(req, res) {
+        try {
+            const metrics = await enrollmentService.getMetrics();
+            res.status(200).json({ success: true, ...metrics });
+        }
+        catch (err) {
+            res.status(500).json({ success: false, message: err.message });
+        }
+    },
 };

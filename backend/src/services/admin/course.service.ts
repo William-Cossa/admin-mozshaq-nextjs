@@ -57,9 +57,7 @@ function formatFrontendCourse(course: any) {
 
 export const courseService = {
   async getAll(query: any = {}) {
-    const { page = 1, limit = 10, category, level, minPrice, maxPrice, sort, status } = query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const take = Number(limit);
+    const { category, level, minPrice, maxPrice, sort, status } = query;
 
     const where: any = {};
     if (query.search) {
@@ -82,8 +80,6 @@ export const courseService = {
       prisma.course.count({ where }),
       prisma.course.findMany({
         where,
-        skip,
-        take,
         include: {
           category: true,
           instructors: { include: { instructor: true } },
@@ -96,8 +92,6 @@ export const courseService = {
 
     return {
       total,
-      page: Number(page),
-      limit: take,
       data: courses.map(formatFrontendCourse)
     };
   },

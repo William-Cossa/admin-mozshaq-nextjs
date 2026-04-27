@@ -11,7 +11,7 @@ export async function getStudents(params?: Record<string, string>) {
 
   if (!token) {
     console.warn("No token found for fetching students.");
-    return { data: [], total: 0, page: 1, limit: 10 };
+    return { data: [], total: 0 };
   }
 
   const query = params ? "?" + new URLSearchParams(params).toString() : "";
@@ -25,12 +25,12 @@ export async function getStudents(params?: Record<string, string>) {
 
     if (!res.ok) {
       console.warn("Failed to fetch students, status:", res.status);
-      return { data: [], total: 0, page: 1, limit: 10 };
+      return { data: [], total: 0 };
     }
     return await res.json();
   } catch (error) {
     console.error("Error fetching students from backend:", error);
-    return { data: [], total: 0, page: 1, limit: 10 };
+    return { data: [], total: 0 };
   }
 }
 

@@ -2,8 +2,6 @@ import type { CreateStudentInput, UpdateStudentInput } from "../../validators/ad
 export declare const studentService: {
     getAll(query?: any): Promise<{
         total: number;
-        page: number;
-        limit: number;
         data: any[];
     }>;
     getById(id: string): Promise<any>;

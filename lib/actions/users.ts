@@ -11,7 +11,7 @@ export async function getUsers(params?: Record<string, string>) {
 
   if (!token) {
     console.warn("No token found for fetching users.");
-    return { users: [], total: 0, page: 1, limit: 10 };
+    return { users: [], total: 0 };
   }
 
   const query = params ? "?" + new URLSearchParams(params).toString() : "";
@@ -27,18 +27,16 @@ export async function getUsers(params?: Record<string, string>) {
 
     if (!res.ok) {
       console.warn("Failed to fetch users, status:", res.status);
-      return { users: [], total: 0, page: 1, limit: 10 };
+      return { users: [], total: 0 };
     }
     const data = await res.json();
     return {
       users: data.users || [],
       total: data.total || 0,
-      page: data.page || 1,
-      limit: data.limit || 10,
     };
   } catch (error) {
     console.error("Error fetching users from backend:", error);
-    return { users: [], total: 0, page: 1, limit: 10 };
+    return { users: [], total: 0 };
   }
 }
 

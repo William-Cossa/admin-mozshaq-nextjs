@@ -4,8 +4,6 @@ export declare const instructorService: {
         success: boolean;
         data: any[];
         total: number;
-        page: number;
-        limit: number;
     }>;
     getById(id: string): Promise<{
         totalCourses: number;

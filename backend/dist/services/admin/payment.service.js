@@ -14,9 +14,7 @@ function formatFrontendPayment(payment) {
 }
 export const paymentService = {
     async getAll(query = {}) {
-        const { page = 1, limit = 10, status, studentId, courseId } = query;
-        const skip = (Number(page) - 1) * Number(limit);
-        const take = Number(limit);
+        const { status, studentId, courseId } = query;
         const where = {};
         if (status)
             where.status = status;
@@ -28,8 +26,6 @@ export const paymentService = {
             prisma.payment.count({ where }),
             prisma.payment.findMany({
                 where,
-                skip,
-                take,
                 include: {
                     student: { select: { id: true, name: true, email: true, avatar: true } },
                     course: { select: { id: true, title: true, thumbnail: true } },
@@ -39,8 +35,6 @@ export const paymentService = {
         ]);
         return {
             total,
-            page: Number(page),
-            limit: take,
             data: payments.map(formatFrontendPayment)
         };
     },
