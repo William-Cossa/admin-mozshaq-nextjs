@@ -14,10 +14,8 @@ export async function getStudents(params?: Record<string, string>) {
     return { data: [], total: 0 };
   }
 
-  const query = params ? "?" + new URLSearchParams(params).toString() : "";
-
   try {
-    const res = await fetch(`${API_URL}/admin/students${query}`, {
+    const res = await fetch(`${API_URL}/admin/students`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "force-cache",
       next: { revalidate: 60 },

@@ -21,11 +21,6 @@ export default function Filters() {
       }
     });
 
-    // Reset to page 1 on search or filter change
-    if (newParams.search !== undefined || newParams.type !== undefined) {
-      params.set("page", "1");
-    }
-
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });

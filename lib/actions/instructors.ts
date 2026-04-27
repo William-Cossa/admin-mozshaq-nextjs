@@ -11,10 +11,8 @@ export async function getInstructors(params?: Record<string, string>) {
   const token = cookieStore.get("accessToken")?.value;
   if (!token) return { data: [], total: 0 };
 
-  const query = params ? "?" + new URLSearchParams(params).toString() : "";
-
   try {
-    const res = await fetch(`${API_URL}/admin/instructors${query}`, {
+    const res = await fetch(`${API_URL}/admin/instructors`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "force-cache",
       next: { revalidate: 600 },

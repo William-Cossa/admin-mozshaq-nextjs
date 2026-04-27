@@ -21,10 +21,6 @@ export function StudentFilters() {
       }
     });
 
-    if (newParams.search !== undefined || newParams.status !== undefined) {
-      params.set("page", "1");
-    }
-
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });

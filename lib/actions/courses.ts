@@ -12,10 +12,8 @@ export async function getCourses(params?: Record<string, string>) {
 
   if (!token) return { data: [], total: 0 };
 
-  const query = params ? "?" + new URLSearchParams(params).toString() : "";
-
   try {
-    const res = await fetch(`${API_URL}/admin/courses${query}`, {
+    const res = await fetch(`${API_URL}/admin/courses`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "force-cache",
       next: { revalidate: 600 },

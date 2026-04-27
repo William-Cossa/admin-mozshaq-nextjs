@@ -21,11 +21,6 @@ export function InstructorFilters() {
       }
     });
 
-    // Reset to page 1 on search or filter change
-    if (newParams.search !== undefined || newParams.status !== undefined) {
-      params.set("page", "1");
-    }
-
     startTransition(() => {
       replace(`${pathname}?${params.toString()}`);
     });

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Filters from "@/components/courses/filters";
 import CoursesList from "@/components/courses/course-list";
 import { getCourses } from "@/lib/actions/courses";
+import { filterCourses } from "@/lib/filters";
 import AddButton from "@/components/add-button";
 
 interface PageProps {
@@ -13,8 +14,8 @@ interface PageProps {
 
 export default async function CoursesPage({ searchParams }: PageProps) {
   const params = await searchParams;
-  const result = await getCourses(params);
-  const courses = result.data || [];
+  const result = await getCourses();
+  const courses = filterCourses(result.data || [], params);
 
   return (
     <div className="max-w-7xl mx-auto space-y-4 pb-12">
@@ -30,7 +31,7 @@ export default async function CoursesPage({ searchParams }: PageProps) {
 
       <CoursesList
         courses={courses}
-        total={result.total || 0}
+        total={courses.length}
       />
     </div>
   );

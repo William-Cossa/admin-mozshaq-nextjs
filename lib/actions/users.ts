@@ -14,10 +14,8 @@ export async function getUsers(params?: Record<string, string>) {
     return { users: [], total: 0 };
   }
 
-  const query = params ? "?" + new URLSearchParams(params).toString() : "";
-
   try {
-    const res = await fetch(`${API_URL}/admin/users${query}`, {
+    const res = await fetch(`${API_URL}/admin/users`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

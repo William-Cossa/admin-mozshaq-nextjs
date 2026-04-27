@@ -1,6 +1,7 @@
 import Heading from "@/components/Heading";
 import UsersTable from "@/components/tables/UsersTable";
 import { getUsers } from "@/lib/actions/users";
+import { filterUsers } from "@/lib/filters";
 import { UserFormDialog } from "@/components/users/UserFormDialog";
 import UsersSearch from "@/components/users/UsersSearch";
 
@@ -10,7 +11,9 @@ interface PageProps {
 
 async function Users({ searchParams }: PageProps) {
   const params = await searchParams;
-  const { users, total } = await getUsers(params);
+  const { users: allUsers } = await getUsers();
+  const users = filterUsers(allUsers, params);
+  const total = users.length;
 
   return (
     <div className="max-w-7xl mx-auto space-y-3">

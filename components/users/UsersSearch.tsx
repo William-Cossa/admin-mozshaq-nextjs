@@ -12,7 +12,6 @@ export default function UsersSearch() {
 
   const handleSearch = (term: string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("page", "1"); // Reset to page 1 on new search
     if (term) {
       params.set("search", term);
     } else {
