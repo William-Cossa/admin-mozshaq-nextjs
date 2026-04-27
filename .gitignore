@@ -44,3 +44,6 @@ next-env.d.ts
 /backend
 .agent
 .agent/
+backend/*
+.backend/*
+.backend/   
