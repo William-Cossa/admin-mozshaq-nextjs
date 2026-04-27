@@ -10,7 +10,7 @@ interface PageProps {
 
 async function Users({ searchParams }: PageProps) {
   const params = await searchParams;
-  const { users, total, page, limit } = await getUsers(params);
+  const { users, total } = await getUsers(params);
 
   return (
     <div className="max-w-7xl mx-auto space-y-3">
@@ -24,11 +24,9 @@ async function Users({ searchParams }: PageProps) {
 
       <UsersSearch />
 
-      <UsersTable 
-        users={users} 
+      <UsersTable
+        users={users}
         total={total}
-        page={page}
-        limit={limit}
       />
     </div>
   );

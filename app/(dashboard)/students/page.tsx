@@ -14,8 +14,6 @@ export default async function StudentsPage({ searchParams }: PageProps) {
     <StudentsClient
       students={result.data || []}
       total={result.total || 0}
-      page={result.page || 1}
-      limit={result.limit || 10}
     />
   );
 }

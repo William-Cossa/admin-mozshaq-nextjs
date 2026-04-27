@@ -34,15 +34,13 @@ const STATUS_MAP: Record<string, { label: string; cls: string }> = {
 interface StudentsClientProps {
   students: StudentRow[];
   total: number;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
 }
 
 const StudentsClient: React.FC<StudentsClientProps> = ({
   students,
   total,
-  page,
-  limit,
 }) => {
   return (
     <div className="max-w-7xl mx-auto flex flex-col gap-3 h-full">
@@ -177,7 +175,7 @@ const StudentsClient: React.FC<StudentsClientProps> = ({
           </table>
         </div>
 
-        <StudentPagination total={total} page={page} limit={limit} />
+        <StudentPagination total={total} />
       </div>
     </div>
   );

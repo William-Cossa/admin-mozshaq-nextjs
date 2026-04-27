@@ -31,8 +31,6 @@ export default async function CoursesPage({ searchParams }: PageProps) {
       <CoursesList
         courses={courses}
         total={result.total || 0}
-        page={result.page || 1}
-        limit={result.limit || 10}
       />
     </div>
   );

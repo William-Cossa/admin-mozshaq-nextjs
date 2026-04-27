@@ -45,15 +45,13 @@ const STATUS_MAP: Record<string, { label: string; cls: string }> = {
 interface InstructorsClientProps {
   instructors: InstructorRow[];
   total: number;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
 }
 
 const InstructorsClient: React.FC<InstructorsClientProps> = ({
   instructors,
   total,
-  page,
-  limit,
 }) => {
 
   return (
@@ -181,7 +179,7 @@ const InstructorsClient: React.FC<InstructorsClientProps> = ({
           </table>
         </div>
 
-        <InstructorPagination total={total} page={page} limit={limit} />
+        <InstructorPagination total={total} />
       </div>
     </div>
   );

@@ -5,16 +5,16 @@ import { CoursePagination } from "./CoursePagination";
 interface CoursesListProps {
   courses: any[];
   total: number;
-  page: number;
-  limit: number;
+  page?: number;
+  limit?: number;
 }
 
 export default function CoursesList({
   courses,
   total,
-  page,
-  limit,
 }: CoursesListProps) {
+  const page = 1;
+  const limit = 10;
   const from = total === 0 ? 0 : (page - 1) * limit + 1;
   const to = Math.min(page * limit, total);
 
@@ -32,7 +32,7 @@ export default function CoursesList({
         )}
       </div>
 
-      <CoursePagination total={total} page={page} limit={limit} />
+      <CoursePagination total={total} />
     </div>
   );
 }

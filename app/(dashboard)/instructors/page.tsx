@@ -14,8 +14,6 @@ export default async function InstructorsPage({ searchParams }: PageProps) {
     <InstructorsClient
       instructors={result.data || []}
       total={result.total || 0}
-      page={result.page || 1}
-      limit={result.limit || 10}
     />
   );
 }
