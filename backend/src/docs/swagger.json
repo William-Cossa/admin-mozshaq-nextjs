@@ -11,7 +11,7 @@
       "description": "Base URL - Local"
     },
     {
-      "url": "https://backend-mozshaq.onrender.com/api",
+      "url": "https://backend.mozshaq.co.mz/api",
       "description": "Base URL - Production"
     }
   ],
